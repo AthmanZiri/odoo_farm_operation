@@ -2,6 +2,7 @@
     'name': 'Product Image Hover',
     'version': '1.0',
     'category': 'Product',
+    'author': 'JengaSol',
     'summary': 'Enlarge product image on hover in Kanban view',
     'description': """
         This module adds a hover effect to product images in the Kanban view,
