@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <!-- Equipment Category -->
+        <record id="maintenance_category_motorbikes" model="maintenance.equipment.category">
+            <field name="name">Motorbikes</field>
+        </record>
+
+        <!-- ========================================== -->
+        <!-- Template 1: Motorbike - 2,500 km Service -->
+        <!-- ========================================== -->
+        <record id="template_motorbike_2500km" model="worksheet.template">
+            <field name="name">Motorbike - 2,500 km Service</field>
+            <field name="res_model">maintenance.request</field>
+        </record>
+
+        <function model="worksheet.template" name="_preload_maintenance_templates">
+            <value eval="'maintenance_worksheet_templates.template_motorbike_2500km'"/>
+            <value eval="[
+                {'name': 'x_lubricate_drive_chain', 'string': 'LUBRICATE: Drive Chain'},
+                {'name': 'x_check_battery_electrolyte', 'string': 'CHECK/ADJUST: Battery Electrolyte Level'},
+                {'name': 'x_replace_air_cleaner_2500', 'string': 'REPLACE: Air Cleaner Element'},
+                {'name': 'x_check_carburetor', 'string': 'CHECK: Carburetor/Idle Speed'},
+                {'name': 'x_check_fuel_leakages', 'string': 'CHECK/REPLACE: Fuel System leakages'},
+                {'name': 'x_clean_spark_plug', 'string': 'CLEAN/REPLACE: Spark Plug/Gap'},
+                {'name': 'x_check_brake_light_switch', 'string': 'CHECK/ADJUST: Brake Light Switch'},
+                {'name': 'x_check_clutch_play', 'string': 'CHECK/ADJUST: Clutch Play'},
+                {'name': 'x_check_throttle_play', 'string': 'CHECK/ADJUST: Throttle Play'},
+                {'name': 'x_check_tps', 'string': 'CHECK/ADJUST: TPS Functioning - Check using a Multimeter'},
+                {'name': 'x_check_front_brake_lever', 'string': 'CHECK/ADJUST: Front Brake Lever Play'},
+                {'name': 'x_check_rear_brake_lever', 'string': 'CHECK/ADJUST: Rear Brake Lever Play'},
+                {'name': 'x_check_brake_lining', 'string': 'CHECK/REPLACE: Brake Lining Wear'},
+                {'name': 'x_check_steering_play', 'string': 'CHECK/ADJUST/REPLACE: Steering Play'},
+                {'name': 'x_tighten_fasteners', 'string': 'TIGHTEN: All Fasteners Tightness'},
+                {'name': 'x_check_tyre_tread', 'string': 'CHECK/REPLACE: Tyre Tread Wear'},
+                {'name': 'x_check_spoke_tightness', 'string': 'CHECK/ADJUST: Spoke Tightness &amp; Rim Run Out'},
+                {'name': 'x_lubricate_general', 'string': 'LUBRICATE: General Lubrication'},
+                {'name': 'x_check_rear_shock', 'string': 'CHECK/REPLACE: Rear Shock Absorber'},
+                {'name': 'x_check_drive_chain_slack', 'string': 'CHECK/ADJUST: Drive Chain Slack'},
+            ]"/>
+        </function>
+
+        <!-- ========================================== -->
+        <!-- Template 2: Motorbike - 5,000 km Service -->
+        <!-- ========================================== -->
+        <record id="template_motorbike_5000km" model="worksheet.template">
+            <field name="name">Motorbike - 5,000 km Service</field>
+            <field name="res_model">maintenance.request</field>
+        </record>
+
+        <function model="worksheet.template" name="_preload_maintenance_templates">
+            <value eval="'maintenance_worksheet_templates.template_motorbike_5000km'"/>
+            <value eval="[
+                {'name': 'x_check_valve_tappet', 'string': 'CHECK/ADJUST: Valve Tappet Clearance'},
+                {'name': 'x_check_front_fork', 'string': 'CHECK: Front Fork'},
+                {'name': 'x_replace_engine_oil_moto', 'string': 'REPLACE: Engine Oil'},
+                {'name': 'x_replace_oil_filter_moto', 'string': 'REPLACE: Paper Oil Filter'},
+            ]"/>
+        </function>
+
+        <!-- ========================================== -->
+        <!-- Template 3: Motorbike - 10,000 km Service -->
+        <!-- ========================================== -->
+        <record id="template_motorbike_10000km" model="worksheet.template">
+            <field name="name">Motorbike - 10,000 km Service</field>
+            <field name="res_model">maintenance.request</field>
+        </record>
+
+        <function model="worksheet.template" name="_preload_maintenance_templates">
+            <value eval="'maintenance_worksheet_templates.template_motorbike_10000km'"/>
+            <value eval="[
+                {'name': 'x_clean_oil_strainer', 'string': 'CLEAN: Oil Strainer'},
+                {'name': 'x_replace_air_cleaner_10000', 'string': 'REPLACE: Replace Air Cleaner Element'},
+                {'name': 'x_replace_spark_plug', 'string': 'REPLACE: Spark Plug'},
+                {'name': 'x_replace_front_fork_oil', 'string': 'REPLACE: Front Fork Oil'},
+            ]"/>
+        </function>
+
+        <!-- ========================================== -->
+        <!-- Template 4: Motorbike - 15,000 km Service -->
+        <!-- ========================================== -->
+        <record id="template_motorbike_15000km" model="worksheet.template">
+            <field name="name">Motorbike - 15,000 km Service</field>
+            <field name="res_model">maintenance.request</field>
+        </record>
+
+        <function model="worksheet.template" name="_preload_maintenance_templates">
+            <value eval="'maintenance_worksheet_templates.template_motorbike_15000km'"/>
+            <value eval="[
+                {'name': 'x_replace_fuel_pipes', 'string': 'REPLACE: Fuel Pipes'},
+                {'name': 'x_lubricate_steering_stem', 'string': 'LUBRICATE: Steering Stem Bearing'},
+                {'name': 'x_lubricate_wheel_bearing', 'string': 'LUBRICATE: Wheel Bearing'},
+                {'name': 'x_lubricate_swing_arm', 'string': 'LUBRICATE: Swing Arm Pivot Pin'},
+            ]"/>
+        </function>
+
+        <!-- ========================================== -->
+        <!-- Template 5: Motorbike - 30,000 km Service -->
+        <!-- ========================================== -->
+        <record id="template_motorbike_30000km" model="worksheet.template">
+            <field name="name">Motorbike - 30,000 km Service</field>
+            <field name="res_model">maintenance.request</field>
+        </record>
+
+        <function model="worksheet.template" name="_preload_maintenance_templates">
+            <value eval="'maintenance_worksheet_templates.template_motorbike_30000km'"/>
+            <value eval="[
+                {'name': 'x_check_front_brake_cable', 'string': 'CHECK/REPLACE: Front Brake Cable'},
+                {'name': 'x_service_valve_lapping', 'string': 'SERVICE: Valve Lapping'},
+                {'name': 'x_service_valve_oil_seal', 'string': 'SERVICE: Valve Oil Seal'},
+            ]"/>
+        </function>
+
+    </data>
+</odoo>

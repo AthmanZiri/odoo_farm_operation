@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <!-- Equipment Category (Reusing or creating specific if needed, but sticking to request) -->
+        <!-- Using a specific one to avoid conflicts if "Tractors" already exists generally -->
+        <record id="maintenance_category_tractors_5075" model="maintenance.equipment.category">
+            <field name="name">Tractors (5075)</field>
+        </record>
+
+        <!-- ========================================== -->
+        <!-- Template 1: JD 5075 - 250 Hour Service -->
+        <!-- ========================================== -->
+        <record id="template_jd_5075_250h" model="worksheet.template">
+            <field name="name">JD 5075 - 250 Hour Service</field>
+            <field name="res_model">maintenance.request</field>
+        </record>
+
+        <function model="worksheet.template" name="_preload_maintenance_templates">
+            <value eval="'maintenance_worksheet_templates.template_jd_5075_250h'"/>
+            <value eval="[
+                {'name': 'x_inspect_primary_air_filter_5075', 'string': 'INSPECT: Primary Engine Air Filter'},
+                {'name': 'x_inspect_battery_5075', 'string': 'INSPECT: Battery'},
+                {'name': 'x_inspect_fan_belt_5075', 'string': 'INSPECT: Alternator/Fan Belt'},
+                {'name': 'x_inspect_neutral_start_5075', 'string': 'INSPECT: Neutral Start System'},
+                {'name': 'x_inspect_clutch_pedal_5075', 'string': 'INSPECT: Clutch Pedal Free Travel'},
+            ]"/>
+        </function>
+
+        <!-- ========================================== -->
+        <!-- Template 2: JD 5075 - 500 Hour Service -->
+        <!-- ========================================== -->
+        <record id="template_jd_5075_500h" model="worksheet.template">
+            <field name="name">JD 5075 - 500 Hour Service</field>
+            <field name="res_model">maintenance.request</field>
+        </record>
+
+        <function model="worksheet.template" name="_preload_maintenance_templates">
+            <value eval="'maintenance_worksheet_templates.template_jd_5075_500h'"/>
+            <value eval="[
+                {'name': 'x_change_engine_oil_5075', 'string': 'CHANGE: Engine Oil'},
+                {'name': 'x_change_oil_filter_5075', 'string': 'CHANGE: Engine Oil Filter'},
+                {'name': 'x_change_trans_hyd_filter_5075', 'string': 'CHANGE: Transmission/Hydraulic Filter'},
+                {'name': 'x_change_primary_air_filter_5075', 'string': 'CHANGE: Primary Engine Air Filter'},
+                {'name': 'x_change_fuel_filter_5075', 'string': 'CHANGE: Fuel Filter'},
+                {'name': 'x_inspect_hoses_clamps_5075', 'string': 'INSPECT: All Hoses and Hose Clamps'},
+                {'name': 'x_inspect_cooling_system_5075', 'string': 'INSPECT: Cooling System'},
+            ]"/>
+        </function>
+
+        <!-- ========================================== -->
+        <!-- Template 3: JD 5075 - 750 Hour Service -->
+        <!-- ========================================== -->
+        <record id="template_jd_5075_750h" model="worksheet.template">
+            <field name="name">JD 5075 - 750 Hour Service</field>
+            <field name="res_model">maintenance.request</field>
+        </record>
+
+        <function model="worksheet.template" name="_preload_maintenance_templates">
+            <value eval="'maintenance_worksheet_templates.template_jd_5075_750h'"/>
+            <value eval="[
+                {'name': 'x_change_mfwd_oil_5075', 'string': 'CHANGE: Oil in MFWD'},
+                {'name': 'x_clean_crankcase_vent_5075', 'string': 'CLEAN: Engine Crankcase Vent Tube'},
+                {'name': 'x_change_repack_bearings_5075', 'string': 'CHANGE: Repack Front Wheel Bearings'},
+                {'name': 'x_grease_rear_axle_bearings_5075', 'string': 'GREASE: Rear Axle Bearings'},
+                {'name': 'x_inspect_idle_speeds_5075', 'string': 'INSPECT: Engine Idle Speeds'},
+                {'name': 'x_inspect_front_axle_pivot_5075', 'string': 'INSPECT: Front Axle Pivot Pin - Dealer'},
+                {'name': 'x_inspect_valve_clearance_5075', 'string': 'INSPECT: Adjust Engine Valve Clearance - Dealer'},
+                {'name': 'x_inspect_fuel_injectors_5075', 'string': 'INSPECT: Inspect Fuel Injectors - Dealer'},
+                {'name': 'x_change_trans_hyd_oil_5075', 'string': 'CHANGE: Transmission/Hydraulic Oil'},
+                {'name': 'x_clean_trans_hyd_screen_5075', 'string': 'CLEAN: Trans/Hydr Oil Pickup Screen'},
+                {'name': 'x_change_sec_air_filter_5075', 'string': 'CHANGE: Secondary Engine Air Filter'},
+                {'name': 'x_change_flush_cooling_5075', 'string': 'CHANGE: Flush Engine Cooling System'},
+            ]"/>
+        </function>
+
+    </data>
+</odoo>

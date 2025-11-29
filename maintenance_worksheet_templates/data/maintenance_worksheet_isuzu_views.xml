@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <!-- ========================================== -->
+        <!-- Template 1: Isuzu - 5,000 km Service -->
+        <!-- ========================================== -->
+        <record id="view_isuzu_5000km" model="ir.ui.view">
+            <field name="name">isuzu.5000km.form</field>
+            <field name="model" model="ir.model" eval="obj().env.ref('maintenance_worksheet_templates.template_isuzu_5000km').model_id.model"/>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group string="CHANGE">
+                                <field name="x_change_engine_oil_isuzu"/>
+                            </group>
+                            <group string="INSPECT">
+                                <field name="x_inspect_fuel_sedimentor"/>
+                                <field name="x_inspect_fuel_leakage"/>
+                                <field name="x_inspect_air_filter_element"/>
+                                <field name="x_inspect_drive_belts"/>
+                                <field name="x_inspect_excessive_smoke"/>
+                                <field name="x_inspect_coolant_system"/>
+                                <field name="x_inspect_radiator_core"/>
+                                <field name="x_inspect_exhaust_system"/>
+                                <field name="x_inspect_brake_pedal"/>
+                                <field name="x_inspect_brake_fluid_level"/>
+                                <field name="x_inspect_front_disc_brake"/>
+                                <field name="x_inspect_handbrake_lining"/>
+                                <field name="x_inspect_brake_pipes"/>
+                                <field name="x_inspect_clutch_pedal"/>
+                                <field name="x_inspect_clutch_fluid_level"/>
+                                <field name="x_inspect_manual_trans_fluid"/>
+                                <field name="x_inspect_transfer_case_fluid"/>
+                                <field name="x_inspect_prop_shaft"/>
+                                <field name="x_inspect_diff_oil_levels"/>
+                                <field name="x_inspect_axle_shafts"/>
+                                <field name="x_inspect_front_drive_axle"/>
+                                <field name="x_inspect_propeller_shaft_joints"/>
+                                <field name="x_inspect_power_steering_oil"/>
+                                <field name="x_inspect_steering_rack_boots"/>
+                                <field name="x_inspect_wheel_alignment"/>
+                                <field name="x_inspect_handbrake_effect"/>
+                                <field name="x_inspect_suspension"/>
+                                <field name="x_inspect_shock_absorbers"/>
+                                <field name="x_inspect_cab_mountings"/>
+                                <field name="x_inspect_tyre_pressures_isuzu"/>
+                                <field name="x_inspect_tyres_rims"/>
+                                <field name="x_inspect_wheel_bearings"/>
+                                <field name="x_inspect_front_wheel_bearing"/>
+                                <field name="x_inspect_needle_bearing"/>
+                                <field name="x_inspect_starter_alternator"/>
+                                <field name="x_inspect_battery_electrolyte"/>
+                                <field name="x_inspect_battery_wiring"/>
+                                <field name="x_inspect_dashboard_items"/>
+                                <field name="x_inspect_airbag_system"/>
+                                <field name="x_inspect_seatbelt_function"/>
+                                <field name="x_inspect_chassis_corrosion"/>
+                                <field name="x_inspect_bolts_nuts"/>
+                                <field name="x_inspect_door_closing"/>
+                                <field name="x_inspect_ac_drain"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="x_comments"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- ========================================== -->
+        <!-- Template 2: Isuzu - 10,000 km Service -->
+        <!-- ========================================== -->
+        <record id="view_isuzu_10000km" model="ir.ui.view">
+            <field name="name">isuzu.10000km.form</field>
+            <field name="model" model="ir.model" eval="obj().env.ref('maintenance_worksheet_templates.template_isuzu_10000km').model_id.model"/>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group string="CHANGE">
+                                <field name="x_change_fuel_filter_isuzu"/>
+                                <field name="x_change_pre_fuel_filter"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="x_comments"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- ========================================== -->
+        <!-- Template 3: Isuzu - 15,000 km Service -->
+        <!-- ========================================== -->
+        <record id="view_isuzu_15000km" model="ir.ui.view">
+            <field name="name">isuzu.15000km.form</field>
+            <field name="model" model="ir.model" eval="obj().env.ref('maintenance_worksheet_templates.template_isuzu_15000km').model_id.model"/>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group string="CHANGE">
+                                <field name="x_change_manual_trans_fluid"/>
+                                <field name="x_change_transfer_case_fluid"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="x_comments"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- ========================================== -->
+        <!-- Template 4: Isuzu - 20,000 km Service -->
+        <!-- ========================================== -->
+        <record id="view_isuzu_20000km" model="ir.ui.view">
+            <field name="name">isuzu.20000km.form</field>
+            <field name="model" model="ir.model" eval="obj().env.ref('maintenance_worksheet_templates.template_isuzu_20000km').model_id.model"/>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group string="CHANGE">
+                                <field name="x_change_air_filter_element"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="x_comments"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- ========================================== -->
+        <!-- Template 5: Isuzu - 50,000 km Service -->
+        <!-- ========================================== -->
+        <record id="view_isuzu_50000km" model="ir.ui.view">
+            <field name="name">isuzu.50000km.form</field>
+            <field name="model" model="ir.model" eval="obj().env.ref('maintenance_worksheet_templates.template_isuzu_50000km').model_id.model"/>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group string="ADJUST">
+                                <field name="x_adjust_valve_clearance_isuzu"/>
+                            </group>
+                            <group string="CHANGE">
+                                <field name="x_change_front_wheel_bearing_grease"/>
+                                <field name="x_change_needle_bearing_grease"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="x_comments"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- ========================================== -->
+        <!-- Template 6: Isuzu - 2 Year Service -->
+        <!-- ========================================== -->
+        <record id="view_isuzu_2yr" model="ir.ui.view">
+            <field name="name">isuzu.2yr.form</field>
+            <field name="model" model="ir.model" eval="obj().env.ref('maintenance_worksheet_templates.template_isuzu_2yr').model_id.model"/>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group string="CHANGE">
+                                <field name="x_change_brake_fluid_isuzu"/>
+                                <field name="x_change_clutch_fluid_isuzu"/>
+                                <field name="x_change_remote_key_battery"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="x_comments"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- ========================================== -->
+        <!-- Template 7: Isuzu - 5 Year Service -->
+        <!-- ========================================== -->
+        <record id="view_isuzu_5yr" model="ir.ui.view">
+            <field name="name">isuzu.5yr.form</field>
+            <field name="model" model="ir.model" eval="obj().env.ref('maintenance_worksheet_templates.template_isuzu_5yr').model_id.model"/>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group string="CHANGE">
+                                <field name="x_change_coolant_concentration"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="x_comments"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>

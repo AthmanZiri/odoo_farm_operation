@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <!-- Equipment Category -->
+        <record id="maintenance_category_harvesters" model="maintenance.equipment.category">
+            <field name="name">Harvesters</field>
+        </record>
+
+        <!-- ========================================== -->
+        <!-- Template 1: JD S660 - 250 Hour Service -->
+        <!-- ========================================== -->
+        <record id="template_jd_s660_250h" model="worksheet.template">
+            <field name="name">JD S660 - 250 Hour Service</field>
+            <field name="res_model">maintenance.request</field>
+        </record>
+
+        <function model="worksheet.template" name="_preload_maintenance_templates">
+            <value eval="'maintenance_worksheet_templates.template_jd_s660_250h'"/>
+            <value eval="[
+                {'name': 'x_inspect_engine_air_filter_bag', 'string': 'INSPECT: Primary Engine Air Filter (Plastic Bag)'},
+                {'name': 'x_inspect_straw_chopper_bearing', 'string': 'INSPECT: Straw Chopper Bearing'},
+                {'name': 'x_inspect_feeder_house_chain', 'string': 'INSPECT: Feeder House Conveyor Chain Tension'},
+                {'name': 'x_inspect_wheel_hub_bolts', 'string': 'INSPECT: Wheel &amp; Hub Bolt Torques'},
+                {'name': 'x_inspect_cleaning_fan_plugs', 'string': 'INSPECT: Cleaning Fan Plastic Plugs'},
+                {'name': 'x_inspect_battery_lights_s660', 'string': 'INSPECT: Battery &amp; Lights'},
+                {'name': 'x_inspect_fan_belts_s660', 'string': 'INSPECT: Fan/Belts/Tensioners'},
+                {'name': 'x_inspect_brakes_s660', 'string': 'INSPECT: Brakes'},
+                {'name': 'x_inspect_loading_auger_oil', 'string': 'INSPECT: Loading Auger Gearcase Oil Level'},
+                {'name': 'x_inspect_air_intake_s660', 'string': 'INSPECT: Engine Air Intake System'},
+                {'name': 'x_inspect_brake_fluid_s660', 'string': 'INSPECT: Brake Fluid Level'},
+                {'name': 'x_inspect_primary_countershaft_oil', 'string': 'INSPECT: Primary Countershaft Gearcase Oil Level'},
+                {'name': 'x_inspect_separator_drive_oil', 'string': 'INSPECT: Separator Two Speed Drive Oil Level'},
+                {'name': 'x_inspect_final_drive_oil', 'string': 'INSPECT: Final Drive Oil Levels'},
+                {'name': 'x_inspect_trans_oil_s660', 'string': 'INSPECT: Transmission Oil Level'},
+                {'name': 'x_inspect_fire_extinguishers', 'string': 'INSPECT: Fire Extinguishers'},
+                {'name': 'x_inspect_header_ground_straps', 'string': 'INSPECT: Header Ground Sensing Straps'},
+                {'name': 'x_inspect_feeder_top_sprockets', 'string': 'INSPECT: Feeder House Top Shaft Sprockets'},
+                {'name': 'x_inspect_header_trailer', 'string': 'INSPECT: Header Trailer'},
+                {'name': 'x_test_coolant_s660', 'string': 'TEST: Coolant Condition (Test Strips)'},
+                {'name': 'x_clean_recirc_filter_s660', 'string': 'CLEAN: Recirculating Filter'},
+                {'name': 'x_clean_sieves', 'string': 'CLEAN: Sieves'},
+                {'name': 'x_clean_fuel_precleaner', 'string': 'CLEAN: Heavy Duty Fuel Precleaner Filter'},
+                {'name': 'x_grease_cleaning_fan_bearing', 'string': 'GREASE: Cleaning Fan Bearing (Right Hand Side)'},
+            ]"/>
+        </function>
+
+        <!-- ========================================== -->
+        <!-- Template 2: JD S660 - 500 Hour Service -->
+        <!-- ========================================== -->
+        <record id="template_jd_s660_500h" model="worksheet.template">
+            <field name="name">JD S660 - 500 Hour Service</field>
+            <field name="res_model">maintenance.request</field>
+        </record>
+
+        <function model="worksheet.template" name="_preload_maintenance_templates">
+            <value eval="'maintenance_worksheet_templates.template_jd_s660_500h'"/>
+            <value eval="[
+                {'name': 'x_change_engine_oil_s660', 'string': 'CHANGE: Engine Oil &amp; Filter'},
+                {'name': 'x_change_hyd_filter_s660', 'string': 'CHANGE: Main Hydraulic System Filter'},
+                {'name': 'x_change_hydro_charge_filter', 'string': 'CHANGE: Hydrostatic Charge Filter'},
+                {'name': 'x_change_engine_gear_filter', 'string': 'CHANGE: Main Engine Gear Case Filter'},
+                {'name': 'x_change_fuel_tank_breather', 'string': 'CHANGE: Fuel Tank Breather'},
+                {'name': 'x_change_fuel_filters_s660', 'string': 'CHANGE: Primary &amp; Secondary Fuel Filters'},
+                {'name': 'x_change_primary_air_filter', 'string': 'CHANGE: Primary Engine Air Filter'},
+                {'name': 'x_change_recirc_filter', 'string': 'CHANGE: Recirculating Filter'},
+                {'name': 'x_clean_moisture_sensor', 'string': 'CLEAN: Moisture Sensor'},
+                {'name': 'x_grease_500h_points', 'string': 'GREASE: General 500 Hr Grease Points'},
+                {'name': 'x_change_oil_reel_speed', 'string': 'CHANGE OIL: Reel Speed Spool'},
+            ]"/>
+        </function>
+
+        <!-- ========================================== -->
+        <!-- Template 3: JD S660 - 750 Hour Service -->
+        <!-- ========================================== -->
+        <record id="template_jd_s660_750h" model="worksheet.template">
+            <field name="name">JD S660 - 750 Hour Service</field>
+            <field name="res_model">maintenance.request</field>
+        </record>
+
+        <function model="worksheet.template" name="_preload_maintenance_templates">
+            <value eval="'maintenance_worksheet_templates.template_jd_s660_750h'"/>
+            <value eval="[
+                {'name': 'x_change_cab_air_filter_s660', 'string': 'CHANGE: Cab Air Filter'},
+                {'name': 'x_change_safety_air_filter', 'string': 'CHANGE: Safety Engine Air Filter'},
+                {'name': 'x_change_feeder_reverser_oil', 'string': 'CHANGE FLUIDS: Feeder House Reverser Gear Case Oil'},
+            ]"/>
+        </function>
+
+        <!-- ========================================== -->
+        <!-- Template 4: JD S660 - 1000 Hour Service -->
+        <!-- ========================================== -->
+        <record id="template_jd_s660_1000h" model="worksheet.template">
+            <field name="name">JD S660 - 1000 Hour Service</field>
+            <field name="res_model">maintenance.request</field>
+        </record>
+
+        <function model="worksheet.template" name="_preload_maintenance_templates">
+            <value eval="'maintenance_worksheet_templates.template_jd_s660_1000h'"/>
+            <value eval="[
+                {'name': 'x_adjust_straw_chopper_knives', 'string': 'ADJUST: Turn Straw Chopper Knives Around'},
+                {'name': 'x_change_primary_countershaft_oil', 'string': 'CHANGE FLUIDS: Primary Countershaft Gearcase Oil'},
+                {'name': 'x_change_separator_drive_oil', 'string': 'CHANGE FLUIDS: Separator Two Speed Drive Oil'},
+                {'name': 'x_change_trans_oil_1000h', 'string': 'CHANGE FLUIDS: Transmission Oil'},
+                {'name': 'x_change_main_engine_gear_oil', 'string': 'CHANGE FLUIDS: Main Engine Gear Case Oil'},
+                {'name': 'x_change_hydro_oil_s660', 'string': 'CHANGE FLUIDS: Hydraulic/Hydrostatic Oil'},
+                {'name': 'x_change_final_drive_oil', 'string': 'CHANGE FLUIDS: Final Drives Oil (Both Sides)'},
+                {'name': 'x_change_sec_air_filter_s660', 'string': 'CHANGE: Secondary Engine Air Filter'},
+            ]"/>
+        </function>
+
+        <!-- ========================================== -->
+        <!-- Template 5: JD S660 - 2000 Hour Service -->
+        <!-- ========================================== -->
+        <record id="template_jd_s660_2000h" model="worksheet.template">
+            <field name="name">JD S660 - 2000 Hour Service</field>
+            <field name="res_model">maintenance.request</field>
+        </record>
+
+        <function model="worksheet.template" name="_preload_maintenance_templates">
+            <value eval="'maintenance_worksheet_templates.template_jd_s660_2000h'"/>
+            <value eval="[
+                {'name': 'x_change_coolant_s660', 'string': 'CHANGE: Engine Coolant'},
+                {'name': 'x_change_chopper_knives', 'string': 'CHANGE: Straw Chopper Knives (Replace)'},
+                {'name': 'x_change_header_ground_straps', 'string': 'CHANGE: Header Ground Sensing Straps'},
+                {'name': 'x_adjust_valve_backlash', 'string': 'ADJUST: Engine Valve Backlash'},
+            ]"/>
+        </function>
+
+        <!-- ========================================== -->
+        <!-- Template 6: JD S660 - 4500 Hour Service -->
+        <!-- ========================================== -->
+        <record id="template_jd_s660_4500h" model="worksheet.template">
+            <field name="name">JD S660 - 4500 Hour Service</field>
+            <field name="res_model">maintenance.request</field>
+        </record>
+
+        <function model="worksheet.template" name="_preload_maintenance_templates">
+            <value eval="'maintenance_worksheet_templates.template_jd_s660_4500h'"/>
+            <value eval="[
+                {'name': 'x_change_crank_damper_s660', 'string': 'CHANGE: Engine Crankshaft Damper'},
+            ]"/>
+        </function>
+
+    </data>
+</odoo>

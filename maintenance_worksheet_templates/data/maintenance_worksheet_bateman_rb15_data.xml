@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <!-- Equipment Category -->
+        <record id="maintenance_category_sprayers" model="maintenance.equipment.category">
+            <field name="name">Sprayers</field>
+        </record>
+
+        <!-- ========================================== -->
+        <!-- Template 1: Bateman RB15 - 250 Hour Service -->
+        <!-- ========================================== -->
+        <record id="template_bateman_rb15_250h" model="worksheet.template">
+            <field name="name">Bateman RB15 - 250 Hour Service</field>
+            <field name="res_model">maintenance.request</field>
+        </record>
+
+        <function model="worksheet.template" name="_preload_maintenance_templates">
+            <value eval="'maintenance_worksheet_templates.template_bateman_rb15_250h'"/>
+            <value eval="[
+                {'name': 'x_inspect_air_intake_rb15', 'string': 'INSPECT: Air Intake System'},
+                {'name': 'x_inspect_plastic_bag_rb15', 'string': 'INSPECT: Put Plastic Bag over Primary Engine Air Filter'},
+                {'name': 'x_inspect_wheel_torque_rb15', 'string': 'INSPECT: Wheel and Hub Bolt Torques'},
+                {'name': 'x_inspect_battery_lights_rb15', 'string': 'INSPECT: Battery (check vent tubes) + Lights'},
+                {'name': 'x_inspect_fan_belts_rb15', 'string': 'INSPECT: Fan + Belts'},
+                {'name': 'x_inspect_brakes_rb15', 'string': 'INSPECT: Brakes and Handbrake'},
+            ]"/>
+        </function>
+
+        <!-- ========================================== -->
+        <!-- Template 2: Bateman RB15 - 500 Hour Service -->
+        <!-- ========================================== -->
+        <record id="template_bateman_rb15_500h" model="worksheet.template">
+            <field name="name">Bateman RB15 - 500 Hour Service</field>
+            <field name="res_model">maintenance.request</field>
+        </record>
+
+        <function model="worksheet.template" name="_preload_maintenance_templates">
+            <value eval="'maintenance_worksheet_templates.template_bateman_rb15_500h'"/>
+            <value eval="[
+                {'name': 'x_change_engine_oil_rb15', 'string': 'CHANGE: Engine Oil'},
+                {'name': 'x_change_oil_filter_rb15', 'string': 'CHANGE: Engine Oil Filter'},
+                {'name': 'x_change_fuel_filter_rb15', 'string': 'CHANGE: Fuel Filter'},
+                {'name': 'x_change_hyd_filter_rb15', 'string': 'CHANGE: Hydraulic Oil Filter'},
+                {'name': 'x_change_primary_air_filter_rb15', 'string': 'CHANGE: Primary Engine Air Filter'},
+            ]"/>
+        </function>
+
+        <!-- ========================================== -->
+        <!-- Template 3: Bateman RB15 - 750 Hour Service -->
+        <!-- ========================================== -->
+        <record id="template_bateman_rb15_750h" model="worksheet.template">
+            <field name="name">Bateman RB15 - 750 Hour Service</field>
+            <field name="res_model">maintenance.request</field>
+        </record>
+
+        <function model="worksheet.template" name="_preload_maintenance_templates">
+            <value eval="'maintenance_worksheet_templates.template_bateman_rb15_750h'"/>
+            <value eval="[
+                {'name': 'x_change_cab_filter_rb15', 'string': 'CHANGE: Cab Air Filter'},
+            ]"/>
+        </function>
+
+        <!-- ========================================== -->
+        <!-- Template 4: Bateman RB15 - 1000 Hour Service -->
+        <!-- ========================================== -->
+        <record id="template_bateman_rb15_1000h" model="worksheet.template">
+            <field name="name">Bateman RB15 - 1000 Hour Service</field>
+            <field name="res_model">maintenance.request</field>
+        </record>
+
+        <function model="worksheet.template" name="_preload_maintenance_templates">
+            <value eval="'maintenance_worksheet_templates.template_bateman_rb15_1000h'"/>
+            <value eval="[
+                {'name': 'x_change_sec_air_filter_rb15', 'string': 'CHANGE: Secondary Engine Air Filter'},
+                {'name': 'x_change_hyd_oil_rb15', 'string': 'CHANGE: Hydraulic Oil'},
+            ]"/>
+        </function>
+
+        <!-- ========================================== -->
+        <!-- Template 5: Bateman RB15 - 2000 Hour Service -->
+        <!-- ========================================== -->
+        <record id="template_bateman_rb15_2000h" model="worksheet.template">
+            <field name="name">Bateman RB15 - 2000 Hour Service</field>
+            <field name="res_model">maintenance.request</field>
+        </record>
+
+        <function model="worksheet.template" name="_preload_maintenance_templates">
+            <value eval="'maintenance_worksheet_templates.template_bateman_rb15_2000h'"/>
+            <value eval="[
+                {'name': 'x_adjust_valve_clearance_rb15', 'string': 'ADJUST: Engine Valve Clearance'},
+                {'name': 'x_change_coolant_rb15', 'string': 'CHANGE: Drain, Flush + Refill Engine Cooling System'},
+            ]"/>
+        </function>
+
+        <!-- ========================================== -->
+        <!-- Template 6: Bateman RB15 - 4000 Hour Service -->
+        <!-- ========================================== -->
+        <record id="template_bateman_rb15_4000h" model="worksheet.template">
+            <field name="name">Bateman RB15 - 4000 Hour Service</field>
+            <field name="res_model">maintenance.request</field>
+        </record>
+
+        <function model="worksheet.template" name="_preload_maintenance_templates">
+            <value eval="'maintenance_worksheet_templates.template_bateman_rb15_4000h'"/>
+            <value eval="[
+                {'name': 'x_change_crank_damper_rb15', 'string': 'CHANGE: Engine Crankshaft Damper'},
+            ]"/>
+        </function>
+
+    </data>
+</odoo>

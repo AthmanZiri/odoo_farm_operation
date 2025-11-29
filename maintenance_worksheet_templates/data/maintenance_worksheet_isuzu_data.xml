@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <!-- Equipment Category -->
+        <record id="maintenance_category_vehicles" model="maintenance.equipment.category">
+            <field name="name">Vehicles</field>
+        </record>
+
+        <!-- ========================================== -->
+        <!-- Template 1: Isuzu - 5,000 km Service -->
+        <!-- ========================================== -->
+        <record id="template_isuzu_5000km" model="worksheet.template">
+            <field name="name">Isuzu - 5,000 km Service</field>
+            <field name="res_model">maintenance.request</field>
+        </record>
+
+        <function model="worksheet.template" name="_preload_maintenance_templates">
+            <value eval="'maintenance_worksheet_templates.template_isuzu_5000km'"/>
+            <value eval="[
+                {'name': 'x_change_engine_oil_isuzu', 'string': 'CHANGE: Engine Oil and Filter'},
+                {'name': 'x_inspect_fuel_sedimentor', 'string': 'INSPECT: Fuel Sedimentor for Presence of Water'},
+                {'name': 'x_inspect_fuel_leakage', 'string': 'INSPECT: Fuel Leakage at Tank, Cap and Pipes'},
+                {'name': 'x_inspect_air_filter_element', 'string': 'INSPECT: Air Filter Element'},
+                {'name': 'x_inspect_drive_belts', 'string': 'INSPECT: Drive Belts Tension/Damage and Pulleys'},
+                {'name': 'x_inspect_excessive_smoke', 'string': 'INSPECT: Excessive Smoke when Operating'},
+                {'name': 'x_inspect_coolant_system', 'string': 'INSPECT: Coolant System (Test Radiator Cap)'},
+                {'name': 'x_inspect_radiator_core', 'string': 'INSPECT: Radiator Core and Fan Operation'},
+                {'name': 'x_inspect_exhaust_system', 'string': 'INSPECT: Exhaust System'},
+                {'name': 'x_inspect_brake_pedal', 'string': 'INSPECT: Brake Pedal'},
+                {'name': 'x_inspect_brake_fluid_level', 'string': 'INSPECT: Brake Fluid Level'},
+                {'name': 'x_inspect_front_disc_brake', 'string': 'INSPECT: Front Disc Brake Pads/Discs for Wear'},
+                {'name': 'x_inspect_handbrake_lining', 'string': 'INSPECT: Handbrake Lining/Drum for Wear'},
+                {'name': 'x_inspect_brake_pipes', 'string': 'INSPECT: Brake Pipes'},
+                {'name': 'x_inspect_clutch_pedal', 'string': 'INSPECT: Clutch Pedal'},
+                {'name': 'x_inspect_clutch_fluid_level', 'string': 'INSPECT: Clutch Fluid Level'},
+                {'name': 'x_inspect_manual_trans_fluid', 'string': 'INSPECT: Manual Transmission Fluid'},
+                {'name': 'x_inspect_transfer_case_fluid', 'string': 'INSPECT: Transfer Case Fluid'},
+                {'name': 'x_inspect_prop_shaft', 'string': 'INSPECT: Prop Shaft'},
+                {'name': 'x_inspect_diff_oil_levels', 'string': 'INSPECT: Differrential (Front/Rear) Oil Levels/Leaks'},
+                {'name': 'x_inspect_axle_shafts', 'string': 'INSPECT: Axle Shafts/Housings'},
+                {'name': 'x_inspect_front_drive_axle', 'string': 'INSPECT: Front Drive Axle CV Joints, Dust Covers'},
+                {'name': 'x_inspect_propeller_shaft_joints', 'string': 'INSPECT: Propeller Shaft Joints'},
+                {'name': 'x_inspect_power_steering_oil', 'string': 'INSPECT: Power Steering Oil Levels and Leaks'},
+                {'name': 'x_inspect_steering_rack_boots', 'string': 'INSPECT: Steering Rack and Ball Joint Rubber Boots'},
+                {'name': 'x_inspect_wheel_alignment', 'string': 'INSPECT: Wheel Alignment'},
+                {'name': 'x_inspect_handbrake_effect', 'string': 'INSPECT: Handbrake Effectiveness and Travel'},
+                {'name': 'x_inspect_suspension', 'string': 'INSPECT: Suspension Front and Rear'},
+                {'name': 'x_inspect_shock_absorbers', 'string': 'INSPECT: Shock Absorbers'},
+                {'name': 'x_inspect_cab_mountings', 'string': 'INSPECT: Cab Mountings'},
+                {'name': 'x_inspect_tyre_pressures_isuzu', 'string': 'INSPECT: Tyre Pressures (Including Spare)'},
+                {'name': 'x_inspect_tyres_rims', 'string': 'INSPECT: Tyres (+ Pressures) and Rims (+ Spare)'},
+                {'name': 'x_inspect_wheel_bearings', 'string': 'INSPECT: Wheel Bearings'},
+                {'name': 'x_inspect_front_wheel_bearing', 'string': 'INSPECT: Front Wheel Bearing Grease and Seal'},
+                {'name': 'x_inspect_needle_bearing', 'string': 'INSPECT: Needle Bearing Grease(Replace Snap ring)'},
+                {'name': 'x_inspect_starter_alternator', 'string': 'INSPECT: Starter and Alternator Function/Output'},
+                {'name': 'x_inspect_battery_electrolyte', 'string': 'INSPECT: Battery Electrolyte Level/Specific Gravity'},
+                {'name': 'x_inspect_battery_wiring', 'string': 'INSPECT: Battery Wiring Harness and terminals'},
+                {'name': 'x_inspect_dashboard_items', 'string': 'INSPECT: All Dashboard Items - Horn, Wipers, etc'},
+                {'name': 'x_inspect_airbag_system', 'string': 'INSPECT: Airbag System and Warning Light'},
+                {'name': 'x_inspect_seatbelt_function', 'string': 'INSPECT: Seatbelt Function and Damage'},
+                {'name': 'x_inspect_chassis_corrosion', 'string': 'INSPECT: Chassis and Body for Corrosion'},
+                {'name': 'x_inspect_bolts_nuts', 'string': 'INSPECT: Bolts/Nuts on Chassis and Body'},
+                {'name': 'x_inspect_door_closing', 'string': 'INSPECT: Door/Bonnet/Tail Gate Closing/Locking'},
+                {'name': 'x_inspect_ac_drain', 'string': 'INSPECT: Air Conditioner Drain Pipe'},
+            ]"/>
+        </function>
+
+        <!-- ========================================== -->
+        <!-- Template 2: Isuzu - 10,000 km Service -->
+        <!-- ========================================== -->
+        <record id="template_isuzu_10000km" model="worksheet.template">
+            <field name="name">Isuzu - 10,000 km Service</field>
+            <field name="res_model">maintenance.request</field>
+        </record>
+
+        <function model="worksheet.template" name="_preload_maintenance_templates">
+            <value eval="'maintenance_worksheet_templates.template_isuzu_10000km'"/>
+            <value eval="[
+                {'name': 'x_change_fuel_filter_isuzu', 'string': 'CHANGE: Fuel Filter'},
+                {'name': 'x_change_pre_fuel_filter', 'string': 'CHANGE: Pre-Fuel Filter'},
+            ]"/>
+        </function>
+
+        <!-- ========================================== -->
+        <!-- Template 3: Isuzu - 15,000 km Service -->
+        <!-- ========================================== -->
+        <record id="template_isuzu_15000km" model="worksheet.template">
+            <field name="name">Isuzu - 15,000 km Service</field>
+            <field name="res_model">maintenance.request</field>
+        </record>
+
+        <function model="worksheet.template" name="_preload_maintenance_templates">
+            <value eval="'maintenance_worksheet_templates.template_isuzu_15000km'"/>
+            <value eval="[
+                {'name': 'x_change_manual_trans_fluid', 'string': 'CHANGE: Manual Transmission Fluid'},
+                {'name': 'x_change_transfer_case_fluid', 'string': 'CHANGE: Transfer Case Fluid'},
+            ]"/>
+        </function>
+
+        <!-- ========================================== -->
+        <!-- Template 4: Isuzu - 20,000 km Service -->
+        <!-- ========================================== -->
+        <record id="template_isuzu_20000km" model="worksheet.template">
+            <field name="name">Isuzu - 20,000 km Service</field>
+            <field name="res_model">maintenance.request</field>
+        </record>
+
+        <function model="worksheet.template" name="_preload_maintenance_templates">
+            <value eval="'maintenance_worksheet_templates.template_isuzu_20000km'"/>
+            <value eval="[
+                {'name': 'x_change_air_filter_element', 'string': 'CHANGE: Air Filter Element'},
+            ]"/>
+        </function>
+
+        <!-- ========================================== -->
+        <!-- Template 5: Isuzu - 50,000 km Service -->
+        <!-- ========================================== -->
+        <record id="template_isuzu_50000km" model="worksheet.template">
+            <field name="name">Isuzu - 50,000 km Service</field>
+            <field name="res_model">maintenance.request</field>
+        </record>
+
+        <function model="worksheet.template" name="_preload_maintenance_templates">
+            <value eval="'maintenance_worksheet_templates.template_isuzu_50000km'"/>
+            <value eval="[
+                {'name': 'x_adjust_valve_clearance_isuzu', 'string': 'ADJUST: Valve Clearance'},
+                {'name': 'x_change_front_wheel_bearing_grease', 'string': 'CHANGE: Front Wheel Bearing Grease and Seal'},
+                {'name': 'x_change_needle_bearing_grease', 'string': 'CHANGE: Needle Bearing Grease(Replace Snap ring)'},
+            ]"/>
+        </function>
+
+        <!-- ========================================== -->
+        <!-- Template 6: Isuzu - 2 Year Service -->
+        <!-- ========================================== -->
+        <record id="template_isuzu_2yr" model="worksheet.template">
+            <field name="name">Isuzu - 2 Year Service</field>
+            <field name="res_model">maintenance.request</field>
+        </record>
+
+        <function model="worksheet.template" name="_preload_maintenance_templates">
+            <value eval="'maintenance_worksheet_templates.template_isuzu_2yr'"/>
+            <value eval="[
+                {'name': 'x_change_brake_fluid_isuzu', 'string': 'CHANGE: Brake Fluid'},
+                {'name': 'x_change_clutch_fluid_isuzu', 'string': 'CHANGE: Clutch Fluid'},
+                {'name': 'x_change_remote_key_battery', 'string': 'CHANGE: Remote Key Battery'},
+            ]"/>
+        </function>
+
+        <!-- ========================================== -->
+        <!-- Template 7: Isuzu - 5 Year Service -->
+        <!-- ========================================== -->
+        <record id="template_isuzu_5yr" model="worksheet.template">
+            <field name="name">Isuzu - 5 Year Service</field>
+            <field name="res_model">maintenance.request</field>
+        </record>
+
+        <function model="worksheet.template" name="_preload_maintenance_templates">
+            <value eval="'maintenance_worksheet_templates.template_isuzu_5yr'"/>
+            <value eval="[
+                {'name': 'x_change_coolant_concentration', 'string': 'CHANGE: Coolant Concentration (50% Glycol)'},
+            ]"/>
+        </function>
+
+    </data>
+</odoo>

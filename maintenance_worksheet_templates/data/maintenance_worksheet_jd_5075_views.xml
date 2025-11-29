@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <!-- ========================================== -->
+        <!-- Template 1: JD 5075 - 250 Hour Service -->
+        <!-- ========================================== -->
+        <record id="view_jd_5075_250h" model="ir.ui.view">
+            <field name="name">jd.5075.250h.form</field>
+            <field name="model" model="ir.model" eval="obj().env.ref('maintenance_worksheet_templates.template_jd_5075_250h').model_id.model"/>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group string="INSPECT">
+                                <field name="x_inspect_primary_air_filter_5075"/>
+                                <field name="x_inspect_battery_5075"/>
+                                <field name="x_inspect_fan_belt_5075"/>
+                                <field name="x_inspect_neutral_start_5075"/>
+                                <field name="x_inspect_clutch_pedal_5075"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="x_comments"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- ========================================== -->
+        <!-- Template 2: JD 5075 - 500 Hour Service -->
+        <!-- ========================================== -->
+        <record id="view_jd_5075_500h" model="ir.ui.view">
+            <field name="name">jd.5075.500h.form</field>
+            <field name="model" model="ir.model" eval="obj().env.ref('maintenance_worksheet_templates.template_jd_5075_500h').model_id.model"/>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group string="CHANGE">
+                                <field name="x_change_engine_oil_5075"/>
+                                <field name="x_change_oil_filter_5075"/>
+                                <field name="x_change_trans_hyd_filter_5075"/>
+                                <field name="x_change_primary_air_filter_5075"/>
+                                <field name="x_change_fuel_filter_5075"/>
+                            </group>
+                            <group string="INSPECT">
+                                <field name="x_inspect_hoses_clamps_5075"/>
+                                <field name="x_inspect_cooling_system_5075"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="x_comments"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- ========================================== -->
+        <!-- Template 3: JD 5075 - 750 Hour Service -->
+        <!-- ========================================== -->
+        <record id="view_jd_5075_750h" model="ir.ui.view">
+            <field name="name">jd.5075.750h.form</field>
+            <field name="model" model="ir.model" eval="obj().env.ref('maintenance_worksheet_templates.template_jd_5075_750h').model_id.model"/>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group string="CHANGE">
+                                <field name="x_change_mfwd_oil_5075"/>
+                                <field name="x_change_repack_bearings_5075"/>
+                                <field name="x_change_trans_hyd_oil_5075"/>
+                                <field name="x_change_sec_air_filter_5075"/>
+                                <field name="x_change_flush_cooling_5075"/>
+                            </group>
+                            <group string="CLEAN">
+                                <field name="x_clean_crankcase_vent_5075"/>
+                                <field name="x_clean_trans_hyd_screen_5075"/>
+                            </group>
+                            <group string="GREASE">
+                                <field name="x_grease_rear_axle_bearings_5075"/>
+                            </group>
+                            <group string="INSPECT">
+                                <field name="x_inspect_idle_speeds_5075"/>
+                                <field name="x_inspect_front_axle_pivot_5075"/>
+                                <field name="x_inspect_valve_clearance_5075"/>
+                                <field name="x_inspect_fuel_injectors_5075"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="x_comments"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>

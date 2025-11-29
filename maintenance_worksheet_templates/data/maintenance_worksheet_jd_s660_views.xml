@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <!-- ========================================== -->
+        <!-- Template 1: JD S660 - 250 Hour Service -->
+        <!-- ========================================== -->
+        <record id="view_jd_s660_250h" model="ir.ui.view">
+            <field name="name">jd.s660.250h.form</field>
+            <field name="model" model="ir.model" eval="obj().env.ref('maintenance_worksheet_templates.template_jd_s660_250h').model_id.model"/>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group string="INSPECT">
+                                <field name="x_inspect_engine_air_filter_bag"/>
+                                <field name="x_inspect_straw_chopper_bearing"/>
+                                <field name="x_inspect_feeder_house_chain"/>
+                                <field name="x_inspect_wheel_hub_bolts"/>
+                                <field name="x_inspect_cleaning_fan_plugs"/>
+                                <field name="x_inspect_battery_lights_s660"/>
+                                <field name="x_inspect_fan_belts_s660"/>
+                                <field name="x_inspect_brakes_s660"/>
+                                <field name="x_inspect_loading_auger_oil"/>
+                                <field name="x_inspect_air_intake_s660"/>
+                                <field name="x_inspect_brake_fluid_s660"/>
+                                <field name="x_inspect_primary_countershaft_oil"/>
+                                <field name="x_inspect_separator_drive_oil"/>
+                                <field name="x_inspect_final_drive_oil"/>
+                                <field name="x_inspect_trans_oil_s660"/>
+                                <field name="x_inspect_fire_extinguishers"/>
+                                <field name="x_inspect_header_ground_straps"/>
+                                <field name="x_inspect_feeder_top_sprockets"/>
+                                <field name="x_inspect_header_trailer"/>
+                            </group>
+                            <group string="TEST">
+                                <field name="x_test_coolant_s660"/>
+                            </group>
+                            <group string="CLEAN">
+                                <field name="x_clean_recirc_filter_s660"/>
+                                <field name="x_clean_sieves"/>
+                                <field name="x_clean_fuel_precleaner"/>
+                            </group>
+                            <group string="GREASE">
+                                <field name="x_grease_cleaning_fan_bearing"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="x_comments"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- ========================================== -->
+        <!-- Template 2: JD S660 - 500 Hour Service -->
+        <!-- ========================================== -->
+        <record id="view_jd_s660_500h" model="ir.ui.view">
+            <field name="name">jd.s660.500h.form</field>
+            <field name="model" model="ir.model" eval="obj().env.ref('maintenance_worksheet_templates.template_jd_s660_500h').model_id.model"/>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group string="CHANGE">
+                                <field name="x_change_engine_oil_s660"/>
+                                <field name="x_change_hyd_filter_s660"/>
+                                <field name="x_change_hydro_charge_filter"/>
+                                <field name="x_change_engine_gear_filter"/>
+                                <field name="x_change_fuel_tank_breather"/>
+                                <field name="x_change_fuel_filters_s660"/>
+                                <field name="x_change_primary_air_filter"/>
+                                <field name="x_change_recirc_filter"/>
+                            </group>
+                            <group string="CLEAN">
+                                <field name="x_clean_moisture_sensor"/>
+                            </group>
+                            <group string="GREASE">
+                                <field name="x_grease_500h_points"/>
+                            </group>
+                            <group string="CHANGE OIL">
+                                <field name="x_change_oil_reel_speed"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="x_comments"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- ========================================== -->
+        <!-- Template 3: JD S660 - 750 Hour Service -->
+        <!-- ========================================== -->
+        <record id="view_jd_s660_750h" model="ir.ui.view">
+            <field name="name">jd.s660.750h.form</field>
+            <field name="model" model="ir.model" eval="obj().env.ref('maintenance_worksheet_templates.template_jd_s660_750h').model_id.model"/>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group string="CHANGE">
+                                <field name="x_change_cab_air_filter_s660"/>
+                                <field name="x_change_safety_air_filter"/>
+                            </group>
+                            <group string="CHANGE FLUIDS">
+                                <field name="x_change_feeder_reverser_oil"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="x_comments"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- ========================================== -->
+        <!-- Template 4: JD S660 - 1000 Hour Service -->
+        <!-- ========================================== -->
+        <record id="view_jd_s660_1000h" model="ir.ui.view">
+            <field name="name">jd.s660.1000h.form</field>
+            <field name="model" model="ir.model" eval="obj().env.ref('maintenance_worksheet_templates.template_jd_s660_1000h').model_id.model"/>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group string="ADJUST">
+                                <field name="x_adjust_straw_chopper_knives"/>
+                            </group>
+                            <group string="CHANGE FLUIDS">
+                                <field name="x_change_primary_countershaft_oil"/>
+                                <field name="x_change_separator_drive_oil"/>
+                                <field name="x_change_trans_oil_1000h"/>
+                                <field name="x_change_main_engine_gear_oil"/>
+                                <field name="x_change_hydro_oil_s660"/>
+                                <field name="x_change_final_drive_oil"/>
+                            </group>
+                            <group string="CHANGE">
+                                <field name="x_change_sec_air_filter_s660"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="x_comments"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- ========================================== -->
+        <!-- Template 5: JD S660 - 2000 Hour Service -->
+        <!-- ========================================== -->
+        <record id="view_jd_s660_2000h" model="ir.ui.view">
+            <field name="name">jd.s660.2000h.form</field>
+            <field name="model" model="ir.model" eval="obj().env.ref('maintenance_worksheet_templates.template_jd_s660_2000h').model_id.model"/>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group string="CHANGE">
+                                <field name="x_change_coolant_s660"/>
+                                <field name="x_change_chopper_knives"/>
+                                <field name="x_change_header_ground_straps"/>
+                            </group>
+                            <group string="ADJUST">
+                                <field name="x_adjust_valve_backlash"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="x_comments"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- ========================================== -->
+        <!-- Template 6: JD S660 - 4500 Hour Service -->
+        <!-- ========================================== -->
+        <record id="view_jd_s660_4500h" model="ir.ui.view">
+            <field name="name">jd.s660.4500h.form</field>
+            <field name="model" model="ir.model" eval="obj().env.ref('maintenance_worksheet_templates.template_jd_s660_4500h').model_id.model"/>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group string="CHANGE">
+                                <field name="x_change_crank_damper_s660"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="x_comments"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>
