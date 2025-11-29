@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_fleet_work_order_part_tree" model="ir.ui.view">
+        <field name="name">fleet.work.order.part.tree</field>
+        <field name="model">fleet.work.order.part</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="product_id"/>
+                <field name="quantity"/>
+                <field name="price_unit"/>
+                <field name="subtotal"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_fleet_work_order_labor_tree" model="ir.ui.view">
+        <field name="name">fleet.work.order.labor.tree</field>
+        <field name="model">fleet.work.order.labor</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="employee_id"/>
+                <field name="date"/>
+                <field name="hours" widget="float_time"/>
+                <field name="description"/>
+            </list>
+        </field>
+    </record>
+</odoo>

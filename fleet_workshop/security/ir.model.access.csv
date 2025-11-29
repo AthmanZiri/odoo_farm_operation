@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_fleet_work_order_manager,fleet.work.order.manager,model_fleet_work_order,fleet.fleet_group_manager,1,1,1,1
+access_fleet_work_order_user,fleet.work.order.user,model_fleet_work_order,fleet.fleet_group_user,1,1,1,0
+access_fleet_work_order_part_manager,fleet.work.order.part.manager,model_fleet_work_order_part,fleet.fleet_group_manager,1,1,1,1
+access_fleet_work_order_part_user,fleet.work.order.part.user,model_fleet_work_order_part,fleet.fleet_group_user,1,1,1,0
+access_fleet_work_order_labor_manager,fleet.work.order.labor.manager,model_fleet_work_order_labor,fleet.fleet_group_manager,1,1,1,1
+access_fleet_work_order_labor_user,fleet.work.order.labor.user,model_fleet_work_order_labor,fleet.fleet_group_user,1,1,1,0

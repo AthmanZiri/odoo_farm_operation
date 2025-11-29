@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_fleet_work_order_form" model="ir.ui.view">
+        <field name="name">fleet.work.order.form</field>
+        <field name="model">fleet.work.order</field>
+        <field name="arch" type="xml">
+            <form string="Job Card">
+                <header>
+                    <button name="action_diagnosis" string="Start Diagnosis" type="object" invisible="state != 'draft'" class="oe_highlight"/>
+                    <button name="action_requisition" string="Request Parts" type="object" invisible="state != 'diagnosis'" class="oe_highlight"/>
+                    <button name="action_request_parts" string="Create Picking" type="object" invisible="state != 'requisition'" class="oe_highlight"/>
+                    <button name="action_start_work" string="Start Work" type="object" invisible="state != 'ready'" class="oe_highlight"/>
+                    <button name="action_close" string="Close Job" type="object" invisible="state != 'in_progress'" class="oe_highlight"/>
+                    <button name="action_cancel" string="Cancel" type="object" invisible="state in ['done', 'cancel']"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,diagnosis,requisition,ready,in_progress,done"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_pickings" type="object" class="oe_stat_button" icon="fa-truck" invisible="picking_count == 0">
+                            <field name="picking_count" widget="statinfo" string="Pickings"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="vehicle_id"/>
+                            <field name="driver_id"/>
+                            <field name="odometer"/>
+                            <field name="odometer_unit"/>
+                            <field name="warehouse_id"/>
+                        </group>
+                        <group>
+                            <field name="date_open"/>
+                            <field name="date_close"/>
+                            <field name="type"/>
+                            <field name="mechanic_ids" widget="many2many_tags"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Parts" name="parts">
+                            <field name="parts_ids"/>
+                        </page>
+                        <page string="Labor" name="labor">
+                            <field name="labor_ids"/>
+                        </page>
+                        <page string="Diagnosis" name="diagnosis">
+                            <field name="description" placeholder="Description of Issue..."/>
+                            <field name="diagnosis_notes" placeholder="Technician Notes..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_fleet_work_order_tree" model="ir.ui.view">
+        <field name="name">fleet.work.order.tree</field>
+        <field name="model">fleet.work.order</field>
+        <field name="arch" type="xml">
+            <list string="Job Cards">
+                <field name="name"/>
+                <field name="date_open"/>
+                <field name="vehicle_id"/>
+                <field name="type"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_fleet_work_order" model="ir.actions.act_window">
+        <field name="name">Job Cards</field>
+        <field name="res_model">fleet.work.order</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            Create a new Job Card
+          </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_fleet_work_order"
+              name="Job Cards"
+              parent="fleet.menu_fleet_reporting"
+              action="action_fleet_work_order"
+              sequence="1"/>
+</odoo>
