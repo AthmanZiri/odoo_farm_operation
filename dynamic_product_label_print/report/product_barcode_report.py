@@ -46,7 +46,10 @@ def _prepare_datas(env, data):
         quantity_by_product[product].append((product.barcode, qnty, product.name,
                                              product.categ_id.name,
                                              product.type,
-                                             product.list_price))
+                                             product.list_price,
+                                             product.location_id.name if product.location_id else '',
+                                             product.x_studio_sku or '',
+                                             product.default_code or ''))
         total += qnty
     if data.get('custom_barcodes'):
         # We expect custom barcodes format as: {product: [(barcode, qty_of_barcode)]}
@@ -55,6 +58,7 @@ def _prepare_datas(env, data):
             total += sum(qty for _, qty in barcodes_qtys)
     return {
         'quantity': quantity_by_product,
+        'dynamic_field_ids': data.get('dynamic_field_ids'),
     }
 
 

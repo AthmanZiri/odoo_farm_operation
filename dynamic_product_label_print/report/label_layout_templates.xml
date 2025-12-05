@@ -42,6 +42,15 @@
                         <t t-if="value[0].get('list_price')">
                             <t t-esc="product[5]"/>
                         </t>
+                        <t t-if="value[0].get('location_id')">
+                            <t t-esc="product[6]"/>
+                        </t>
+                        <t t-if="value[0].get('x_studio_sku')">
+                            <t t-esc="product[7]"/>
+                        </t>
+                        <t t-if="value[0].get('default_code')">
+                            <t t-esc="product[8]"/>
+                        </t>
                     </div>
                 </t>
                 <t t-if="barcode">
