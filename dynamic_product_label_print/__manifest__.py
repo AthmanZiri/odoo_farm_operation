@@ -21,7 +21,7 @@
 #############################################################################
 {
     'name': 'Dynamic Product Label Print',
-    'version': '18.0.1.0.0',
+    'version': '19.0.1.0.0',
     'category': 'Warehouse',
     'summary': "Print Label Dynamically for multiple products",
     'description': "Dynamically print the barcode and product fields of multiple products",
