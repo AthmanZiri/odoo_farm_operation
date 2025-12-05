@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Inherit Maintenance Request Form View -->
+    <record id="hr_equipment_request_view_form_inherit" model="ir.ui.view">
+        <field name="name">maintenance.request.form.inherit</field>
+        <field name="model">maintenance.request</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_request_view_form"/>
+        <field name="arch" type="xml">
+            <!-- Add smart button for repair orders -->
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_repair_orders" type="object" class="oe_stat_button" icon="fa-wrench" invisible="repair_count == 0">
+                    <field name="repair_count" widget="statinfo" string="Repairs"/>
+                </button>
+            </xpath>
+            
+            <!-- Add Create Repair Order button in header -->
+            <xpath expr="//header" position="inside">
+                <button name="action_create_repair_order" type="object" string="Create Repair Order" class="btn-primary" invisible="not vehicle_id or stage_id.done"/>
+            </xpath>
+            
+            <!-- Add vehicle field display -->
+            <xpath expr="//field[@name='equipment_id']" position="after">
+                <field name="vehicle_id" readonly="1"/>
+                <field name="fleet_service_id" readonly="1" invisible="not fleet_service_id"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

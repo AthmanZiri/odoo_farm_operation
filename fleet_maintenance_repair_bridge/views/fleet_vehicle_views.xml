@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Inherit Fleet Vehicle Form View -->
+    <record id="fleet_vehicle_view_form_inherit" model="ir.ui.view">
+        <field name="name">fleet.vehicle.form.inherit</field>
+        <field name="model">fleet.vehicle</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_view_form"/>
+        <field name="arch" type="xml">
+            <!-- Add smart buttons -->
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_equipment" type="object" class="oe_stat_button" icon="fa-wrench" invisible="not equipment_id">
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_text">Equipment</span>
+                    </div>
+                </button>
+                <button name="action_view_maintenance" type="object" class="oe_stat_button" icon="fa-tasks" invisible="not equipment_id">
+                    <field name="maintenance_count" widget="statinfo" string="Maintenance"/>
+                </button>
+            </xpath>
+            
+            <!-- Add fields after driver_id -->
+            <xpath expr="//field[@name='driver_id']" position="after">
+                <field name="equipment_id" readonly="1"/>
+                <field name="product_id" options="{'no_create': True}"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

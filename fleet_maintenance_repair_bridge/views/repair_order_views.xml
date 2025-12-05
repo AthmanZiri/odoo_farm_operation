@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Inherit Repair Order Form View -->
+    <record id="view_repair_order_form_inherit" model="ir.ui.view">
+        <field name="name">repair.order.form.inherit</field>
+        <field name="model">repair.order</field>
+        <field name="inherit_id" ref="repair.view_repair_order_form"/>
+        <field name="arch" type="xml">
+            <!-- Add maintenance_request_id field -->
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="maintenance_request_id" readonly="1"/>
+                <field name="fleet_service_id" readonly="1" invisible="not fleet_service_id"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

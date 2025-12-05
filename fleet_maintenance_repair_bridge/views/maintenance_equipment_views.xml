@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Inherit Maintenance Equipment Form View -->
+    <record id="hr_equipment_view_form_inherit" model="ir.ui.view">
+        <field name="name">maintenance.equipment.form.inherit</field>
+        <field name="model">maintenance.equipment</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_view_form"/>
+        <field name="arch" type="xml">
+            <!-- Add vehicle_id field -->
+            <xpath expr="//field[@name='company_id']" position="after">
+                <field name="vehicle_id" readonly="1"/>
+                <field name="vehicle_odometer_value" invisible="not vehicle_id"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

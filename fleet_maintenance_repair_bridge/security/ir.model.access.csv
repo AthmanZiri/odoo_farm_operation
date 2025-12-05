@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_fleet_vehicle_user,fleet.vehicle.user,fleet.model_fleet_vehicle,base.group_user,1,0,0,0
+access_maintenance_equipment_user,maintenance.equipment.user,maintenance.model_maintenance_equipment,base.group_user,1,0,0,0
+access_maintenance_request_user,maintenance.request.user,maintenance.model_maintenance_request,base.group_user,1,0,0,0
+access_repair_order_user,repair.order.user,repair.model_repair_order,base.group_user,1,0,0,0
