@@ -33,7 +33,7 @@ class DynamicFields(models.Model):
             [('model', '=', 'product.product')])
         return [('model_id', '=', model_id.id), ('state', '=', 'base'), (
             'name', '=',
-            ['name', 'categ_id', 'type', 'list_price'])]
+            ['name', 'categ_id', 'type', 'list_price', 'location_id', 'x_studio_sku'])]
 
     size = fields.Char(string='Font Size', help="Set the size of the field")
     color = fields.Char(string='Font Color', help="Set the colour of the field")
