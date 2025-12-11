@@ -6,7 +6,7 @@
         <field name="model">product.template</field>
         <field name="inherit_id" ref="product.product_template_tree_view"/>
         <field name="arch" type="xml">
-            <xpath expr="//header" position="inside">
+            <xpath expr="//list" position="inside">
                 <button class="btn-primary" name="action_apply_template_tags"
                         type="object" string="Apply Product Tag"/>
             </xpath>
