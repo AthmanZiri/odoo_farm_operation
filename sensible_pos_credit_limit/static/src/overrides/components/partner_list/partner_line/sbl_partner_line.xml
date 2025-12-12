@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="sensible_pos_credit_limit.PartnerLine" t-inherit="point_of_sale.PartnerLine" t-inherit-mode="extension">
+        <!-- Mobile view: Add credit after email div -->
+        <xpath expr="//t[@t-if='ui.isSmall']//div[contains(@class, 'partner-line-email')]/div[contains(@class, 'email-field')]" position="after">
+            <div class="partner-line-credit-limit mb-1">
+                <i class="fa fa-fw fa-credit-card me-2"/><t t-esc="this.partnerAvailableCredit"/>
+            </div>
+        </xpath>
+
+        <!-- Desktop view: Add credit as table cell after email column -->
+        <xpath expr="//t[@t-else='']//td[contains(@class, 'partner-line-email')]" position="after">
+            <td class="partner-line-credit-limit">
+                <t t-esc="this.partnerAvailableCredit"/>
+            </td>
+        </xpath>
+    </t>
+</templates>
