@@ -41,3 +41,19 @@ class FleetVehicleLogServices(models.Model):
             'domain': [('fleet_service_id', '=', self.id)],
             'context': {'default_fleet_service_id': self.id},
         }
+
+    def update_service_cost(self):
+        for service in self:
+            total_cost = 0.0
+            for picking in service.picking_ids:
+                if picking.state == 'done':
+                    for move in picking.move_ids:
+                        # Use effective quantity and standard price (cost)
+                        qty = move.quantity if hasattr(move, 'quantity') else move.quantity_done
+                        # Fallback for older versions if quantity_done is used, though 'quantity' is standard in 17+
+                        if not qty and hasattr(move, 'quantity_done'):
+                            qty = move.quantity_done
+                            
+                        total_cost += qty * move.product_id.standard_price
+            service.amount = total_cost
+
