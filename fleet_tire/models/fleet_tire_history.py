@@ -14,6 +14,7 @@ class FleetVehicleTireHistory(models.Model):
         ('inspection', 'Inspection'),
         ('repair', 'Repair'),
         ('retread', 'Retread'),
+        ('return_stock', 'Returned to Stock'),
         ('disposal', 'Disposal')
     ], string='Operation Type', required=True)
 

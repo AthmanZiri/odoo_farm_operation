@@ -20,15 +20,14 @@
                             <field name="name"/>
                             <field name="position"/>
                             <field name="current_tread_depth"/>
-                             <templates>
-                                <t t-name="kanban-box">
-                                    <div class="oe_kanban_global_click">
-                                        <div class="o_kanban_image">
-                                            <!-- Optionally add tire image if field exists -->
+                            <templates>
+                                <t t-name="card">
+                                    <div class="d-flex flex-column">
+                                        <div class="fw-bold">
+                                            <field name="position"/>: <field name="name"/>
                                         </div>
-                                        <div class="oe_kanban_details">
-                                            <strong><field name="position"/></strong>: <field name="name"/>
-                                            <div>Tread: <field name="current_tread_depth"/> mm</div>
+                                        <div class="text-muted small">
+                                            Tread: <field name="current_tread_depth"/> mm
                                         </div>
                                     </div>
                                 </t>

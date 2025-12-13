@@ -8,10 +8,10 @@ class FleetVehicleTire(models.Model):
     name = fields.Char(string='Serial Number', required=True, copy=False, help="Unique Serial Number or Internal ID")
     rfid_tag = fields.Char(string='RFID Tag', copy=False)
     
-    product_id = fields.Many2one('product.product', string='Tire Product', required=True, domain=[('detailed_type', '=', 'product')])
+    product_id = fields.Many2one('product.product', string='Tire Product', required=True, domain=[('type', '=', 'product')])
     lot_id = fields.Many2one('stock.lot', string='Stock Lot/Serial', domain="[('product_id', '=', product_id)]", copy=False)
 
-    brand = fields.Char(related='product_id.brand_id.name', string='Brand', store=True, readonly=False) # Assuming generic or product brand
+    brand = fields.Char(string='Brand', help="Tire Brand/Manufacturer")
     # If product doesn't have brand, we might need a custom field or rely on product name. 
     # Let's add explicit fields for now to allow standalone usage if product is generic.
     
@@ -57,5 +57,6 @@ class FleetVehicleTire(models.Model):
         # Sync with Stock Lot if needed
         return super().create(vals)
     
-    def _read_group_stage_ids(self, stages, domain, order):
+    @api.model
+    def _read_group_stage_ids(self, stages, domain, order=None):
         return [key for key, val in self._fields['state'].selection]

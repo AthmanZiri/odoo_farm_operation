@@ -16,7 +16,7 @@ class FleetVehicle(models.Model):
             'name': 'Tires',
             'type': 'ir.actions.act_window',
             'res_model': 'fleet.vehicle.tire',
-            'view_mode': 'kanban,tree,form',
+            'view_mode': 'kanban,list,form',
             'domain': [('vehicle_id', '=', self.id)],
             'context': {'default_vehicle_id': self.id},
         }
