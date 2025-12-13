@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="fleet_vehicle_log_services_view_form_inherit_requisition" model="ir.ui.view">
+        <field name="name">fleet.vehicle.log.services.form.inherit.requisition</field>
+        <field name="model">fleet.vehicle.log.services</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_log_services_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_create_requisition" string="Request Material" type="object" class="btn-primary"/>
+            </xpath>
+            <div name="button_box" position="inside">
+                <button name="action_view_pickings" type="object" class="oe_stat_button" icon="fa-truck" invisible="picking_count == 0">
+                    <field name="picking_count" widget="statinfo" string="Requisitions"/>
+                </button>
+            </div>
+        </field>
+    </record>
+</odoo>
