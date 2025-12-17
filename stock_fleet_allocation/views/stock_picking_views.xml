@@ -10,6 +10,7 @@
                 <field name="fleet_vehicle_id" invisible="allocation_type != 'fleet'" required="allocation_type == 'fleet'"/>
                 <field name="equipment_id" invisible="allocation_type != 'equipment'" required="allocation_type == 'equipment'"/>
                 <field name="fleet_service_type_id" invisible="not allocation_type" required="allocation_type"/>
+                <field name="ordered_by_id" invisible="not allocation_type"/>
             </xpath>
             <xpath expr="//field[@name='picking_type_id']" position="attributes">
                 <attribute name="domain">[('code', '=', 'internal')]</attribute>

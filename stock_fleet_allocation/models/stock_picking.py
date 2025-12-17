@@ -11,6 +11,7 @@ class StockPicking(models.Model):
     fleet_vehicle_id = fields.Many2one('fleet.vehicle', string='Vehicle')
     equipment_id = fields.Many2one('maintenance.equipment', string='Equipment')
     fleet_service_type_id = fields.Many2one('fleet.service.type', string='Service Type', help="The type of service to log in Fleet.")
+    ordered_by_id = fields.Many2one('res.partner', string='Ordered By')
 
     def _action_done(self):
         res = super(StockPicking, self)._action_done()
