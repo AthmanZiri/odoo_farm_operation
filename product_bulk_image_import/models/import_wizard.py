@@ -2,6 +2,7 @@ import base64
 import io
 import zipfile
 import logging
+from PIL import Image
 from odoo import models, fields, _
 from odoo.exceptions import UserError
 
@@ -13,6 +14,47 @@ class ProductBulkImageImport(models.TransientModel):
 
     zip_file = fields.Binary(string='ZIP File', required=True, attachment=False)
     zip_filename = fields.Char(string='Filename')
+
+    def _resize_image(self, image_data, target_size_kb=200):
+        """
+        Resizes and compresses image data to be under target_size_kb.
+        """
+        if not image_data or len(image_data) <= target_size_kb * 1024:
+            return image_data
+
+        try:
+            img = Image.open(io.BytesIO(image_data))
+            # Convert RGBA to RGB if saving as JPEG
+            if img.mode in ('RGBA', 'P'):
+                img = img.convert('RGB')
+            
+            img_format = 'JPEG' # Force JPEG for better compression/size control
+            
+            # Iterative quality reduction
+            quality = 95
+            output = io.BytesIO()
+            img.save(output, format=img_format, quality=quality, optimize=True)
+            
+            while output.tell() > target_size_kb * 1024 and quality > 30:
+                quality -= 10
+                output = io.BytesIO()
+                img.save(output, format=img_format, quality=quality, optimize=True)
+
+            # If still too large, reduce dimensions
+            while output.tell() > target_size_kb * 1024:
+                width, height = img.size
+                if width <= 400 or height <= 400: # Don't go too small
+                    break
+                new_width = int(width * 0.8)
+                new_height = int(height * 0.8)
+                img = img.resize((new_width, new_height), Image.Resampling.LANCZOS)
+                output = io.BytesIO()
+                img.save(output, format=img_format, quality=quality, optimize=True)
+
+            return output.getvalue()
+        except Exception as e:
+            _logger.error("Error resizing image: %s", str(e))
+            return image_data
 
     def action_import_images(self):
         self.ensure_one()
@@ -41,6 +83,9 @@ class ProductBulkImageImport(models.TransientModel):
 
                 # Read image data
                 image_data = zf.read(file_name)
+                
+                # Resize image to 200KB
+                image_data = self._resize_image(image_data, target_size_kb=200)
                 
                 # Extract filename without extension and path
                 # e.g., 'folder/FURN001.jpg' -> 'FURN001'
