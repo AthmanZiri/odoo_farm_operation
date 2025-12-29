@@ -8,7 +8,7 @@
         Upon validation, it automatically creates a Fleet Service log.
     """,
     'author': 'Athman Ziri',
-    'depends': ['stock', 'fleet', 'maintenance', 'fleet_material_requisition'],
+    'depends': ['stock', 'fleet', 'maintenance', 'fleet_material_requisition', 'hr'],
     'data': [
         'views/stock_picking_views.xml',
     ],
