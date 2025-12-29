@@ -1,7 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_fleet_vehicle_tire,fleet.vehicle.tire,model_fleet_vehicle_tire,fleet.fleet_group_user,1,1,1,1
-access_fleet_vehicle_tire_manager,fleet.vehicle.tire,model_fleet_vehicle_tire,fleet.fleet_group_manager,1,1,1,1
-access_fleet_vehicle_tire_history,fleet.vehicle.tire.history,model_fleet_vehicle_tire_history,fleet.fleet_group_user,1,1,1,1
-access_fleet_vehicle_tire_history_manager,fleet.vehicle.tire.history,model_fleet_vehicle_tire_history,fleet.fleet_group_manager,1,1,1,1
-access_fleet_tire_operation_wizard,fleet.tire.operation.wizard,model_fleet_tire_operation_wizard,fleet.fleet_group_user,1,1,1,1
-access_fleet_tire_operation_wizard_manager,fleet.tire.operation.wizard,model_fleet_tire_operation_wizard,fleet.fleet_group_manager,1,1,1,1
