@@ -5,10 +5,11 @@
         <field name="inherit_id" ref="stock.view_production_lot_form"/>
         <field name="arch" type="xml">
             <xpath expr="//group[@name='main_group']" position="after">
-                <group name="tyre_info" string="Tyre Information" invisible="not tyre_brand and not rfid_tag">
+                <group name="tyre_info" string="Tyre Information" invisible="not rfid_tag">
                     <group>
                         <field name="rfid_tag"/>
-                        <field name="tyre_brand" readonly="1"/>
+                        <field name="tyre_brand_id" readonly="1"/>
+                        <field name="tyre_brand" invisible="1"/>
                         <field name="tyre_dimensions" readonly="1"/>
                     </group>
                     <group>

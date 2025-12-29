@@ -4,7 +4,7 @@ import json
 
 class FleettyreController(http.Controller):
 
-    @http.route('/tyre/gate_scan', type='json', auth='public', methods=['POST'], csrf=False)
+    @http.route('/tyre/gate_scan', type='jsonrpc', auth='public', methods=['POST'], csrf=False)
     def gate_scan(self, **post):
         """
         Receives JSON payload:
@@ -30,6 +30,7 @@ class FleettyreController(http.Controller):
         vals = {
             'tyre_id': tyre.id,
             'type': 'gate_check',
+            'gate_scan_type': data.get('gate_scan_type'), # 'check_in' or 'check_out'
             'date': fields.Date.today(),
             'odometer': float(odometer) if odometer else tyre.history_ids and tyre.history_ids[0].odometer or 0.0,
             'note': f"Gate Scan at {data.get('gate_id', 'Unknown Gate')}",

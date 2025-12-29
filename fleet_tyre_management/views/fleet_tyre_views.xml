@@ -4,13 +4,13 @@
         <field name="name">fleet.vehicle.tyre.tree</field>
         <field name="model">fleet.vehicle.tyre</field>
         <field name="arch" type="xml">
-            <list string="tyres">
+            <list string="Tyres">
                 <field name="name"/>
                 <field name="rfid_tag"/>
                 <field name="product_id"/>
                 <field name="dimensions"/>
                 <field name="vehicle_id"/>
-                <field name="position"/>
+                <field name="position_id"/>
                 <field name="state" widget="badge" decoration-success="state == 'available'" decoration-info="state == 'mounted'"/>
             </list>
         </field>
@@ -21,7 +21,7 @@
         <field name="name">fleet.vehicle.tyre.form</field>
         <field name="model">fleet.vehicle.tyre</field>
         <field name="arch" type="xml">
-            <form string="tyre">
+            <form string="Tyre">
                 <header>
                     <button name="%(fleet_tyre_management.action_fleet_tyre_management_operation_wizard)d" string="Update Status" type="action" class="oe_highlight"/>
                     <field name="state" widget="statusbar" options="{'clickable': '0'}"/>
@@ -38,17 +38,20 @@
                     <group>
                         <group string="Specs">
                             <field name="product_id"/>
-                            <field name="brand"/>
+                            <field name="brand_id"/>
+                            <field name="brand" invisible="1"/>
                             <field name="dimensions"/>
                             <field name="tyre_type"/>
                             <field name="initial_tread_depth"/>
+                            <field name="manufacture_date"/>
+                            <field name="expiry_date"/>
                             <field name="gps_tracker_info"/>
                         </group>
                         <group string="Tracking">
                             <field name="lot_id"/>
                             <field name="vehicle_id"/>
                             <field name="location_id" invisible="state == 'mounted'"/>
-                            <field name="position"/>
+                            <field name="position_id"/>
                             <field name="current_tread_depth"/>
                         </group>
                     </group>
@@ -67,11 +70,6 @@
                         </page>
                     </notebook>
                 </sheet>
-                <!-- <div class="oe_chatter">
-                    <field name="message_follower_ids" widget="mail_followers"/>
-                    <field name="activity_ids" widget="mail_activity"/>
-                    <field name="message_ids" widget="mail_thread"/>
-                </div> -->
             </form>
         </field>
     </record>
@@ -106,29 +104,9 @@
         </field>
     </record>
 
-    <!-- Search View -->
-    <!-- <record id="view_fleet_vehicle_tyre_search" model="ir.ui.view">
-        <field name="name">fleet.vehicle.tyre.search</field>
-        <field name="model">fleet.vehicle.tyre</field>
-        <field name="arch" type="xml">
-            <search string="Search tyres">
-                <field name="name"/>
-                <field name="rfid_tag"/>
-                <field name="product_id"/>
-                <field name="vehicle_id"/>
-                <filter string="Mounted" name="mounted" domain="[('state', '=', 'mounted')]"/>
-                <filter string="In Stock" name="available" domain="[('state', '=', 'available')]"/>
-                <group expand="0" string="Group By">
-                    <filter string="Status" name="groupby_state" context="{'group_by': 'state'}"/>
-                    <filter string="Vehicle" name="groupby_vehicle" context="{'group_by': 'vehicle_id'}"/>
-                </group>
-            </search>
-        </field>
-    </record> -->
-
-    <!-- Action -->
+    <!-- Main Action -->
     <record id="action_fleet_vehicle_tyre" model="ir.actions.act_window">
-        <field name="name">tyres</field>
+        <field name="name">Tyre Management</field>
         <field name="res_model">fleet.vehicle.tyre</field>
         <field name="view_mode">kanban,list,form</field>
         <field name="help" type="html">
@@ -138,15 +116,200 @@
         </field>
     </record>
 
-    <!-- Menu -->
+    <!-- Tyre Receipts (Purchase Orders) -->
+    <record id="action_tyre_purchase_order" model="ir.actions.act_window">
+        <field name="name">Tyre Receipts</field>
+        <field name="res_model">purchase.order</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="domain">[('order_line.product_id.is_tyre', '=', True)]</field>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            Create and track tyre purchase orders.
+          </p>
+        </field>
+    </record>
+
+    <!-- Tyre Moves History View -->
+    <record id="view_fleet_vehicle_tyre_history_tree" model="ir.ui.view">
+        <field name="name">fleet.vehicle.tyre.history.list</field>
+        <field name="model">fleet.vehicle.tyre.history</field>
+        <field name="arch" type="xml">
+            <list string="Tyre History" decoration-muted="type in ('dismount', 'return_stock')" decoration-info="type == 'mount'">
+                <field name="date"/>
+                <field name="tyre_id"/>
+                <field name="type"/>
+                <field name="vehicle_id"/>
+                <field name="odometer"/>
+                <field name="tread_depth"/>
+                <field name="cost" optional="hide"/>
+                <field name="vendor_id" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Tyre Moves History Action -->
+    <record id="action_tyre_history" model="ir.actions.act_window">
+        <field name="name">Tyre Moves History</field>
+        <field name="res_model">fleet.vehicle.tyre.history</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            View the movement and operation history of all tyres.
+          </p>
+        </field>
+    </record>
+
+    <!-- Tyre Lots / Serial Numbers -->
+    <record id="action_tyre_stock_lot" model="ir.actions.act_window">
+        <field name="name">Tyre Lots / Serial Numbers</field>
+        <field name="res_model">stock.lot</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('product_id.is_tyre', '=', True)]</field>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            Manage inventory lots for tyres.
+          </p>
+        </field>
+    </record>
+
+    <!-- Tyre Products -->
+    <record id="action_tyre_product_template" model="ir.actions.act_window">
+        <field name="name">Tyre Products</field>
+        <field name="res_model">product.template</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="domain">[('is_tyre', '=', True)]</field>
+        <field name="context">{'default_is_tyre': True}</field>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            Manage the catalog of tyre products.
+          </p>
+        </field>
+    </record>
+
+    <!-- Tyre Warehouse -->
+    <record id="action_tyre_warehouse" model="ir.actions.act_window">
+        <field name="name">Tyre Warehouse</field>
+        <field name="res_model">stock.warehouse</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            Manage warehouses used for tyres.
+          </p>
+        </field>
+    </record>
+
+    <!-- Tyre Locations -->
+    <record id="action_tyre_location" model="ir.actions.act_window">
+        <field name="name">Tyre Locations</field>
+        <field name="res_model">stock.location</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('usage', '=', 'internal')]</field>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            Manage storage locations for tyres.
+          </p>
+        </field>
+    </record>
+
+    <!-- Tyre Brands -->
+    <record id="action_tyre_brand" model="ir.actions.act_window">
+        <field name="name">Tyre Brands</field>
+        <field name="res_model">fleet.tyre.brand</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            Manage your tyre brands.
+          </p>
+        </field>
+    </record>
+
+    <!-- Menu Structure -->
     <menuitem id="menu_fleet_tyre_management_root"
-              name="tyres"
-              parent="fleet.menu_root"
+              name="Tyre Management"
+              web_icon="fleet_tyre_management,static/description/icon.png"
+              sequence="5"/>
+
+    <!-- Operations Submenu -->
+    <menuitem id="menu_tyre_operations"
+              name="Operations"
+              parent="menu_fleet_tyre_management_root"
+              sequence="10"/>
+
+    <menuitem id="menu_tyre_visual_ops"
+              name="Visual Operations"
+              parent="menu_tyre_operations"
+              action="action_fleet_vehicle_visual_ops"
               sequence="5"/>
 
     <menuitem id="menu_fleet_tyre_management_list"
-              name="tyres"
-              parent="menu_fleet_tyre_management_root"
+              name="Tyres"
+              parent="menu_tyre_operations"
               action="action_fleet_vehicle_tyre"
-              sequence="1"/>
+              sequence="10"/>
+
+    <menuitem id="menu_tyre_receipts"
+              name="Tyre Receipts"
+              parent="menu_tyre_operations"
+              action="action_tyre_purchase_order"
+              sequence="20"/>
+
+    <menuitem id="menu_tyre_history"
+              name="Tyre Moves History"
+              parent="menu_tyre_operations"
+              action="action_tyre_history"
+              sequence="30"/>
+
+    <menuitem id="menu_tyre_lots"
+              name="Tyre Lots / Serial Numbers"
+              parent="menu_tyre_operations"
+              action="action_tyre_stock_lot"
+              sequence="40"/>
+
+    <!-- Master Data Submenu -->
+    <menuitem id="menu_tyre_master_data"
+              name="Master Data"
+              parent="menu_fleet_tyre_management_root"
+              sequence="20"/>
+
+    <menuitem id="menu_tyre_products"
+              name="Tyre Products"
+              parent="menu_tyre_master_data"
+              action="action_tyre_product_template"
+              sequence="10"/>
+
+    <menuitem id="menu_tyre_brand"
+              name="Tyre Brands"
+              parent="menu_tyre_master_data"
+              action="action_tyre_brand"
+              sequence="20"/>
+
+    <menuitem id="menu_tyre_vehicles"
+              name="Vehicles"
+              parent="menu_tyre_master_data"
+              action="fleet.fleet_vehicle_action"
+              sequence="5"/>
+
+    <!-- Inventory Configuration Submenu -->
+    <menuitem id="menu_tyre_inventory_config"
+              name="Inventory Configuration"
+              parent="menu_fleet_tyre_management_root"
+              sequence="30"/>
+
+    <menuitem id="menu_tyre_warehouse"
+              name="Tyre Warehouse"
+              parent="menu_tyre_inventory_config"
+              action="action_tyre_warehouse"
+              sequence="10"/>
+
+    <menuitem id="menu_tyre_locations"
+              name="Tyre Locations"
+              parent="menu_tyre_inventory_config"
+              action="action_tyre_location"
+              sequence="20"/>
+
+    <!-- Reporting Submenu -->
+    <menuitem id="menu_tyre_reporting"
+              name="Reporting"
+              parent="menu_fleet_tyre_management_root"
+              sequence="40"/>
 </odoo>

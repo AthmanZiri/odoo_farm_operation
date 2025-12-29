@@ -1,17 +1,25 @@
 from odoo import models, fields, api
 
+class FleettyreBrand(models.Model):
+    _name = 'fleet.tyre.brand'
+    _description = 'Tyre Brand'
+
+    name = fields.Char(string='Brand Name', required=True)
+    active = fields.Boolean(default=True)
+
 class FleetVehicletyre(models.Model):
     _name = 'fleet.vehicle.tyre'
-    _description = 'Vehicle tyre'
+    _description = 'Vehicle Tyre'
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
     name = fields.Char(string='Serial Number', required=True, copy=False, help="Unique Serial Number or Internal ID")
     rfid_tag = fields.Char(string='RFID Tag', copy=False)
     
-    product_id = fields.Many2one('product.product', string='tyre Product', required=True, domain=[('type', '=', 'product')])
+    product_id = fields.Many2one('product.product', string='Tyre Product', required=True, domain=[('type', '=', 'product')])
     lot_id = fields.Many2one('stock.lot', string='Stock Lot/Serial', domain="[('product_id', '=', product_id)]", copy=False)
 
-    brand = fields.Char(string='Brand', help="tyre Brand/Manufacturer")
+    brand_id = fields.Many2one('fleet.tyre.brand', string='Brand', help="Tyre Brand/Manufacturer")
+    brand = fields.Char(related='brand_id.name', string='Brand Name', store=True)
     # If product doesn't have brand, we might need a custom field or rely on product name. 
     # Let's add explicit fields for now to allow standalone usage if product is generic.
     
@@ -35,25 +43,21 @@ class FleetVehicletyre(models.Model):
 
     vehicle_id = fields.Many2one('fleet.vehicle', string='Current Vehicle', tracking=True)
     location_id = fields.Many2one('stock.location', string='Storage Location', domain=[('usage', '=', 'internal')], tracking=True, help="Where the tyre is currently stored if not mounted.")
-    position = fields.Selection([
-        ('fl', 'Front Left'),
-        ('fr', 'Front Right'),
-        ('rl', 'Rear Left'),
-        ('rr', 'Rear Right'),
-        ('spare', 'Spare'),
-        ('other', 'Other')
-    ], string='Position', tracking=True)
+    position_id = fields.Many2one('fleet.tyre.position', string='Position', tracking=True, domain="[('config_id', '=', vehicle_axle_config_id)]")
+    vehicle_axle_config_id = fields.Many2one(related='vehicle_id.axle_config_id', string='Vehicle Axle Config')
+    position_code = fields.Char(related='position_id.code', string='Position Code', store=True)
 
     current_tread_depth = fields.Float(string='Current Tread Depth (mm)', tracking=True)
     initial_tread_depth = fields.Float(string='Initial Tread Depth (mm)')
     
     purchase_date = fields.Date(string='Purchase Date')
     manufacture_date = fields.Date(string='Manufacture Date (DOT)')
+    expiry_date = fields.Date(string='Expiry Date')
 
     # Lifecycle Extensions
     retread_count = fields.Integer(string='Retread Count', default=0, tracking=True)
     total_kms = fields.Float(string='Total KMs', compute='_compute_total_kms', store=True, help="Total KMs traveled by this tyre")
-    cpk = fields.Float(string='Cost Per KM', compute='_compute_cpk', help="Total Cost / Total KMs")
+    cpk = fields.Float(string='Cost Per KM', compute='_compute_cpk', store=True, help="Total Cost / Total KMs")
     
     disposal_reason = fields.Char(string='Disposal Reason', tracking=True)
     disposal_date = fields.Date(string='Disposal Date', tracking=True)
@@ -105,7 +109,8 @@ class ProductTemplate(models.Model):
     _inherit = 'product.template'
 
     is_tyre = fields.Boolean(string='Is Tyre')
-    tyre_brand = fields.Char(string='Tyre Brand')
+    tyre_brand_id = fields.Many2one('fleet.tyre.brand', string='Tyre Brand')
+    tyre_brand = fields.Char(related='tyre_brand_id.name', string='Tyre Brand Name', store=True)
     tyre_dimensions = fields.Char(string='Tyre Dimensions')
     tyre_type = fields.Selection([
         ('summer', 'Summer'),
@@ -114,77 +119,4 @@ class ProductTemplate(models.Model):
         ('off_road', 'Off-Road')
     ], string='Tyre Type')
 
-class StockLot(models.Model):
-    _inherit = 'stock.lot'
 
-    rfid_tag = fields.Char(string='RFID Tag')
-    initial_tread_depth = fields.Float(string='Initial Tread Depth (mm)')
-    manufacture_date = fields.Date(string='Manufacture Date (DOT)')
-    expiry_date = fields.Date(string='Expiry Date')
-    
-    tyre_brand = fields.Char(related='product_id.tyre_brand', readonly=False, store=True)
-    tyre_dimensions = fields.Char(related='product_id.tyre_dimensions', readonly=False, store=True)
-    tyre_type = fields.Selection(related='product_id.tyre_type', readonly=False, store=True)
-
-    def _create_or_update_tyre(self):
-        for lot in self.filtered(lambda l: l.product_id.is_tyre):
-            tyre = self.env['fleet.vehicle.tyre'].sudo().search([('lot_id', '=', lot.id)], limit=1)
-            vals = {
-                'name': lot.name,
-                'lot_id': lot.id,
-                'product_id': lot.product_id.id,
-                'rfid_tag': lot.rfid_tag,
-                'brand': lot.tyre_brand,
-                'dimensions': lot.tyre_dimensions,
-                'tyre_type': lot.tyre_type,
-                'initial_tread_depth': lot.initial_tread_depth,
-                'manufacture_date': lot.manufacture_date,
-            }
-            if tyre:
-                tyre.write(vals)
-            else:
-                self.env['fleet.vehicle.tyre'].sudo().create(vals)
-
-    @api.model_create_multi
-    def create(self, vals_list):
-        lots = super().create(vals_list)
-        lots._create_or_update_tyre()
-        return lots
-
-    def write(self, vals):
-        res = super().write(vals)
-        self._create_or_update_tyre()
-        return res
-
-class StockMoveLine(models.Model):
-    _inherit = 'stock.move.line'
-
-    is_tyre = fields.Boolean(related='product_id.is_tyre', readonly=True, store=True)
-    rfid_tag = fields.Char(string='RFID Tag')
-    initial_tread_depth = fields.Float(string='Initial Tread Depth (mm)')
-    manufacture_date = fields.Date(string='Manufacture Date (DOT)')
-    expiry_date = fields.Date(string='Expiry Date')
-
-    @api.model_create_multi
-    def create(self, vals_list):
-        lines = super().create(vals_list)
-        for line in lines.filtered(lambda l: l.product_id.is_tyre and l.lot_id):
-            line.lot_id.write({
-                'rfid_tag': line.rfid_tag,
-                'initial_tread_depth': line.initial_tread_depth,
-                'manufacture_date': line.manufacture_date,
-                'expiry_date': line.expiry_date,
-            })
-        return lines
-
-    def write(self, vals):
-        res = super().write(vals)
-        for line in self.filtered(lambda l: l.product_id.is_tyre and l.lot_id):
-            update_vals = {}
-            if 'rfid_tag' in vals: update_vals['rfid_tag'] = vals['rfid_tag']
-            if 'initial_tread_depth' in vals: update_vals['initial_tread_depth'] = vals['initial_tread_depth']
-            if 'manufacture_date' in vals: update_vals['manufacture_date'] = vals['manufacture_date']
-            if 'expiry_date' in vals: update_vals['expiry_date'] = vals['expiry_date']
-            if update_vals:
-                line.lot_id.write(update_vals)
-        return res

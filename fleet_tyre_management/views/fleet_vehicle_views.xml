@@ -14,17 +14,27 @@
                 </button>
             </div>
             <xpath expr="//notebook" position="inside">
-                <page string="tyres">
-                     <field name="tyre_ids" mode="kanban">
-                        <kanban>
+                <page string="Tyres">
+                     <header>
+                        <button name="%(fleet_tyre_management.action_fleet_tyre_management_operation_wizard)d" string="Mount Tyre" type="action" class="btn-primary"/>
+                     </header>
+                     <group>
+                        <field name="axle_config_id"/>
+                        <field name="trailer_id"/>
+                        <field name="tyre_layout_json" invisible="1"/>
+                     </group>
+                     <field name="tyre_layout_json" widget="tyre_layout"/>
+                     <separator string="Mounted Tyres List"/>
+                     <field name="tyre_ids" mode="kanban" context="{'create': False, 'delete': False}">
+                        <kanban create="0">
                             <field name="name"/>
-                            <field name="position"/>
+                            <field name="position_id"/>
                             <field name="current_tread_depth"/>
                             <templates>
                                 <t t-name="card">
                                     <div class="d-flex flex-column">
                                         <div class="fw-bold">
-                                            <field name="position"/>: <field name="name"/>
+                                            <field name="position_id"/>: <field name="name"/>
                                         </div>
                                         <div class="text-muted small">
                                             Tread: <field name="current_tread_depth"/> mm
@@ -37,5 +47,56 @@
                 </page>
             </xpath>
         </field>
+    </record>
+
+    <!-- Workstation Form View -->
+    <record id="view_fleet_vehicle_tyre_workstation_form" model="ir.ui.view">
+        <field name="name">fleet.vehicle.tyre.workstation.form</field>
+        <field name="model">fleet.vehicle</field>
+        <field name="arch" type="xml">
+            <form string="Tyre Workstation" create="0" delete="0" edit="0">
+                <sheet>
+                    <div class="oe_title text-center">
+                        <h1 class="mb-3">
+                            <field name="name" readonly="1"/>
+                        </h1>
+                        <div class="text-muted mb-4">
+                            Select a wheel position to Mount, Dismount or Inspect tyres.
+                        </div>
+                    </div>
+                    <group invisible="1">
+                        <field name="axle_config_id"/>
+                        <field name="trailer_id"/>
+                    </group>
+                    <field name="tyre_layout_json" widget="tyre_layout"/>
+                    <footer class="oe_edit_only">
+                        <button string="Close" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Visual Operations Action -->
+    <record id="action_fleet_vehicle_visual_ops" model="ir.actions.act_window">
+        <field name="name">Visual Operations</field>
+        <field name="res_model">fleet.vehicle</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('axle_config_id', '!=', False)]</field>
+        <field name="view_id" ref="view_fleet_vehicle_tyre_workstation_form"/>
+    </record>
+
+    <!-- Form View Action Override for Visual Ops (to ensure it uses the workstation form) -->
+    <record id="action_fleet_vehicle_visual_ops_list" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">list</field>
+        <field name="act_window_id" ref="action_fleet_vehicle_visual_ops"/>
+    </record>
+
+    <record id="action_fleet_vehicle_visual_ops_form" model="ir.actions.act_window.view">
+        <field name="sequence" eval="2"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_fleet_vehicle_tyre_workstation_form"/>
+        <field name="act_window_id" ref="action_fleet_vehicle_visual_ops"/>
     </record>
 </odoo>

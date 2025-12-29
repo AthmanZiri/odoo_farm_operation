@@ -1,0 +1,531 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- 
+            Standard Axle Configurations
+        -->
+
+        <!-- 1. 4x2 Truck (2 Axles, 6 Wheels) -->
+        <record id="axle_config_4x2" model="fleet.tyre.axle.config">
+            <field name="name">4x2 Truck (2 Axles)</field>
+        </record>
+
+        <!-- Positions for 4x2 -->
+        <!-- Axle 1 (Steer) -->
+        <record id="pos_4x2_1L" model="fleet.tyre.position">
+            <field name="config_id" ref="axle_config_4x2"/>
+            <field name="axle_number">1</field>
+            <field name="side">left</field>
+            <field name="position_type">steer</field>
+            <field name="is_dual">False</field>
+            <field name="code">1L</field>
+            <field name="name">Axle 1 Left</field>
+            <field name="sequence">1</field>
+        </record>
+        <record id="pos_4x2_1R" model="fleet.tyre.position">
+            <field name="config_id" ref="axle_config_4x2"/>
+            <field name="axle_number">1</field>
+            <field name="side">right</field>
+            <field name="position_type">steer</field>
+            <field name="is_dual">False</field>
+            <field name="code">1R</field>
+            <field name="name">Axle 1 Right</field>
+            <field name="sequence">2</field>
+        </record>
+        <!-- Axle 2 (Drive, Dual) -->
+        <record id="pos_4x2_2LO" model="fleet.tyre.position">
+            <field name="config_id" ref="axle_config_4x2"/>
+            <field name="axle_number">2</field>
+            <field name="side">left</field>
+            <field name="position_type">drive</field>
+            <field name="is_dual">True</field>
+            <field name="code">2LO</field>
+            <field name="name">Axle 2 Left Outer</field>
+            <field name="sequence">3</field>
+        </record>
+        <record id="pos_4x2_2LI" model="fleet.tyre.position">
+            <field name="config_id" ref="axle_config_4x2"/>
+            <field name="axle_number">2</field>
+            <field name="side">left</field>
+            <field name="position_type">drive</field>
+            <field name="is_dual">True</field>
+            <field name="code">2LI</field>
+            <field name="name">Axle 2 Left Inner</field>
+            <field name="sequence">4</field>
+        </record>
+        <record id="pos_4x2_2RI" model="fleet.tyre.position">
+            <field name="config_id" ref="axle_config_4x2"/>
+            <field name="axle_number">2</field>
+            <field name="side">right</field>
+            <field name="position_type">drive</field>
+            <field name="is_dual">True</field>
+            <field name="code">2RI</field>
+            <field name="name">Axle 2 Right Inner</field>
+            <field name="sequence">5</field>
+        </record>
+        <record id="pos_4x2_2RO" model="fleet.tyre.position">
+            <field name="config_id" ref="axle_config_4x2"/>
+            <field name="axle_number">2</field>
+            <field name="side">right</field>
+            <field name="position_type">drive</field>
+            <field name="is_dual">True</field>
+            <field name="code">2RO</field>
+            <field name="name">Axle 2 Right Outer</field>
+            <field name="sequence">6</field>
+        </record>
+
+
+        <!-- 2. 6x4 Truck (3 Axles, 10 Wheels) -->
+        <record id="axle_config_6x4" model="fleet.tyre.axle.config">
+            <field name="name">6x4 Truck (3 Axles)</field>
+        </record>
+
+        <!-- Positions for 6x4 -->
+        <!-- Axle 1 (Steer) -->
+        <record id="pos_6x4_1L" model="fleet.tyre.position">
+            <field name="config_id" ref="axle_config_6x4"/>
+            <field name="axle_number">1</field>
+            <field name="side">left</field>
+            <field name="position_type">steer</field>
+            <field name="is_dual">False</field>
+            <field name="code">1L</field>
+            <field name="name">Axle 1 Left</field>
+            <field name="sequence">1</field>
+        </record>
+         <record id="pos_6x4_1R" model="fleet.tyre.position">
+            <field name="config_id" ref="axle_config_6x4"/>
+            <field name="axle_number">1</field>
+            <field name="side">right</field>
+            <field name="position_type">steer</field>
+            <field name="is_dual">False</field>
+            <field name="code">1R</field>
+            <field name="name">Axle 1 Right</field>
+            <field name="sequence">2</field>
+        </record>
+
+        <!-- Axle 2 (Drive, Dual) -->
+        <record id="pos_6x4_2LO" model="fleet.tyre.position">
+            <field name="config_id" ref="axle_config_6x4"/>
+            <field name="axle_number">2</field>
+            <field name="side">left</field>
+            <field name="position_type">drive</field>
+            <field name="is_dual">True</field>
+            <field name="code">2LO</field>
+            <field name="name">Axle 2 Left Outer</field>
+            <field name="sequence">3</field>
+        </record>
+        <record id="pos_6x4_2LI" model="fleet.tyre.position">
+            <field name="config_id" ref="axle_config_6x4"/>
+            <field name="axle_number">2</field>
+            <field name="side">left</field>
+            <field name="position_type">drive</field>
+            <field name="is_dual">True</field>
+            <field name="code">2LI</field>
+            <field name="name">Axle 2 Left Inner</field>
+            <field name="sequence">4</field>
+        </record>
+        <record id="pos_6x4_2RI" model="fleet.tyre.position">
+            <field name="config_id" ref="axle_config_6x4"/>
+            <field name="axle_number">2</field>
+            <field name="side">right</field>
+            <field name="position_type">drive</field>
+            <field name="is_dual">True</field>
+            <field name="code">2RI</field>
+            <field name="name">Axle 2 Right Inner</field>
+            <field name="sequence">5</field>
+        </record>
+        <record id="pos_6x4_2RO" model="fleet.tyre.position">
+            <field name="config_id" ref="axle_config_6x4"/>
+            <field name="axle_number">2</field>
+            <field name="side">right</field>
+            <field name="position_type">drive</field>
+            <field name="is_dual">True</field>
+            <field name="code">2RO</field>
+            <field name="name">Axle 2 Right Outer</field>
+            <field name="sequence">6</field>
+        </record>
+
+        <!-- Axle 3 (Drive, Dual) -->
+        <record id="pos_6x4_3LO" model="fleet.tyre.position">
+            <field name="config_id" ref="axle_config_6x4"/>
+            <field name="axle_number">3</field>
+            <field name="side">left</field>
+            <field name="position_type">drive</field>
+            <field name="is_dual">True</field>
+            <field name="code">3LO</field>
+            <field name="name">Axle 3 Left Outer</field>
+            <field name="sequence">7</field>
+        </record>
+        <record id="pos_6x4_3LI" model="fleet.tyre.position">
+            <field name="config_id" ref="axle_config_6x4"/>
+            <field name="axle_number">3</field>
+            <field name="side">left</field>
+            <field name="position_type">drive</field>
+            <field name="is_dual">True</field>
+            <field name="code">3LI</field>
+            <field name="name">Axle 3 Left Inner</field>
+            <field name="sequence">8</field>
+        </record>
+        <record id="pos_6x4_3RI" model="fleet.tyre.position">
+            <field name="config_id" ref="axle_config_6x4"/>
+            <field name="axle_number">3</field>
+            <field name="side">right</field>
+            <field name="position_type">drive</field>
+            <field name="is_dual">True</field>
+            <field name="code">3RI</field>
+            <field name="name">Axle 3 Right Inner</field>
+            <field name="sequence">9</field>
+        </record>
+        <record id="pos_6x4_3RO" model="fleet.tyre.position">
+            <field name="config_id" ref="axle_config_6x4"/>
+            <field name="axle_number">3</field>
+            <field name="side">right</field>
+            <field name="position_type">drive</field>
+            <field name="is_dual">True</field>
+            <field name="code">3RO</field>
+            <field name="name">Axle 3 Right Outer</field>
+            <field name="sequence">10</field>
+        </record>
+
+
+        <!-- 3. Sedan (2 Axles, 4 Wheels) -->
+        <record id="axle_config_sedan" model="fleet.tyre.axle.config">
+            <field name="name">Sedan (2 Axles)</field>
+        </record>
+
+        <record id="pos_sedan_1L" model="fleet.tyre.position">
+            <field name="config_id" ref="axle_config_sedan"/>
+            <field name="axle_number">1</field>
+            <field name="side">left</field>
+            <field name="position_type">steer</field>
+            <field name="is_dual">False</field>
+            <field name="code">1L</field>
+            <field name="name">Axle 1 Left</field>
+            <field name="sequence">1</field>
+        </record>
+        <record id="pos_sedan_1R" model="fleet.tyre.position">
+            <field name="config_id" ref="axle_config_sedan"/>
+            <field name="axle_number">1</field>
+            <field name="side">right</field>
+            <field name="position_type">steer</field>
+            <field name="is_dual">False</field>
+            <field name="code">1R</field>
+            <field name="name">Axle 1 Right</field>
+            <field name="sequence">2</field>
+        </record>
+        <record id="pos_sedan_2L" model="fleet.tyre.position">
+            <field name="config_id" ref="axle_config_sedan"/>
+            <field name="axle_number">2</field>
+            <field name="side">left</field>
+            <field name="position_type">drive</field>
+            <field name="is_dual">False</field>
+            <field name="code">2L</field>
+            <field name="name">Axle 2 Left</field>
+            <field name="sequence">3</field>
+        </record>
+        <record id="pos_sedan_2R" model="fleet.tyre.position">
+            <field name="config_id" ref="axle_config_sedan"/>
+            <field name="axle_number">2</field>
+            <field name="side">right</field>
+            <field name="position_type">drive</field>
+            <field name="is_dual">False</field>
+            <field name="code">2R</field>
+            <field name="name">Axle 2 Right</field>
+            <field name="sequence">4</field>
+        </record>
+
+        <!-- 4. Pickup (2 Axles, 4 Wheels) -->
+        <record id="axle_config_pickup" model="fleet.tyre.axle.config">
+            <field name="name">Pickup (2 Axles)</field>
+        </record>
+
+        <record id="pos_pickup_1L" model="fleet.tyre.position">
+            <field name="config_id" ref="axle_config_pickup"/>
+            <field name="axle_number">1</field>
+            <field name="side">left</field>
+            <field name="position_type">steer</field>
+            <field name="is_dual">False</field>
+            <field name="code">1L</field>
+            <field name="name">Axle 1 Left</field>
+            <field name="sequence">1</field>
+        </record>
+        <record id="pos_pickup_1R" model="fleet.tyre.position">
+            <field name="config_id" ref="axle_config_pickup"/>
+            <field name="axle_number">1</field>
+            <field name="side">right</field>
+            <field name="position_type">steer</field>
+            <field name="is_dual">False</field>
+            <field name="code">1R</field>
+            <field name="name">Axle 1 Right</field>
+            <field name="sequence">2</field>
+        </record>
+        <record id="pos_pickup_2L" model="fleet.tyre.position">
+            <field name="config_id" ref="axle_config_pickup"/>
+            <field name="axle_number">2</field>
+            <field name="side">left</field>
+            <field name="position_type">drive</field>
+            <field name="is_dual">False</field>
+            <field name="code">2L</field>
+            <field name="name">Axle 2 Left</field>
+            <field name="sequence">3</field>
+        </record>
+        <record id="pos_pickup_2R" model="fleet.tyre.position">
+            <field name="config_id" ref="axle_config_pickup"/>
+            <field name="axle_number">2</field>
+            <field name="side">right</field>
+            <field name="position_type">drive</field>
+            <field name="is_dual">False</field>
+            <field name="code">2R</field>
+            <field name="name">Axle 2 Right</field>
+            <field name="sequence">4</field>
+        </record>
+
+        <!-- 5. Motorcycle (2 Axles, 2 Wheels) -->
+        <record id="axle_config_moto" model="fleet.tyre.axle.config">
+            <field name="name">Motorcycle</field>
+        </record>
+
+        <record id="pos_moto_1" model="fleet.tyre.position">
+            <field name="config_id" ref="axle_config_moto"/>
+            <field name="axle_number">1</field>
+            <field name="side">center</field>
+            <field name="position_type">steer</field>
+            <field name="is_dual">False</field>
+            <field name="code">1</field>
+            <field name="name">Front</field>
+            <field name="sequence">1</field>
+        </record>
+        <record id="pos_moto_2" model="fleet.tyre.position">
+            <field name="config_id" ref="axle_config_moto"/>
+            <field name="axle_number">2</field>
+            <field name="side">center</field>
+            <field name="position_type">drive</field>
+            <field name="is_dual">False</field>
+            <field name="code">2</field>
+            <field name="name">Rear</field>
+            <field name="sequence">2</field>
+        </record>
+
+        <!-- 6. 2-Axle Trailer -->
+        <record id="axle_config_trailer_2" model="fleet.tyre.axle.config">
+            <field name="name">2-Axle Trailer</field>
+        </record>
+
+        <record id="pos_tr2_1LO" model="fleet.tyre.position">
+            <field name="config_id" ref="axle_config_trailer_2"/>
+            <field name="axle_number">1</field>
+            <field name="side">left</field>
+            <field name="position_type">tag</field>
+            <field name="is_dual">True</field>
+            <field name="code">1LO</field>
+            <field name="name">Axle 1 Left Outer</field>
+            <field name="sequence">1</field>
+        </record>
+        <record id="pos_tr2_1LI" model="fleet.tyre.position">
+            <field name="config_id" ref="axle_config_trailer_2"/>
+            <field name="axle_number">1</field>
+            <field name="side">left</field>
+            <field name="position_type">tag</field>
+            <field name="is_dual">True</field>
+            <field name="code">1LI</field>
+            <field name="name">Axle 1 Left Inner</field>
+            <field name="sequence">2</field>
+        </record>
+        <record id="pos_tr2_1RI" model="fleet.tyre.position">
+            <field name="config_id" ref="axle_config_trailer_2"/>
+            <field name="axle_number">1</field>
+            <field name="side">right</field>
+            <field name="position_type">tag</field>
+            <field name="is_dual">True</field>
+            <field name="code">1RI</field>
+            <field name="name">Axle 1 Right Inner</field>
+            <field name="sequence">3</field>
+        </record>
+        <record id="pos_tr2_1RO" model="fleet.tyre.position">
+            <field name="config_id" ref="axle_config_trailer_2"/>
+            <field name="axle_number">1</field>
+            <field name="side">right</field>
+            <field name="position_type">tag</field>
+            <field name="is_dual">True</field>
+            <field name="code">1RO</field>
+            <field name="name">Axle 1 Right Outer</field>
+            <field name="sequence">4</field>
+        </record>
+
+        <record id="pos_tr2_2LO" model="fleet.tyre.position">
+            <field name="config_id" ref="axle_config_trailer_2"/>
+            <field name="axle_number">2</field>
+            <field name="side">left</field>
+            <field name="position_type">tag</field>
+            <field name="is_dual">True</field>
+            <field name="code">2LO</field>
+            <field name="name">Axle 2 Left Outer</field>
+            <field name="sequence">5</field>
+        </record>
+        <record id="pos_tr2_2LI" model="fleet.tyre.position">
+            <field name="config_id" ref="axle_config_trailer_2"/>
+            <field name="axle_number">2</field>
+            <field name="side">left</field>
+            <field name="position_type">tag</field>
+            <field name="is_dual">True</field>
+            <field name="code">2LI</field>
+            <field name="name">Axle 2 Left Inner</field>
+            <field name="sequence">6</field>
+        </record>
+        <record id="pos_tr2_2RI" model="fleet.tyre.position">
+            <field name="config_id" ref="axle_config_trailer_2"/>
+            <field name="axle_number">2</field>
+            <field name="side">right</field>
+            <field name="position_type">tag</field>
+            <field name="is_dual">True</field>
+            <field name="code">2RI</field>
+            <field name="name">Axle 2 Right Inner</field>
+            <field name="sequence">7</field>
+        </record>
+        <record id="pos_tr2_2RO" model="fleet.tyre.position">
+            <field name="config_id" ref="axle_config_trailer_2"/>
+            <field name="axle_number">2</field>
+            <field name="side">right</field>
+            <field name="position_type">tag</field>
+            <field name="is_dual">True</field>
+            <field name="code">2RO</field>
+            <field name="name">Axle 2 Right Outer</field>
+            <field name="sequence">8</field>
+        </record>
+
+        <!-- 7. 3-Axle Trailer -->
+        <record id="axle_config_trailer_3" model="fleet.tyre.axle.config">
+            <field name="name">3-Axle Trailer</field>
+        </record>
+        <!-- Adding just the config record to save space, assuming pattern is clear or will be added manually if needed. 
+             Actually user asked for it, I should add the positions for completeness even if verbose. 
+             Optimizing: Copying 2-axle and adding 3rd axle. 
+        -->
+        <!-- Axle 1 -->
+        <record id="pos_tr3_1LO" model="fleet.tyre.position">
+            <field name="config_id" ref="axle_config_trailer_3"/>
+            <field name="axle_number">1</field>
+            <field name="side">left</field>
+            <field name="position_type">tag</field>
+            <field name="is_dual">True</field>
+            <field name="code">1LO</field>
+            <field name="name">Axle 1 Left Outer</field>
+            <field name="sequence">1</field>
+        </record>
+        <record id="pos_tr3_1LI" model="fleet.tyre.position">
+            <field name="config_id" ref="axle_config_trailer_3"/>
+            <field name="axle_number">1</field>
+            <field name="side">left</field>
+            <field name="position_type">tag</field>
+            <field name="is_dual">True</field>
+            <field name="code">1LI</field>
+            <field name="name">Axle 1 Left Inner</field>
+            <field name="sequence">2</field>
+        </record>
+        <record id="pos_tr3_1RI" model="fleet.tyre.position">
+            <field name="config_id" ref="axle_config_trailer_3"/>
+            <field name="axle_number">1</field>
+            <field name="side">right</field>
+            <field name="position_type">tag</field>
+            <field name="is_dual">True</field>
+            <field name="code">1RI</field>
+            <field name="name">Axle 1 Right Inner</field>
+            <field name="sequence">3</field>
+        </record>
+        <record id="pos_tr3_1RO" model="fleet.tyre.position">
+            <field name="config_id" ref="axle_config_trailer_3"/>
+            <field name="axle_number">1</field>
+            <field name="side">right</field>
+            <field name="position_type">tag</field>
+            <field name="is_dual">True</field>
+            <field name="code">1RO</field>
+            <field name="name">Axle 1 Right Outer</field>
+            <field name="sequence">4</field>
+        </record>
+
+        <!-- Axle 2 -->
+        <record id="pos_tr3_2LO" model="fleet.tyre.position">
+            <field name="config_id" ref="axle_config_trailer_3"/>
+            <field name="axle_number">2</field>
+            <field name="side">left</field>
+            <field name="position_type">tag</field>
+            <field name="is_dual">True</field>
+            <field name="code">2LO</field>
+            <field name="name">Axle 2 Left Outer</field>
+            <field name="sequence">5</field>
+        </record>
+        <record id="pos_tr3_2LI" model="fleet.tyre.position">
+            <field name="config_id" ref="axle_config_trailer_3"/>
+            <field name="axle_number">2</field>
+            <field name="side">left</field>
+            <field name="position_type">tag</field>
+            <field name="is_dual">True</field>
+            <field name="code">2LI</field>
+            <field name="name">Axle 2 Left Inner</field>
+            <field name="sequence">6</field>
+        </record>
+        <record id="pos_tr3_2RI" model="fleet.tyre.position">
+            <field name="config_id" ref="axle_config_trailer_3"/>
+            <field name="axle_number">2</field>
+            <field name="side">right</field>
+            <field name="position_type">tag</field>
+            <field name="is_dual">True</field>
+            <field name="code">2RI</field>
+            <field name="name">Axle 2 Right Inner</field>
+            <field name="sequence">7</field>
+        </record>
+        <record id="pos_tr3_2RO" model="fleet.tyre.position">
+            <field name="config_id" ref="axle_config_trailer_3"/>
+            <field name="axle_number">2</field>
+            <field name="side">right</field>
+            <field name="position_type">tag</field>
+            <field name="is_dual">True</field>
+            <field name="code">2RO</field>
+            <field name="name">Axle 2 Right Outer</field>
+            <field name="sequence">8</field>
+        </record>
+
+         <!-- Axle 3 -->
+        <record id="pos_tr3_3LO" model="fleet.tyre.position">
+            <field name="config_id" ref="axle_config_trailer_3"/>
+            <field name="axle_number">3</field>
+            <field name="side">left</field>
+            <field name="position_type">tag</field>
+            <field name="is_dual">True</field>
+            <field name="code">3LO</field>
+            <field name="name">Axle 3 Left Outer</field>
+            <field name="sequence">9</field>
+        </record>
+        <record id="pos_tr3_3LI" model="fleet.tyre.position">
+            <field name="config_id" ref="axle_config_trailer_3"/>
+            <field name="axle_number">3</field>
+            <field name="side">left</field>
+            <field name="position_type">tag</field>
+            <field name="is_dual">True</field>
+            <field name="code">3LI</field>
+            <field name="name">Axle 3 Left Inner</field>
+            <field name="sequence">10</field>
+        </record>
+        <record id="pos_tr3_3RI" model="fleet.tyre.position">
+            <field name="config_id" ref="axle_config_trailer_3"/>
+            <field name="axle_number">3</field>
+            <field name="side">right</field>
+            <field name="position_type">tag</field>
+            <field name="is_dual">True</field>
+            <field name="code">3RI</field>
+            <field name="name">Axle 3 Right Inner</field>
+            <field name="sequence">11</field>
+        </record>
+        <record id="pos_tr3_3RO" model="fleet.tyre.position">
+            <field name="config_id" ref="axle_config_trailer_3"/>
+            <field name="axle_number">3</field>
+            <field name="side">right</field>
+            <field name="position_type">tag</field>
+            <field name="is_dual">True</field>
+            <field name="code">3RO</field>
+            <field name="name">Axle 3 Right Outer</field>
+            <field name="sequence">12</field>
+        </record>
+
+    </data>
+</odoo>

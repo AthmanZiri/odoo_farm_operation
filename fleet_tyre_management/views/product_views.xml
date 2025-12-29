@@ -14,7 +14,8 @@
                 <page name="tyre_specs" string="Tyre Specifications" invisible="not is_tyre">
                     <group>
                         <group>
-                            <field name="tyre_brand"/>
+                            <field name="tyre_brand_id"/>
+                            <field name="tyre_brand" invisible="1"/>
                             <field name="tyre_dimensions"/>
                         </group>
                         <group>

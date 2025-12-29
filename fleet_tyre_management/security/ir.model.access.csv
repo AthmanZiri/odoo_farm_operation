@@ -5,3 +5,9 @@ access_fleet_vehicle_tyre_history,fleet.vehicle.tyre.history,model_fleet_vehicle
 access_fleet_vehicle_tyre_history_manager,fleet.vehicle.tyre.history,model_fleet_vehicle_tyre_history,fleet.fleet_group_manager,1,1,1,1
 access_fleet_tyre_operation_wizard,fleet.tyre.operation.wizard,model_fleet_tyre_operation_wizard,fleet.fleet_group_user,1,1,1,1
 access_fleet_tyre_operation_wizard_manager,fleet.tyre.operation.wizard,model_fleet_tyre_operation_wizard,fleet.fleet_group_manager,1,1,1,1
+access_fleet_tyre_brand,fleet.tyre.brand,model_fleet_tyre_brand,fleet.fleet_group_user,1,1,1,1
+access_fleet_tyre_brand_manager,fleet.tyre.brand,model_fleet_tyre_brand,fleet.fleet_group_manager,1,1,1,1
+access_fleet_tyre_axle_config_user,fleet.tyre.axle.config,model_fleet_tyre_axle_config,fleet.fleet_group_user,1,1,1,1
+access_fleet_tyre_axle_config_manager,fleet.tyre.axle.config,model_fleet_tyre_axle_config,fleet.fleet_group_manager,1,1,1,1
+access_fleet_tyre_position_user,fleet.tyre.position,model_fleet_tyre_position,fleet.fleet_group_user,1,1,1,1
+access_fleet_tyre_position_manager,fleet.tyre.position,model_fleet_tyre_position,fleet.fleet_group_manager,1,1,1,1

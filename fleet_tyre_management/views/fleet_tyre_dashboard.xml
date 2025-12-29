@@ -1,0 +1,104 @@
+<odoo>
+    <!-- View: State Pie Chart -->
+    <record id="view_tyre_dashboard_state_pie" model="ir.ui.view">
+        <field name="name">fleet.vehicle.tyre.dashboard.state.pie</field>
+        <field name="model">fleet.vehicle.tyre</field>
+        <field name="arch" type="xml">
+            <graph string="Tyre Status" type="pie" sample="1">
+                <field name="state"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- View: CPK Graph -->
+    <record id="view_tyre_dashboard_cpk_graph" model="ir.ui.view">
+        <field name="name">fleet.vehicle.tyre.dashboard.cpk.graph</field>
+        <field name="model">fleet.vehicle.tyre</field>
+        <field name="arch" type="xml">
+            <graph string="Cost Per KM (CPK)" type="bar" sample="1">
+                <field name="brand_id"/>
+                <field name="cpk" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+     <!-- View: KMs Graph -->
+    <record id="view_tyre_dashboard_kms_graph" model="ir.ui.view">
+        <field name="name">fleet.vehicle.tyre.dashboard.kms.graph</field>
+        <field name="model">fleet.vehicle.tyre</field>
+        <field name="arch" type="xml">
+            <graph string="Total KMs" type="bar" sample="1">
+                <field name="brand_id"/>
+                <field name="total_kms" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- Action: Inventory Overview -->
+    <record id="action_dashboard_tyre_state_pie" model="ir.actions.act_window">
+        <field name="name">Inventory Status</field>
+        <field name="res_model">fleet.vehicle.tyre</field>
+        <field name="view_mode">graph</field>
+        <field name="view_id" ref="view_tyre_dashboard_state_pie"/>
+    </record>
+
+    <!-- Action: Safety Alerts -->
+    <record id="action_dashboard_tyre_alert_list" model="ir.actions.act_window">
+        <field name="name">Safety Alerts (Low Tread)</field>
+        <field name="res_model">fleet.vehicle.tyre</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('current_tread_depth', '&lt;', 4), ('state', '=', 'mounted')]</field>
+    </record>
+
+    <!-- Action: Cost Analysis -->
+    <record id="action_dashboard_tyre_cpk_bar" model="ir.actions.act_window">
+        <field name="name">Cost Per KM by Brand</field>
+        <field name="res_model">fleet.vehicle.tyre</field>
+        <field name="view_mode">graph</field>
+        <field name="view_id" ref="view_tyre_dashboard_cpk_graph"/>
+    </record>
+    
+     <!-- Action: Usage Analysis -->
+    <record id="action_dashboard_tyre_kms_bar" model="ir.actions.act_window">
+        <field name="name">Usage (KMs) by Brand</field>
+        <field name="res_model">fleet.vehicle.tyre</field>
+        <field name="view_mode">graph</field>
+        <field name="view_id" ref="view_tyre_dashboard_kms_graph"/>
+    </record>
+
+    <!-- Board View -->
+    <record id="board_tyre_management" model="ir.ui.view">
+        <field name="name">Tyre Dashboard</field>
+        <field name="model">board.board</field>
+        <field name="arch" type="xml">
+            <form string="Tyre Dashboard">
+                <board style="2-1">
+                    <column>
+                        <action name="%(action_dashboard_tyre_state_pie)d" string="Inventory Status"/>
+                        <action name="%(action_dashboard_tyre_cpk_bar)d" string="Cost Analysis (Mean CPK)"/>
+                    </column>
+                    <column>
+                         <action name="%(action_dashboard_tyre_alert_list)d" string="Safety Alerts (Tread &lt; 4mm)"/>
+                         <action name="%(action_dashboard_tyre_kms_bar)d" string="Usage Analysis (Total KMs)"/>
+                    </column>
+                </board>
+            </form>
+        </field>
+    </record>
+
+    <!-- Dashboard Action -->
+    <record id="open_board_tyre_management" model="ir.actions.act_window">
+        <field name="name">Tyre Dashboard</field>
+        <field name="res_model">board.board</field>
+        <field name="view_mode">form</field>
+        <field name="usage">menu</field>
+        <field name="view_id" ref="board_tyre_management"/>
+    </record>
+
+    <!-- Menu Item (Top Level Link) -->
+    <menuitem id="menu_tyre_dashboard"
+              name="Dashboard"
+              parent="menu_fleet_tyre_management_root"
+              action="open_board_tyre_management"
+              sequence="1"/>
+</odoo>
