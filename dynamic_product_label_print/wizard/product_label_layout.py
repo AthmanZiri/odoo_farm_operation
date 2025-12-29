@@ -29,8 +29,11 @@ class ProductLabelLayout(models.TransientModel):
     _inherit = 'product.label.layout'
 
     print_format = fields.Selection(
-        selection_add=[('dynamic_template', 'Dynamic Template'), ],
-        ondelete={'dynamic_template': 'set default'},
+        selection_add=[
+            ('dynamic_template', 'Dynamic Template'),
+            ('zpl_4x12', 'ZPL Labels (4x12)')
+        ],
+        ondelete={'dynamic_template': 'set default', 'zpl_4x12': 'set default'},
         help="Added new selection for choosing dynamic template")
     dynamic_template_id = fields.Many2one('dynamic.template',
                                           help="Select the required template")
@@ -85,6 +88,64 @@ class ProductLabelLayout(models.TransientModel):
         xml_id, data = self._prepare_report_data()
         if not xml_id:
             raise UserError(_('Unable to find report template for %s format'))
-        report_action = self.env.ref(xml_id).report_action(None, data=data)
+        if self.print_format == 'zpl_4x12':
+            report_action = self.env.ref(xml_id).report_action(self.product_tmpl_ids or self.product_ids, data=data)
+        else:
+            report_action = self.env.ref(xml_id).report_action(None, data=data)
         report_action.update({'close_on_report_download': True})
         return action
+
+    def _prepare_report_data(self):
+        """Passing the datas to template"""
+        xml_id, data = super()._prepare_report_data()
+        
+        if self.print_format == 'zpl_4x12':
+            xml_id = 'dynamic_product_label_print.action_report_product_label_zpl_4x12'
+            data = {}
+            # Logic to gather product data for ZPL
+            if self.product_tmpl_ids:
+                products = self.product_tmpl_ids
+            elif self.product_ids:
+                products = self.product_ids
+            else:
+                products = self.env[data.get('model')].browse(data.get('ids', []))
+
+            # ZPL generation needs specific data passed or handled in the report
+            # The qweb-text report will iterate over docs (products).
+            # We can pass Quantities if needed. 
+            # But standard report actions usually take docids.
+            # Let's ensure we return the correct XML ID.
+            return xml_id, data
+
+        if 'dynamic_template' in self.print_format:
+            xml_id = 'dynamic_product_label_print.product_label_layout_form_dynamic'
+            active_model = ''
+            if self.product_tmpl_ids:
+                products = self.product_tmpl_ids.ids
+                active_model = 'product.template'
+            elif self.product_ids:
+                products = self.product_ids.ids
+                active_model = 'product.product'
+            dynamic_field_ids = []
+            if self.product_ids:
+                dynamic_dict = [
+                    {'fields': self.product_ids.read([i.fd_name_id.name]),
+                     'size': i.size,
+                     'color': i.color} for i in self.dynamic_field_ids]
+            else:
+                dynamic_dict = [
+                    {'fields': self.product_tmpl_ids.read([i.fd_name_id.name]),
+                     'size': i.size,
+                     'color': i.color} for i in self.dynamic_field_ids]
+            dynamic_field_ids.append(dynamic_dict)
+            data = {
+                'active_model': active_model,
+                'quantity_by_product': {p: self.custom_quantity for p in
+                                        products},
+                'layout_wizard': self.dynamic_template_id,
+                'bc_width': self.dynamic_template_id.bc_width,
+                'bc_height': self.dynamic_template_id.bc_height,
+                'dynamic_field_ids': dynamic_field_ids,
+            }
+        return xml_id, data
+

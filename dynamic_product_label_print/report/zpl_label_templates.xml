@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_product_label_zpl_4x12">
+        <t t-call="web.basic_layout">
+            <t t-foreach="docs" t-as="product">
+                <t t-translation="off">
+^XA
+^PW812
+^LL2436
+^CF0,60
+^FO20,50^FB770,2,0,C,0^FD<t t-esc="product.display_name"/>^FS
+^CF0,40
+^FO20,250^FDLocation: <t t-esc="product.location_id.name or 'N/A'"/>^FS
+^FO20,350^BCN,100,Y,N,N^FD<t t-esc="product.barcode or product.default_code"/>^FS
+^XZ
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <record id="action_report_product_label_zpl_4x12" model="ir.actions.report">
+        <field name="name">Product Label (ZPL 4x12)</field>
+        <field name="model">product.template</field>
+        <field name="report_type">qweb-text</field>
+        <field name="report_name">dynamic_product_label_print.report_product_label_zpl_4x12</field>
+        <field name="report_file">dynamic_product_label_print.report_product_label_zpl_4x12</field>
+        <field name="binding_model_id" eval="False"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

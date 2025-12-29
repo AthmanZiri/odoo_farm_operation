@@ -12,7 +12,7 @@
             <xpath expr="//field[@name='print_format']" position="after">
                 <field name="dynamic_template_id"
                        invisible="print_format != 'dynamic_template'"
-                       required="print_format != 'dynamic_template'"/>
+                       required="print_format == 'dynamic_template'"/>
                 <field name="dynamic_field_ids" invisible="1"/>
             </xpath>
         </field>

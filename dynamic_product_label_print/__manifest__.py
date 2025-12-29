@@ -33,6 +33,7 @@
     'data': [
         'security/ir.model.access.csv',
         'report/label_layout_templates.xml',
+        'report/zpl_label_templates.xml',
         'views/dynamic_template_views.xml',
         'wizard/product_label_layout_views.xml',
     ],
