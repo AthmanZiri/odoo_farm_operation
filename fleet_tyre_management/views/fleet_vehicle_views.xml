@@ -1,0 +1,41 @@
+<odoo>
+    <record id="fleet_vehicle_view_form_inherit_tyre" model="ir.ui.view">
+        <field name="name">fleet.vehicle.form.inherit.tyre</field>
+        <field name="model">fleet.vehicle</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_view_form"/>
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button name="action_view_tyres"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-circle-o"
+                        help="tyres">
+                    <field name="tyre_count" widget="statinfo" string="tyres"/>
+                </button>
+            </div>
+            <xpath expr="//notebook" position="inside">
+                <page string="tyres">
+                     <field name="tyre_ids" mode="kanban">
+                        <kanban>
+                            <field name="name"/>
+                            <field name="position"/>
+                            <field name="current_tread_depth"/>
+                            <templates>
+                                <t t-name="card">
+                                    <div class="d-flex flex-column">
+                                        <div class="fw-bold">
+                                            <field name="position"/>: <field name="name"/>
+                                        </div>
+                                        <div class="text-muted small">
+                                            Tread: <field name="current_tread_depth"/> mm
+                                        </div>
+                                    </div>
+                                </t>
+                            </templates>
+                        </kanban>
+                     </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

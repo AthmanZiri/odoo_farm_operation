@@ -1,0 +1,152 @@
+<odoo>
+    <!-- Tree View -->
+    <record id="view_fleet_vehicle_tyre_tree" model="ir.ui.view">
+        <field name="name">fleet.vehicle.tyre.tree</field>
+        <field name="model">fleet.vehicle.tyre</field>
+        <field name="arch" type="xml">
+            <list string="tyres">
+                <field name="name"/>
+                <field name="rfid_tag"/>
+                <field name="product_id"/>
+                <field name="dimensions"/>
+                <field name="vehicle_id"/>
+                <field name="position"/>
+                <field name="state" widget="badge" decoration-success="state == 'available'" decoration-info="state == 'mounted'"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_fleet_vehicle_tyre_form" model="ir.ui.view">
+        <field name="name">fleet.vehicle.tyre.form</field>
+        <field name="model">fleet.vehicle.tyre</field>
+        <field name="arch" type="xml">
+            <form string="tyre">
+                <header>
+                    <button name="%(fleet_tyre_management.action_fleet_tyre_management_operation_wizard)d" string="Update Status" type="action" class="oe_highlight"/>
+                    <field name="state" widget="statusbar" options="{'clickable': '0'}"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Serial Number"/>
+                        </h1>
+                        <h3>
+                            <field name="rfid_tag" placeholder="RFID Tag"/>
+                        </h3>
+                    </div>
+                    <group>
+                        <group string="Specs">
+                            <field name="product_id"/>
+                            <field name="brand"/>
+                            <field name="dimensions"/>
+                            <field name="tyre_type"/>
+                            <field name="initial_tread_depth"/>
+                            <field name="gps_tracker_info"/>
+                        </group>
+                        <group string="Tracking">
+                            <field name="lot_id"/>
+                            <field name="vehicle_id"/>
+                            <field name="location_id" invisible="state == 'mounted'"/>
+                            <field name="position"/>
+                            <field name="current_tread_depth"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="History">
+                            <field name="history_ids">
+                                <list editable="bottom">
+                                    <field name="date"/>
+                                    <field name="type"/>
+                                    <field name="vehicle_id"/>
+                                    <field name="odometer"/>
+                                    <field name="tread_depth"/>
+                                    <field name="note"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <!-- <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div> -->
+            </form>
+        </field>
+    </record>
+
+    <!-- Kanban View -->
+    <record id="view_fleet_vehicle_tyre_kanban" model="ir.ui.view">
+        <field name="name">fleet.vehicle.tyre.kanban</field>
+        <field name="model">fleet.vehicle.tyre</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state">
+                <field name="id"/>
+                <field name="name"/>
+                <field name="product_id"/>
+                <field name="state"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="oe_kanban_global_click">
+                            <strong class="o_kanban_record_title"><field name="name"/></strong>
+                            <div class="text-muted">
+                                <field name="product_id"/>
+                            </div>
+                            <div t-if="record.vehicle_id.value">
+                                <span class="fa fa-car"/> <field name="vehicle_id"/>
+                            </div>
+                            <div class="mt-1">
+                                <field name="state" widget="label_selection" options="{'classes': {'available': 'success', 'mounted': 'info'}}"/>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <!-- <record id="view_fleet_vehicle_tyre_search" model="ir.ui.view">
+        <field name="name">fleet.vehicle.tyre.search</field>
+        <field name="model">fleet.vehicle.tyre</field>
+        <field name="arch" type="xml">
+            <search string="Search tyres">
+                <field name="name"/>
+                <field name="rfid_tag"/>
+                <field name="product_id"/>
+                <field name="vehicle_id"/>
+                <filter string="Mounted" name="mounted" domain="[('state', '=', 'mounted')]"/>
+                <filter string="In Stock" name="available" domain="[('state', '=', 'available')]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Status" name="groupby_state" context="{'group_by': 'state'}"/>
+                    <filter string="Vehicle" name="groupby_vehicle" context="{'group_by': 'vehicle_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record> -->
+
+    <!-- Action -->
+    <record id="action_fleet_vehicle_tyre" model="ir.actions.act_window">
+        <field name="name">tyres</field>
+        <field name="res_model">fleet.vehicle.tyre</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            Track your fleet tyres here.
+          </p>
+        </field>
+    </record>
+
+    <!-- Menu -->
+    <menuitem id="menu_fleet_tyre_management_root"
+              name="tyres"
+              parent="fleet.menu_root"
+              sequence="5"/>
+
+    <menuitem id="menu_fleet_tyre_management_list"
+              name="tyres"
+              parent="menu_fleet_tyre_management_root"
+              action="action_fleet_vehicle_tyre"
+              sequence="1"/>
+</odoo>

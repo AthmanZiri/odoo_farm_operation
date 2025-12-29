@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_fleet_vehicle_tyre,fleet.vehicle.tyre,model_fleet_vehicle_tyre,fleet.fleet_group_user,1,1,1,1
+access_fleet_vehicle_tyre_manager,fleet.vehicle.tyre,model_fleet_vehicle_tyre,fleet.fleet_group_manager,1,1,1,1
+access_fleet_vehicle_tyre_history,fleet.vehicle.tyre.history,model_fleet_vehicle_tyre_history,fleet.fleet_group_user,1,1,1,1
+access_fleet_vehicle_tyre_history_manager,fleet.vehicle.tyre.history,model_fleet_vehicle_tyre_history,fleet.fleet_group_manager,1,1,1,1
+access_fleet_tyre_operation_wizard,fleet.tyre.operation.wizard,model_fleet_tyre_operation_wizard,fleet.fleet_group_user,1,1,1,1
+access_fleet_tyre_operation_wizard_manager,fleet.tyre.operation.wizard,model_fleet_tyre_operation_wizard,fleet.fleet_group_manager,1,1,1,1
