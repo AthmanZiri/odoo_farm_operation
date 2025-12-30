@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_stock_transfer_po_wizard_form" model="ir.ui.view">
+        <field name="name">stock.transfer.po.wizard.form</field>
+        <field name="model">stock.transfer.po.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Generate PO from Shortages">
+                <group>
+                    <div class="alert alert-info" role="alert" invisible="not line_ids">
+                        Below are the products with shortages found in the selected transfers. 
+                        Please review the suggested vendors and quantities.
+                    </div>
+                    <div class="alert alert-warning" role="alert" invisible="line_ids">
+                        No shortages found in the selected transfers.
+                    </div>
+                </group>
+                <field name="line_ids" nolabel="1">
+                    <list editable="bottom">
+                        <field name="picking_id"/>
+                        <field name="product_id"/>
+                        <field name="quantity"/>
+                        <field name="partner_id"/>
+                    </list>
+                </field>
+                <footer>
+                    <button string="Create Purchase Orders" name="action_create_po" type="object" class="btn-primary" 
+                            invisible="not line_ids"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_stock_transfer_po_wizard" model="ir.actions.act_window">
+        <field name="name">Generate POs</field>
+        <field name="res_model">stock.transfer.po.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>
