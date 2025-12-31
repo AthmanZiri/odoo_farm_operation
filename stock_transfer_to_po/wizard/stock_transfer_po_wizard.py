@@ -21,7 +21,10 @@ class StockTransferPoWizard(models.TransientModel):
                 
                 # Check for waiting or partially available moves
                 # We want moves that are confirmed (waiting) or partially_available
-                moves = picking.move_ids.filtered(lambda m: m.state in ['confirmed', 'partially_available'])
+                # Exclude pack moves - only purchase actual products (components or non-packs)
+                moves = picking.move_ids.filtered(
+                    lambda m: m.state in ['confirmed', 'partially_available'] and not m.is_pack_move
+                )
                 
                 for move in moves:
                      # Calculate shortage
@@ -52,7 +55,8 @@ class StockTransferPoWizard(models.TransientModel):
         grouped = {}
         for line in self.line_ids:
             if not line.partner_id:
-                raise UserError(_("Please define a vendor for product %s") % line.product_id.name)
+                product_name = line.product_id.display_name or _("Unknown Product")
+                raise UserError(_("Please define a vendor for product %s") % product_name)
             if line.partner_id not in grouped:
                 grouped[line.partner_id] = []
             grouped[line.partner_id].append(line)
@@ -71,6 +75,8 @@ class StockTransferPoWizard(models.TransientModel):
             po = self.env['purchase.order'].create(po_vals)
             
             for line in lines:
+                if not line.product_id:
+                    continue
                 line_vals = {
                     'order_id': po.id,
                     'product_id': line.product_id.id,
@@ -83,7 +89,7 @@ class StockTransferPoWizard(models.TransientModel):
                     partner_id=partner,
                     quantity=line.quantity,
                     date=po.date_order and po.date_order.date(),
-                    uom_id=line.product_id.uom_po_id
+                    uom_id=line.product_id.uom_id
                 )
                 if supplier_info:
                     line_vals['price_unit'] = supplier_info.price
@@ -107,7 +113,7 @@ class StockTransferPoWizardLine(models.TransientModel):
     _description = 'Wizard Line'
 
     wizard_id = fields.Many2one('stock.transfer.po.wizard', string="Wizard")
-    product_id = fields.Many2one('product.product', string='Product', required=True, readonly=True)
+    product_id = fields.Many2one('product.product', string='Product', required=True)
     quantity = fields.Float(string='Shortage Qty', required=True)
     partner_id = fields.Many2one('res.partner', string='Vendor', required=True)
     picking_id = fields.Many2one('stock.picking', string='Source Transfer', readonly=True)
