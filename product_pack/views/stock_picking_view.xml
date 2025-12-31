@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_picking_form_product_pack" model="ir.ui.view">
+        <field name="name">stock.picking.form.product.pack</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <!-- Header Button to explode all packs -->
+            <header position="inside">
+                <button name="action_explode_pack" string="Explode Packs" type="object" 
+                        invisible="state not in ('draft', 'confirmed', 'assigned')"
+                        groups="stock.group_stock_user"/>
+            </header>
+        </field>
+    </record>
+</odoo>

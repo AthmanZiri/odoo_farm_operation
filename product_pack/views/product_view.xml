@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tree View for Pack Line -->
+    <record id="view_product_pack_line_tree" model="ir.ui.view">
+        <field name="name">product.pack.line.tree</field>
+        <field name="model">product.pack.line</field>
+        <field name="arch" type="xml">
+            <list string="Pack Items" editable="bottom">
+                <field name="product_id"/>
+                <field name="quantity"/>
+                <field name="uom_id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="product_template_form_view_pack" model="ir.ui.view">
+        <field name="name">product.template.form.pack</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <!-- Smart Button -->
+            <div name="button_box" position="inside">
+                <button name="action_view_pack_components" type="object" icon="fa-cubes" 
+                    invisible="not is_pack" class="oe_stat_button">
+                    <field name="pack_availability_qty" widget="statinfo" string="Pack Availability"/>
+                </button>
+            </div>
+
+            <!-- Is Pack Checkbox -->
+            <div name="options" position="inside">
+                <span class="d-inline-block">
+                    <field name="is_pack"/>
+                    <label for="is_pack"/>
+                </span>
+            </div>
+
+            <!-- Pack Items Notebook Page -->
+            <notebook position="inside">
+                <page string="Pack Items" name="pack_items" invisible="not is_pack">
+                    <group>
+                        <button name="action_compute_pack_price" string="Calculate Pack Price" type="object" class="oe_highlight"/>
+                    </group>
+                    <field name="pack_line_ids"/>
+                </page>
+            </notebook>
+        </field>
+    </record>
+</odoo>
