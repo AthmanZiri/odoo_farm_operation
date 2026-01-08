@@ -18,10 +18,10 @@
     'data': [
         'security/ir.model.access.csv',
         'data/fleet_axle_config_data.xml',
-        'views/fleet_axle_config_views.xml',
         'wizards/tyre_operation_wizard_views.xml',
         'views/fleet_vehicle_views.xml',
         'views/fleet_tyre_views.xml',
+        'views/fleet_axle_config_views.xml',
         'views/fleet_tyre_report_views.xml',
         'views/fleet_tyre_dashboard.xml',
         'views/product_views.xml',
