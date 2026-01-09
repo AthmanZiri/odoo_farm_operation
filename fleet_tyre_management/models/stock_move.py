@@ -19,4 +19,9 @@ class StockMove(models.Model):
                         
                         if vals:
                             line.lot_id.sudo().write(vals)
+
+                        # Sync Location to Fleet Tyre
+                        tyre = self.env['fleet.vehicle.tyre'].search([('lot_id', '=', line.lot_id.id)], limit=1)
+                        if tyre:
+                            tyre.sudo().write({'location_id': move.location_dest_id.id})
         return res

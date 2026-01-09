@@ -19,6 +19,7 @@
         'security/ir.model.access.csv',
         'data/fleet_axle_config_data.xml',
         'wizards/tyre_operation_wizard_views.xml',
+        'views/gate_check_views.xml',
         'views/fleet_vehicle_views.xml',
         'views/fleet_tyre_views.xml',
         'views/fleet_axle_config_views.xml',
@@ -27,6 +28,7 @@
         'views/product_views.xml',
         'views/stock_lot_views.xml',
         'views/stock_move_line_views.xml',
+        'views/fleet_tyre_requisition_views.xml',
     ],
     'assets': {
         'web.assets_backend': [

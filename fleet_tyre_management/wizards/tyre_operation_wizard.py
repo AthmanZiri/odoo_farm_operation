@@ -21,7 +21,7 @@ class FleettyreOperationWizard(models.TransientModel):
     vehicle_axle_config_id = fields.Many2one(related='vehicle_id.axle_config_id')
     position_id = fields.Many2one('fleet.tyre.position', string='Position', domain="[('config_id', '=', vehicle_axle_config_id)]")
     
-    related_tyre_ids = fields.Many2many('fleet.vehicle.tyre', string='Other Tyres', help="Select other tyres on the same vehicle to update.")
+    line_ids = fields.One2many('fleet.tyre.operation.line', 'wizard_id', string='Tyre Lines')
     
     destination_location_id = fields.Many2one('stock.location', string='Destination Location', domain=[('usage', '=', 'internal')])
     
@@ -69,17 +69,28 @@ class FleettyreOperationWizard(models.TransientModel):
         return loc
     
     @api.onchange('operation_type')
+    @api.onchange('operation_type', 'tyre_id')
     def _onchange_operation_type(self):
         if self.operation_type == 'gate_check' and self.vehicle_id:
-            # Auto-select other tyres on the same vehicle
+            # Auto-populate lines with all tyres on the same vehicle
+            lines = []
+            
+            # 1. Add other tyres on the vehicle
             other_tyres = self.env['fleet.vehicle.tyre'].search([
                 ('vehicle_id', '=', self.vehicle_id.id),
-                ('id', '!=', self.tyre_id.id),
                 ('state', '=', 'mounted')
             ])
-            self.related_tyre_ids = [(6, 0, other_tyres.ids)]
+            
+            for t in other_tyres:
+                 lines.append((0, 0, {
+                     'tyre_id': t.id,
+                     'tread_depth': t.current_tread_depth,
+                     'odometer': self.odometer, # Default to wizard odometer
+                 }))
+            
+            self.line_ids = lines
         else:
-            self.related_tyre_ids = [(5, 0, 0)]
+            self.line_ids = [(5, 0, 0)]
 
     @api.model
     def default_get(self, fields_list):
@@ -139,15 +150,26 @@ class FleettyreOperationWizard(models.TransientModel):
         }
         
         # Collect all tyres to process (Self + Selected Related)
-        tyres_to_process = [tyre]
         if self.operation_type == 'gate_check':
-            tyres_to_process.extend(self.related_tyre_ids)
+             # Process Lines
+             for line in self.line_ids:
+                 vals = history_vals.copy()
+                 vals.update({
+                     'tyre_id': line.tyre_id.id,
+                     'tread_depth': line.tread_depth, # Use individual line tread depth
+                     'odometer': line.odometer if line.odometer else self.odometer or 0.0,
+                 })
+                 self.env['fleet.vehicle.tyre.history'].create(vals)
+                 
+                 # Optional Update Tyre
+                 if line.tread_depth:
+                     line.tyre_id.write({'current_tread_depth': line.tread_depth})
+             
+             # Don't create duplicate history for main tyre if it was in the lines
+             return {'type': 'ir.actions.act_window_close'}
 
-        for t in tyres_to_process:
-             # Create history for each (adjust logic if needed per tyre)
-             vals = history_vals.copy()
-             vals['tyre_id'] = t.id
-             self.env['fleet.vehicle.tyre.history'].create(vals)
+        # Non-Batch Operations (Single Tyre)
+        self.env['fleet.vehicle.tyre.history'].create(history_vals)
              
         # Stock Move Logic - ONLY for the main tyre_id (wizard context)
         # We generally don't move "related" tyres in bulk logic for mount/dismount yet, 

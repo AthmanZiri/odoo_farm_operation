@@ -15,7 +15,14 @@
                         <field name="position_id" invisible="operation_type not in ('mount')" required="operation_type == 'mount'"/>
                         <field name="destination_location_id" invisible="operation_type not in ('dismount', 'return_stock')" required="operation_type == 'return_stock'"/>
                         <field name="gate_scan_type" invisible="operation_type != 'gate_check'" required="operation_type == 'gate_check'"/>
-                        <field name="related_tyre_ids" widget="many2many_checkboxes" invisible="operation_type != 'gate_check'" domain="[('vehicle_id', '=', vehicle_id), ('state', '=', 'mounted')]"/>
+                        <field name="line_ids" invisible="operation_type != 'gate_check'">
+                            <list editable="bottom" create="0">
+                                <field name="tyre_id" readonly="1"/>
+                                <field name="position_id"/>
+                                <field name="tread_depth"/>
+                                <field name="odometer"/>
+                            </list>
+                        </field>
                         <field name="odometer"/>
                         <field name="tread_depth"/>
                         

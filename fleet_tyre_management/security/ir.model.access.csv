@@ -11,3 +11,13 @@ access_fleet_tyre_axle_config_user,fleet.tyre.axle.config,model_fleet_tyre_axle_
 access_fleet_tyre_axle_config_manager,fleet.tyre.axle.config,model_fleet_tyre_axle_config,fleet.fleet_group_manager,1,1,1,1
 access_fleet_tyre_position_user,fleet.tyre.position,model_fleet_tyre_position,fleet.fleet_group_user,1,1,1,1
 access_fleet_tyre_position_manager,fleet.tyre.position,model_fleet_tyre_position,fleet.fleet_group_manager,1,1,1,1
+access_fleet_tyre_operation_line_user,fleet.tyre.operation.line,model_fleet_tyre_operation_line,fleet.fleet_group_user,1,1,1,1
+access_fleet_tyre_operation_line_manager,fleet.tyre.operation.line,model_fleet_tyre_operation_line,fleet.fleet_group_manager,1,1,1,1
+access_fleet_tyre_gate_check_user,fleet.tyre.gate.check,model_fleet_tyre_gate_check,fleet.fleet_group_user,1,1,1,1
+access_fleet_tyre_gate_check_manager,fleet.tyre.gate.check,model_fleet_tyre_gate_check,fleet.fleet_group_manager,1,1,1,1
+access_fleet_tyre_gate_check_line_user,fleet.tyre.gate.check.line,model_fleet_tyre_gate_check_line,fleet.fleet_group_user,1,1,1,1
+access_fleet_tyre_gate_check_line_manager,fleet.tyre.gate.check.line,model_fleet_tyre_gate_check_line,fleet.fleet_group_manager,1,1,1,1
+access_fleet_tyre_requisition_user,fleet.tyre.requisition,model_fleet_tyre_requisition,fleet.fleet_group_user,1,1,1,1
+access_fleet_tyre_requisition_manager,fleet.tyre.requisition,model_fleet_tyre_requisition,fleet.fleet_group_manager,1,1,1,1
+access_fleet_tyre_requisition_line_user,fleet.tyre.requisition.line,model_fleet_tyre_requisition_line,fleet.fleet_group_user,1,1,1,1
+access_fleet_tyre_requisition_line_manager,fleet.tyre.requisition.line,model_fleet_tyre_requisition_line,fleet.fleet_group_manager,1,1,1,1

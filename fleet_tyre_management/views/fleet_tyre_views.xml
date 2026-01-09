@@ -235,6 +235,12 @@
               parent="menu_fleet_tyre_management_root"
               sequence="10"/>
 
+    <menuitem id="menu_fleet_gate_check"
+              name="Gate Check"
+              parent="menu_tyre_operations"
+              action="action_fleet_gate_check"
+              sequence="1"/>
+
     <menuitem id="menu_tyre_visual_ops"
               name="Visual Operations"
               parent="menu_tyre_operations"

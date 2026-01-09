@@ -5,3 +5,6 @@ from . import stock_lot
 from . import stock_move
 from . import stock_move_line
 from . import fleet_axle_config
+from . import fleet_tyre_operation_line
+from . import fleet_gate_check
+from . import fleet_tyre_requisition
