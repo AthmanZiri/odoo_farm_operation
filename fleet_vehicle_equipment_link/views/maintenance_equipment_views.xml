@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="maintenance_equipment_view_form_inherit_vehicle" model="ir.ui.view">
+        <field name="name">maintenance.equipment.view.form.inherit.vehicle</field>
+        <field name="model">maintenance.equipment</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_view_form"/>
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button name="action_view_vehicle"
+                    type="object"
+                    class="oe_stat_button"
+                    icon="fa-car"
+                    invisible="not vehicle_id">
+                    <div class="o_stat_info">
+                        <span class="o_stat_text">Vehicle</span>
+                    </div>
+                </button>
+            </div>
+            <xpath expr="//field[@name='category_id']" position="after">
+                <field name="vehicle_id" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
