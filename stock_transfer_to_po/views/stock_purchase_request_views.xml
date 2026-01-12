@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_stock_purchase_request_tree" model="ir.ui.view">
+        <field name="name">stock.purchase.request.tree</field>
+        <field name="model">stock.purchase.request</field>
+        <field name="arch" type="xml">
+            <list string="Purchase Requests" decoration-info="state == 'draft'" decoration-warning="state == 'submitted'" decoration-success="state == 'approved'" decoration-danger="state == 'rejected'">
+                <field name="name"/>
+                <field name="requester_id"/>
+                <field name="create_date"/>
+                <field name="state"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_stock_purchase_request_form" model="ir.ui.view">
+        <field name="name">stock.purchase.request.form</field>
+        <field name="model">stock.purchase.request</field>
+        <field name="arch" type="xml">
+            <form string="Purchase Request">
+                <header>
+                    <button name="action_submit" string="Submit" type="object" class="oe_highlight" invisible="state != 'draft'"/>
+                    <button name="action_approve" string="Approve" type="object" class="oe_highlight" invisible="state != 'submitted'" groups="stock.group_stock_manager"/>
+                    <button name="action_reject" string="Reject" type="object" invisible="state != 'submitted'" groups="stock.group_stock_manager"/>
+                    <button name="action_reset_draft" string="Reset to Draft" type="object" invisible="state != 'rejected'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,submitted,approved"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_purchase_orders" type="object" class="oe_stat_button" icon="fa-shopping-cart" invisible="purchase_count == 0">
+                            <field name="purchase_count" widget="statinfo" string="Purchase Orders"/>
+                        </button>
+                        <button name="action_view_stock_moves" type="object" class="oe_stat_button" icon="fa-arrows-v" invisible="move_count == 0">
+                            <field name="move_count" widget="statinfo" string="Stock Moves"/>
+                        </button>
+                        <button name="action_view_stock_pickings" type="object" class="oe_stat_button" icon="fa-truck" invisible="picking_count == 0">
+                            <field name="picking_count" widget="statinfo" string="Transfers"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="requester_id" readonly="state != 'draft'"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group>
+                            <field name="create_date" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Products" name="products">
+                            <field name="line_ids" readonly="state in ['approved', 'rejected']">
+                                <list editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="quantity"/>
+                                    <field name="partner_id"/>
+                                    <field name="move_id" optional="hide"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Purchase Orders" name="purchase_orders" invisible="not purchase_order_ids">
+                            <field name="purchase_order_ids"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_stock_purchase_request" model="ir.actions.act_window">
+        <field name="name">Purchase Requests</field>
+        <field name="res_model">stock.purchase.request</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            Create a new Purchase Request
+          </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_stock_purchase_request"
+              name="Purchase Requests"
+              parent="purchase.menu_procurement_management"
+              action="action_stock_purchase_request"
+              sequence="20"/>
+</odoo>

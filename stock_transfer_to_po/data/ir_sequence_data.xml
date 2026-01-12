@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="seq_stock_purchase_request" model="ir.sequence">
+            <field name="name">Stock Purchase Request</field>
+            <field name="code">stock.purchase.request</field>
+            <field name="prefix">SPR/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+</odoo>

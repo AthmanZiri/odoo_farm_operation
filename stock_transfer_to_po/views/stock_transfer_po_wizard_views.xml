@@ -23,7 +23,7 @@
                     </list>
                 </field>
                 <footer>
-                    <button string="Create Purchase Orders" name="action_create_po" type="object" class="btn-primary" 
+                    <button string="Create Purchase Request" name="action_create_po" type="object" class="btn-primary" 
                             invisible="not line_ids"/>
                     <button string="Cancel" class="btn-secondary" special="cancel"/>
                 </footer>
