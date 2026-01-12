@@ -15,8 +15,11 @@
             <field name="res_model">maintenance.request</field>
         </record>
 
-        <function model="worksheet.template" name="_preload_maintenance_templates">
+        <function model="worksheet.template" name="_generate_accumulated_template">
             <value eval="'maintenance_worksheet_templates.template_jd8230_250h'"/>
+            <value>JD 8230</value>
+            <value eval="250"/>
+            <!-- Specific Fields -->
             <value eval="[
                 {'name': 'x_clean_fuel_tank_sump', 'string': 'CLEAN: Fuel Tank Sump'},
                 {'name': 'x_clean_fuel_tank_vent_filter', 'string': 'CLEAN: Fuel Tank Vent Filter'},
@@ -35,42 +38,6 @@
             ]"/>
         </function>
 
-        <record id="view_jd8230_250h" model="ir.ui.view">
-            <field name="name">jd8230.250h.form</field>
-            <field name="model" model="ir.model" eval="obj().env.ref('maintenance_worksheet_templates.template_jd8230_250h').model_id.model"/>
-            <field name="arch" type="xml">
-                <form>
-                    <sheet>
-                        <group>
-                            <group string="CLEAN">
-                                <field name="x_clean_fuel_tank_sump"/>
-                                <field name="x_clean_fuel_tank_vent_filter"/>
-                                <field name="x_clean_recirculation_filter"/>
-                            </group>
-                            <group string="GREASE">
-                                <field name="x_grease_front_axle"/>
-                            </group>
-                            <group string="INSPECT">
-                                <field name="x_inspect_engine_air_filter"/>
-                                <field name="x_inspect_neutral_start"/>
-                                <field name="x_inspect_park_position"/>
-                                <field name="x_inspect_wheel_bolts"/>
-                                <field name="x_inspect_tyre_pressures"/>
-                                <field name="x_inspect_battery_lights"/>
-                                <field name="x_inspect_fan_belts"/>
-                                <field name="x_inspect_brakes"/>
-                                <field name="x_inspect_mfwd_diff_oil"/>
-                                <field name="x_inspect_mfwd_hub_oil"/>
-                            </group>
-                        </group>
-                        <group>
-                            <field name="x_comments"/>
-                        </group>
-                    </sheet>
-                </form>
-            </field>
-        </record>
-
         <!-- ========================================== -->
         <!-- Template 2: JD 8230 - 500 Hour Service -->
         <!-- ========================================== -->
@@ -79,8 +46,11 @@
             <field name="res_model">maintenance.request</field>
         </record>
 
-        <function model="worksheet.template" name="_preload_maintenance_templates">
+        <function model="worksheet.template" name="_generate_accumulated_template">
             <value eval="'maintenance_worksheet_templates.template_jd8230_500h'"/>
+            <value>JD 8230</value>
+            <value eval="500"/>
+            <!-- Specific Fields -->
             <value eval="[
                 {'name': 'x_change_engine_oil', 'string': 'CHANGE: Engine Oil &amp; Filter'},
                 {'name': 'x_change_fuel_filters', 'string': 'CHANGE: Both Fuel Filters'},
@@ -94,39 +64,6 @@
             ]"/>
         </function>
 
-        <record id="view_jd8230_500h" model="ir.ui.view">
-            <field name="name">jd8230.500h.form</field>
-            <field name="model" model="ir.model" eval="obj().env.ref('maintenance_worksheet_templates.template_jd8230_500h').model_id.model"/>
-            <field name="arch" type="xml">
-                <form>
-                    <sheet>
-                        <group>
-                            <group string="CHANGE">
-                                <field name="x_change_engine_oil"/>
-                                <field name="x_change_fuel_filters"/>
-                            </group>
-                            <group string="INSPECT">
-                                <field name="x_inspect_coolant_weep"/>
-                                <field name="x_inspect_air_intake"/>
-                                <field name="x_inspect_trans_oil"/>
-                                <field name="x_inspect_brake_fluid"/>
-                            </group>
-                            <group string="CLEAN">
-                                <field name="x_clean_primary_air_filter"/>
-                                <field name="x_clean_mfwd_vent"/>
-                            </group>
-                            <group string="TEST">
-                                <field name="x_test_coolant"/>
-                            </group>
-                        </group>
-                        <group>
-                            <field name="x_comments"/>
-                        </group>
-                    </sheet>
-                </form>
-            </field>
-        </record>
-
         <!-- ========================================== -->
         <!-- Template 3: JD 8230 - 750 Hour Service -->
         <!-- ========================================== -->
@@ -135,37 +72,16 @@
             <field name="res_model">maintenance.request</field>
         </record>
 
-        <function model="worksheet.template" name="_preload_maintenance_templates">
+        <function model="worksheet.template" name="_generate_accumulated_template">
             <value eval="'maintenance_worksheet_templates.template_jd8230_750h'"/>
+            <value>JD 8230</value>
+            <value eval="750"/>
             <value eval="[
                 {'name': 'x_change_cab_air_filter', 'string': 'CHANGE: Cab Air Filter'},
                 {'name': 'x_change_sec_air_filter', 'string': 'CHANGE: Secondary Engine Air Filter'},
                 {'name': 'x_inspect_aux_belt', 'string': 'INSPECT: Auxiliary Belt Tensioner'},
             ]"/>
         </function>
-
-        <record id="view_jd8230_750h" model="ir.ui.view">
-            <field name="name">jd8230.750h.form</field>
-            <field name="model" model="ir.model" eval="obj().env.ref('maintenance_worksheet_templates.template_jd8230_750h').model_id.model"/>
-            <field name="arch" type="xml">
-                <form>
-                    <sheet>
-                        <group>
-                            <group string="CHANGE">
-                                <field name="x_change_cab_air_filter"/>
-                                <field name="x_change_sec_air_filter"/>
-                            </group>
-                            <group string="INSPECT">
-                                <field name="x_inspect_aux_belt"/>
-                            </group>
-                        </group>
-                        <group>
-                            <field name="x_comments"/>
-                        </group>
-                    </sheet>
-                </form>
-            </field>
-        </record>
 
         <!-- ========================================== -->
         <!-- Template 4: JD 8230 - 1500 Hour Service -->
@@ -175,8 +91,10 @@
             <field name="res_model">maintenance.request</field>
         </record>
 
-        <function model="worksheet.template" name="_preload_maintenance_templates">
+        <function model="worksheet.template" name="_generate_accumulated_template">
             <value eval="'maintenance_worksheet_templates.template_jd8230_1500h'"/>
+            <value>JD 8230</value>
+            <value eval="1500"/>
             <value eval="[
                 {'name': 'x_change_trans_oil', 'string': 'CHANGE FLUIDS: Transmission Oil'},
                 {'name': 'x_change_hyd_oil', 'string': 'CHANGE FLUIDS: Hydraulic Oil'},
@@ -191,40 +109,6 @@
             ]"/>
         </function>
 
-        <record id="view_jd8230_1500h" model="ir.ui.view">
-            <field name="name">jd8230.1500h.form</field>
-            <field name="model" model="ir.model" eval="obj().env.ref('maintenance_worksheet_templates.template_jd8230_1500h').model_id.model"/>
-            <field name="arch" type="xml">
-                <form>
-                    <sheet>
-                        <group>
-                            <group string="CHANGE FLUIDS">
-                                <field name="x_change_trans_oil"/>
-                                <field name="x_change_hyd_oil"/>
-                                <field name="x_change_mfwd_diff_oil"/>
-                                <field name="x_change_front_hub_oil"/>
-                            </group>
-                            <group string="CHANGE FILTERS">
-                                <field name="x_change_trans_filter"/>
-                                <field name="x_change_hyd_filter"/>
-                            </group>
-                            <group string="CLEAN">
-                                <field name="x_clean_trans_screen"/>
-                                <field name="x_clean_hyd_screen"/>
-                                <field name="x_clean_oil_reservoir"/>
-                            </group>
-                            <group string="GREASE">
-                                <field name="x_grease_draft_link"/>
-                            </group>
-                        </group>
-                        <group>
-                            <field name="x_comments"/>
-                        </group>
-                    </sheet>
-                </form>
-            </field>
-        </record>
-
         <!-- ========================================== -->
         <!-- Template 5: JD 8230 - 2000 Hour Service -->
         <!-- ========================================== -->
@@ -233,37 +117,16 @@
             <field name="res_model">maintenance.request</field>
         </record>
 
-        <function model="worksheet.template" name="_preload_maintenance_templates">
+        <function model="worksheet.template" name="_generate_accumulated_template">
             <value eval="'maintenance_worksheet_templates.template_jd8230_2000h'"/>
+            <value>JD 8230</value>
+            <value eval="2000"/>
             <value eval="[
                 {'name': 'x_adjust_valve_clearance', 'string': 'ADJUST: Engine Valve Clearance'},
                 {'name': 'x_change_thermostats', 'string': 'CHANGE: Engine Coolant Thermostats'},
                 {'name': 'x_change_deaeration_cap', 'string': 'CHANGE: Coolant De-aeration Tank Cap'},
             ]"/>
         </function>
-
-        <record id="view_jd8230_2000h" model="ir.ui.view">
-            <field name="name">jd8230.2000h.form</field>
-            <field name="model" model="ir.model" eval="obj().env.ref('maintenance_worksheet_templates.template_jd8230_2000h').model_id.model"/>
-            <field name="arch" type="xml">
-                <form>
-                    <sheet>
-                        <group>
-                            <group string="ADJUST">
-                                <field name="x_adjust_valve_clearance"/>
-                            </group>
-                            <group string="CHANGE">
-                                <field name="x_change_thermostats"/>
-                                <field name="x_change_deaeration_cap"/>
-                            </group>
-                        </group>
-                        <group>
-                            <field name="x_comments"/>
-                        </group>
-                    </sheet>
-                </form>
-            </field>
-        </record>
 
         <!-- ========================================== -->
         <!-- Template 6: JD 8230 - 4500 Hour Service -->
@@ -273,35 +136,15 @@
             <field name="res_model">maintenance.request</field>
         </record>
 
-        <function model="worksheet.template" name="_preload_maintenance_templates">
+        <function model="worksheet.template" name="_generate_accumulated_template">
             <value eval="'maintenance_worksheet_templates.template_jd8230_4500h'"/>
+            <value>JD 8230</value>
+            <value eval="4500"/>
             <value eval="[
                 {'name': 'x_change_crank_damper', 'string': 'CHANGE: Engine Crankshaft Damper'},
                 {'name': 'x_service_flush_coolant', 'string': 'SERVICE: Drain, Flush &amp; Refill Engine Cooling System'},
             ]"/>
         </function>
-
-        <record id="view_jd8230_4500h" model="ir.ui.view">
-            <field name="name">jd8230.4500h.form</field>
-            <field name="model" model="ir.model" eval="obj().env.ref('maintenance_worksheet_templates.template_jd8230_4500h').model_id.model"/>
-            <field name="arch" type="xml">
-                <form>
-                    <sheet>
-                        <group>
-                            <group string="CHANGE">
-                                <field name="x_change_crank_damper"/>
-                            </group>
-                            <group string="SERVICE">
-                                <field name="x_service_flush_coolant"/>
-                            </group>
-                        </group>
-                        <group>
-                            <field name="x_comments"/>
-                        </group>
-                    </sheet>
-                </form>
-            </field>
-        </record>
 
     </data>
 </odoo>

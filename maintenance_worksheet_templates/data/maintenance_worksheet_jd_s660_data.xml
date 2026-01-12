@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data noupdate="0">
+    <data noupdate="1">
 
         <!-- Equipment Category -->
         <record id="maintenance_category_harvesters" model="maintenance.equipment.category">
@@ -15,8 +15,10 @@
             <field name="res_model">maintenance.request</field>
         </record>
 
-        <function model="worksheet.template" name="_preload_maintenance_templates">
+        <function model="worksheet.template" name="_generate_accumulated_template">
             <value eval="'maintenance_worksheet_templates.template_jd_s660_250h'"/>
+            <value>JD S660</value>
+            <value eval="250"/>
             <value eval="[
                 {'name': 'x_inspect_engine_air_filter_bag', 'string': 'INSPECT: Primary Engine Air Filter (Plastic Bag)'},
                 {'name': 'x_inspect_straw_chopper_bearing', 'string': 'INSPECT: Straw Chopper Bearing'},
@@ -53,8 +55,10 @@
             <field name="res_model">maintenance.request</field>
         </record>
 
-        <function model="worksheet.template" name="_preload_maintenance_templates">
+        <function model="worksheet.template" name="_generate_accumulated_template">
             <value eval="'maintenance_worksheet_templates.template_jd_s660_500h'"/>
+            <value>JD S660</value>
+            <value eval="500"/>
             <value eval="[
                 {'name': 'x_change_engine_oil_s660', 'string': 'CHANGE: Engine Oil &amp; Filter'},
                 {'name': 'x_change_hyd_filter_s660', 'string': 'CHANGE: Main Hydraulic System Filter'},
@@ -78,8 +82,10 @@
             <field name="res_model">maintenance.request</field>
         </record>
 
-        <function model="worksheet.template" name="_preload_maintenance_templates">
+        <function model="worksheet.template" name="_generate_accumulated_template">
             <value eval="'maintenance_worksheet_templates.template_jd_s660_750h'"/>
+            <value>JD S660</value>
+            <value eval="750"/>
             <value eval="[
                 {'name': 'x_change_cab_air_filter_s660', 'string': 'CHANGE: Cab Air Filter'},
                 {'name': 'x_change_safety_air_filter', 'string': 'CHANGE: Safety Engine Air Filter'},
@@ -95,8 +101,10 @@
             <field name="res_model">maintenance.request</field>
         </record>
 
-        <function model="worksheet.template" name="_preload_maintenance_templates">
+        <function model="worksheet.template" name="_generate_accumulated_template">
             <value eval="'maintenance_worksheet_templates.template_jd_s660_1000h'"/>
+            <value>JD S660</value>
+            <value eval="1000"/>
             <value eval="[
                 {'name': 'x_adjust_straw_chopper_knives', 'string': 'ADJUST: Turn Straw Chopper Knives Around'},
                 {'name': 'x_change_primary_countershaft_oil', 'string': 'CHANGE FLUIDS: Primary Countershaft Gearcase Oil'},
@@ -117,8 +125,10 @@
             <field name="res_model">maintenance.request</field>
         </record>
 
-        <function model="worksheet.template" name="_preload_maintenance_templates">
+        <function model="worksheet.template" name="_generate_accumulated_template">
             <value eval="'maintenance_worksheet_templates.template_jd_s660_2000h'"/>
+            <value>JD S660</value>
+            <value eval="2000"/>
             <value eval="[
                 {'name': 'x_change_coolant_s660', 'string': 'CHANGE: Engine Coolant'},
                 {'name': 'x_change_chopper_knives', 'string': 'CHANGE: Straw Chopper Knives (Replace)'},
@@ -135,8 +145,10 @@
             <field name="res_model">maintenance.request</field>
         </record>
 
-        <function model="worksheet.template" name="_preload_maintenance_templates">
+        <function model="worksheet.template" name="_generate_accumulated_template">
             <value eval="'maintenance_worksheet_templates.template_jd_s660_4500h'"/>
+            <value>JD S660</value>
+            <value eval="4500"/>
             <value eval="[
                 {'name': 'x_change_crank_damper_s660', 'string': 'CHANGE: Engine Crankshaft Damper'},
             ]"/>

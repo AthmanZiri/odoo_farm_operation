@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data noupdate="0">
+    <data noupdate="1">
 
         <!-- Equipment Category -->
         <record id="maintenance_category_motorbikes" model="maintenance.equipment.category">
@@ -15,8 +15,10 @@
             <field name="res_model">maintenance.request</field>
         </record>
 
-        <function model="worksheet.template" name="_preload_maintenance_templates">
+        <function model="worksheet.template" name="_generate_accumulated_template">
             <value eval="'maintenance_worksheet_templates.template_motorbike_2500km'"/>
+            <value>Motorbike</value>
+            <value eval="2500"/>
             <value eval="[
                 {'name': 'x_lubricate_drive_chain', 'string': 'LUBRICATE: Drive Chain'},
                 {'name': 'x_check_battery_electrolyte', 'string': 'CHECK/ADJUST: Battery Electrolyte Level'},
@@ -39,6 +41,7 @@
                 {'name': 'x_check_rear_shock', 'string': 'CHECK/REPLACE: Rear Shock Absorber'},
                 {'name': 'x_check_drive_chain_slack', 'string': 'CHECK/ADJUST: Drive Chain Slack'},
             ]"/>
+            <value>km</value>
         </function>
 
         <!-- ========================================== -->
@@ -49,14 +52,17 @@
             <field name="res_model">maintenance.request</field>
         </record>
 
-        <function model="worksheet.template" name="_preload_maintenance_templates">
+        <function model="worksheet.template" name="_generate_accumulated_template">
             <value eval="'maintenance_worksheet_templates.template_motorbike_5000km'"/>
+            <value>Motorbike</value>
+            <value eval="5000"/>
             <value eval="[
                 {'name': 'x_check_valve_tappet', 'string': 'CHECK/ADJUST: Valve Tappet Clearance'},
                 {'name': 'x_check_front_fork', 'string': 'CHECK: Front Fork'},
                 {'name': 'x_replace_engine_oil_moto', 'string': 'REPLACE: Engine Oil'},
                 {'name': 'x_replace_oil_filter_moto', 'string': 'REPLACE: Paper Oil Filter'},
             ]"/>
+            <value>km</value>
         </function>
 
         <!-- ========================================== -->
@@ -67,14 +73,17 @@
             <field name="res_model">maintenance.request</field>
         </record>
 
-        <function model="worksheet.template" name="_preload_maintenance_templates">
+        <function model="worksheet.template" name="_generate_accumulated_template">
             <value eval="'maintenance_worksheet_templates.template_motorbike_10000km'"/>
+            <value>Motorbike</value>
+            <value eval="10000"/>
             <value eval="[
                 {'name': 'x_clean_oil_strainer', 'string': 'CLEAN: Oil Strainer'},
                 {'name': 'x_replace_air_cleaner_10000', 'string': 'REPLACE: Replace Air Cleaner Element'},
                 {'name': 'x_replace_spark_plug', 'string': 'REPLACE: Spark Plug'},
                 {'name': 'x_replace_front_fork_oil', 'string': 'REPLACE: Front Fork Oil'},
             ]"/>
+            <value>km</value>
         </function>
 
         <!-- ========================================== -->
@@ -85,14 +94,17 @@
             <field name="res_model">maintenance.request</field>
         </record>
 
-        <function model="worksheet.template" name="_preload_maintenance_templates">
+        <function model="worksheet.template" name="_generate_accumulated_template">
             <value eval="'maintenance_worksheet_templates.template_motorbike_15000km'"/>
+            <value>Motorbike</value>
+            <value eval="15000"/>
             <value eval="[
                 {'name': 'x_replace_fuel_pipes', 'string': 'REPLACE: Fuel Pipes'},
                 {'name': 'x_lubricate_steering_stem', 'string': 'LUBRICATE: Steering Stem Bearing'},
                 {'name': 'x_lubricate_wheel_bearing', 'string': 'LUBRICATE: Wheel Bearing'},
                 {'name': 'x_lubricate_swing_arm', 'string': 'LUBRICATE: Swing Arm Pivot Pin'},
             ]"/>
+            <value>km</value>
         </function>
 
         <!-- ========================================== -->
@@ -103,13 +115,16 @@
             <field name="res_model">maintenance.request</field>
         </record>
 
-        <function model="worksheet.template" name="_preload_maintenance_templates">
+        <function model="worksheet.template" name="_generate_accumulated_template">
             <value eval="'maintenance_worksheet_templates.template_motorbike_30000km'"/>
+            <value>Motorbike</value>
+            <value eval="30000"/>
             <value eval="[
                 {'name': 'x_check_front_brake_cable', 'string': 'CHECK/REPLACE: Front Brake Cable'},
                 {'name': 'x_service_valve_lapping', 'string': 'SERVICE: Valve Lapping'},
                 {'name': 'x_service_valve_oil_seal', 'string': 'SERVICE: Valve Oil Seal'},
             ]"/>
+            <value>km</value>
         </function>
 
     </data>

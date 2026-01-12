@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data noupdate="0">
+    <data noupdate="1">
 
         <!-- Equipment Category -->
         <record id="maintenance_category_sprayers" model="maintenance.equipment.category">
@@ -15,8 +15,10 @@
             <field name="res_model">maintenance.request</field>
         </record>
 
-        <function model="worksheet.template" name="_preload_maintenance_templates">
+        <function model="worksheet.template" name="_generate_accumulated_template">
             <value eval="'maintenance_worksheet_templates.template_bateman_rb15_250h'"/>
+            <value>Bateman RB15</value>
+            <value eval="250"/>
             <value eval="[
                 {'name': 'x_inspect_air_intake_rb15', 'string': 'INSPECT: Air Intake System'},
                 {'name': 'x_inspect_plastic_bag_rb15', 'string': 'INSPECT: Put Plastic Bag over Primary Engine Air Filter'},
@@ -35,8 +37,10 @@
             <field name="res_model">maintenance.request</field>
         </record>
 
-        <function model="worksheet.template" name="_preload_maintenance_templates">
+        <function model="worksheet.template" name="_generate_accumulated_template">
             <value eval="'maintenance_worksheet_templates.template_bateman_rb15_500h'"/>
+            <value>Bateman RB15</value>
+            <value eval="500"/>
             <value eval="[
                 {'name': 'x_change_engine_oil_rb15', 'string': 'CHANGE: Engine Oil'},
                 {'name': 'x_change_oil_filter_rb15', 'string': 'CHANGE: Engine Oil Filter'},
@@ -54,8 +58,10 @@
             <field name="res_model">maintenance.request</field>
         </record>
 
-        <function model="worksheet.template" name="_preload_maintenance_templates">
+        <function model="worksheet.template" name="_generate_accumulated_template">
             <value eval="'maintenance_worksheet_templates.template_bateman_rb15_750h'"/>
+            <value>Bateman RB15</value>
+            <value eval="750"/>
             <value eval="[
                 {'name': 'x_change_cab_filter_rb15', 'string': 'CHANGE: Cab Air Filter'},
             ]"/>
@@ -69,8 +75,10 @@
             <field name="res_model">maintenance.request</field>
         </record>
 
-        <function model="worksheet.template" name="_preload_maintenance_templates">
+        <function model="worksheet.template" name="_generate_accumulated_template">
             <value eval="'maintenance_worksheet_templates.template_bateman_rb15_1000h'"/>
+            <value>Bateman RB15</value>
+            <value eval="1000"/>
             <value eval="[
                 {'name': 'x_change_sec_air_filter_rb15', 'string': 'CHANGE: Secondary Engine Air Filter'},
                 {'name': 'x_change_hyd_oil_rb15', 'string': 'CHANGE: Hydraulic Oil'},
@@ -85,8 +93,10 @@
             <field name="res_model">maintenance.request</field>
         </record>
 
-        <function model="worksheet.template" name="_preload_maintenance_templates">
+        <function model="worksheet.template" name="_generate_accumulated_template">
             <value eval="'maintenance_worksheet_templates.template_bateman_rb15_2000h'"/>
+            <value>Bateman RB15</value>
+            <value eval="2000"/>
             <value eval="[
                 {'name': 'x_adjust_valve_clearance_rb15', 'string': 'ADJUST: Engine Valve Clearance'},
                 {'name': 'x_change_coolant_rb15', 'string': 'CHANGE: Drain, Flush + Refill Engine Cooling System'},
@@ -101,8 +111,10 @@
             <field name="res_model">maintenance.request</field>
         </record>
 
-        <function model="worksheet.template" name="_preload_maintenance_templates">
+        <function model="worksheet.template" name="_generate_accumulated_template">
             <value eval="'maintenance_worksheet_templates.template_bateman_rb15_4000h'"/>
+            <value>Bateman RB15</value>
+            <value eval="4000"/>
             <value eval="[
                 {'name': 'x_change_crank_damper_rb15', 'string': 'CHANGE: Engine Crankshaft Damper'},
             ]"/>

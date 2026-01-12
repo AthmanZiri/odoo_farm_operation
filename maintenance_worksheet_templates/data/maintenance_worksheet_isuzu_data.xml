@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data noupdate="0">
+    <data noupdate="1">
 
         <!-- Equipment Category -->
         <record id="maintenance_category_vehicles" model="maintenance.equipment.category">
@@ -15,8 +15,10 @@
             <field name="res_model">maintenance.request</field>
         </record>
 
-        <function model="worksheet.template" name="_preload_maintenance_templates">
+        <function model="worksheet.template" name="_generate_accumulated_template">
             <value eval="'maintenance_worksheet_templates.template_isuzu_5000km'"/>
+            <value>Isuzu</value>
+            <value eval="5000"/>
             <value eval="[
                 {'name': 'x_change_engine_oil_isuzu', 'string': 'CHANGE: Engine Oil and Filter'},
                 {'name': 'x_inspect_fuel_sedimentor', 'string': 'INSPECT: Fuel Sedimentor for Presence of Water'},
@@ -64,6 +66,7 @@
                 {'name': 'x_inspect_door_closing', 'string': 'INSPECT: Door/Bonnet/Tail Gate Closing/Locking'},
                 {'name': 'x_inspect_ac_drain', 'string': 'INSPECT: Air Conditioner Drain Pipe'},
             ]"/>
+            <value>km</value>
         </function>
 
         <!-- ========================================== -->
@@ -74,12 +77,15 @@
             <field name="res_model">maintenance.request</field>
         </record>
 
-        <function model="worksheet.template" name="_preload_maintenance_templates">
+        <function model="worksheet.template" name="_generate_accumulated_template">
             <value eval="'maintenance_worksheet_templates.template_isuzu_10000km'"/>
+            <value>Isuzu</value>
+            <value eval="10000"/>
             <value eval="[
                 {'name': 'x_change_fuel_filter_isuzu', 'string': 'CHANGE: Fuel Filter'},
                 {'name': 'x_change_pre_fuel_filter', 'string': 'CHANGE: Pre-Fuel Filter'},
             ]"/>
+            <value>km</value>
         </function>
 
         <!-- ========================================== -->
@@ -90,12 +96,15 @@
             <field name="res_model">maintenance.request</field>
         </record>
 
-        <function model="worksheet.template" name="_preload_maintenance_templates">
+        <function model="worksheet.template" name="_generate_accumulated_template">
             <value eval="'maintenance_worksheet_templates.template_isuzu_15000km'"/>
+            <value>Isuzu</value>
+            <value eval="15000"/>
             <value eval="[
                 {'name': 'x_change_manual_trans_fluid', 'string': 'CHANGE: Manual Transmission Fluid'},
                 {'name': 'x_change_transfer_case_fluid', 'string': 'CHANGE: Transfer Case Fluid'},
             ]"/>
+            <value>km</value>
         </function>
 
         <!-- ========================================== -->
@@ -106,11 +115,14 @@
             <field name="res_model">maintenance.request</field>
         </record>
 
-        <function model="worksheet.template" name="_preload_maintenance_templates">
+        <function model="worksheet.template" name="_generate_accumulated_template">
             <value eval="'maintenance_worksheet_templates.template_isuzu_20000km'"/>
+            <value>Isuzu</value>
+            <value eval="20000"/>
             <value eval="[
                 {'name': 'x_change_air_filter_element', 'string': 'CHANGE: Air Filter Element'},
             ]"/>
+            <value>km</value>
         </function>
 
         <!-- ========================================== -->
@@ -121,30 +133,37 @@
             <field name="res_model">maintenance.request</field>
         </record>
 
-        <function model="worksheet.template" name="_preload_maintenance_templates">
+        <function model="worksheet.template" name="_generate_accumulated_template">
             <value eval="'maintenance_worksheet_templates.template_isuzu_50000km'"/>
+            <value>Isuzu</value>
+            <value eval="50000"/>
             <value eval="[
                 {'name': 'x_adjust_valve_clearance_isuzu', 'string': 'ADJUST: Valve Clearance'},
                 {'name': 'x_change_front_wheel_bearing_grease', 'string': 'CHANGE: Front Wheel Bearing Grease and Seal'},
                 {'name': 'x_change_needle_bearing_grease', 'string': 'CHANGE: Needle Bearing Grease(Replace Snap ring)'},
             ]"/>
+            <value>km</value>
         </function>
 
         <!-- ========================================== -->
         <!-- Template 6: Isuzu - 2 Year Service -->
         <!-- ========================================== -->
+        <!-- WARNING: "Year" service intervals are not accumulated by km logic. Manual definition kept, but switched to new loader to gen view. -->
         <record id="template_isuzu_2yr" model="worksheet.template">
             <field name="name">Isuzu - 2 Year Service</field>
             <field name="res_model">maintenance.request</field>
         </record>
 
-        <function model="worksheet.template" name="_preload_maintenance_templates">
+        <function model="worksheet.template" name="_generate_accumulated_template">
             <value eval="'maintenance_worksheet_templates.template_isuzu_2yr'"/>
+            <value>Isuzu</value>
+            <value eval="2"/>
             <value eval="[
                 {'name': 'x_change_brake_fluid_isuzu', 'string': 'CHANGE: Brake Fluid'},
                 {'name': 'x_change_clutch_fluid_isuzu', 'string': 'CHANGE: Clutch Fluid'},
                 {'name': 'x_change_remote_key_battery', 'string': 'CHANGE: Remote Key Battery'},
             ]"/>
+            <value>Year</value>
         </function>
 
         <!-- ========================================== -->
@@ -155,11 +174,14 @@
             <field name="res_model">maintenance.request</field>
         </record>
 
-        <function model="worksheet.template" name="_preload_maintenance_templates">
+        <function model="worksheet.template" name="_generate_accumulated_template">
             <value eval="'maintenance_worksheet_templates.template_isuzu_5yr'"/>
+            <value>Isuzu</value>
+            <value eval="5"/>
             <value eval="[
                 {'name': 'x_change_coolant_concentration', 'string': 'CHANGE: Coolant Concentration (50% Glycol)'},
             ]"/>
+            <value>Year</value>
         </function>
 
     </data>

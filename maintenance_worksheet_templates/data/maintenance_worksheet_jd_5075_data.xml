@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data noupdate="0">
+    <data noupdate="1">
 
-        <!-- Equipment Category (Reusing or creating specific if needed, but sticking to request) -->
-        <!-- Using a specific one to avoid conflicts if "Tractors" already exists generally -->
+        <!-- Equipment Category -->
         <record id="maintenance_category_tractors_5075" model="maintenance.equipment.category">
             <field name="name">Tractors (5075)</field>
         </record>
@@ -16,8 +15,10 @@
             <field name="res_model">maintenance.request</field>
         </record>
 
-        <function model="worksheet.template" name="_preload_maintenance_templates">
+        <function model="worksheet.template" name="_generate_accumulated_template">
             <value eval="'maintenance_worksheet_templates.template_jd_5075_250h'"/>
+            <value>JD 5075</value>
+            <value eval="250"/>
             <value eval="[
                 {'name': 'x_inspect_primary_air_filter_5075', 'string': 'INSPECT: Primary Engine Air Filter'},
                 {'name': 'x_inspect_battery_5075', 'string': 'INSPECT: Battery'},
@@ -35,8 +36,10 @@
             <field name="res_model">maintenance.request</field>
         </record>
 
-        <function model="worksheet.template" name="_preload_maintenance_templates">
+        <function model="worksheet.template" name="_generate_accumulated_template">
             <value eval="'maintenance_worksheet_templates.template_jd_5075_500h'"/>
+            <value>JD 5075</value>
+            <value eval="500"/>
             <value eval="[
                 {'name': 'x_change_engine_oil_5075', 'string': 'CHANGE: Engine Oil'},
                 {'name': 'x_change_oil_filter_5075', 'string': 'CHANGE: Engine Oil Filter'},
@@ -56,8 +59,10 @@
             <field name="res_model">maintenance.request</field>
         </record>
 
-        <function model="worksheet.template" name="_preload_maintenance_templates">
+        <function model="worksheet.template" name="_generate_accumulated_template">
             <value eval="'maintenance_worksheet_templates.template_jd_5075_750h'"/>
+            <value>JD 5075</value>
+            <value eval="750"/>
             <value eval="[
                 {'name': 'x_change_mfwd_oil_5075', 'string': 'CHANGE: Oil in MFWD'},
                 {'name': 'x_clean_crankcase_vent_5075', 'string': 'CLEAN: Engine Crankcase Vent Tube'},
