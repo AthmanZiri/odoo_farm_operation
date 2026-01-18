@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_rfid_reader,rfid.reader,model_rfid_reader,base.group_user,1,1,1,1
+access_rfid_tag_scan,rfid.tag.scan,model_rfid_tag_scan,base.group_user,1,1,1,1
