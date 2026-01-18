@@ -56,7 +56,8 @@
                     <notebook>
                         <page string="Tyres">
                             <field name="line_ids" readonly="state == 'done'">
-                                <list editable="bottom" create="0" delete="0">
+                                <list editable="bottom" create="0" delete="0" decoration-success="is_scanned">
+                                    <field name="is_scanned" column_invisible="1"/>
                                     <field name="tyre_id" readonly="1" force_save="1"/>
                                     <field name="position_id"/>
                                     <field name="current_tread_depth"/>

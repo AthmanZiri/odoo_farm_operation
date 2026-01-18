@@ -105,6 +105,7 @@ class FleetTyreGateCheckLine(models.Model):
     tyre_id = fields.Many2one('fleet.vehicle.tyre', string='Tyre', required=True)
     position_id = fields.Many2one(related='tyre_id.position_id', string='Position', readonly=True)
     current_tread_depth = fields.Float(related='tyre_id.current_tread_depth', string='Current Depth', readonly=True)
+    is_scanned = fields.Boolean(string="Scanned", default=False, readonly=True)
     
     new_tread_depth = fields.Float(string='New Tread Depth (mm)')
     odometer = fields.Float(string='Odometer')

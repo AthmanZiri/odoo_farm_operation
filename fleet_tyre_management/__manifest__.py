@@ -34,6 +34,7 @@
         'web.assets_backend': [
             'fleet_tyre_management/static/src/css/tyre_layout_widget.css',
             'fleet_tyre_management/static/src/js/tyre_layout_widget.js',
+            'fleet_tyre_management/static/src/js/rfid_tyre_widget.js',
             'fleet_tyre_management/static/src/xml/tyre_layout_widget.xml',
         ],
     },

@@ -6,7 +6,7 @@
             <form string="tyre Operation">
                 <group>
                     <group>
-                        <field name="tyre_id" domain="[('state', '=', 'available')]" required="1"/>
+                        <field name="tyre_id" domain="[('state', '=', 'available')]" required="1" widget="rfid_tyre_selection"/>
                         <field name="operation_type" widget="radio"/>
                         <field name="date"/>
                     </group>
