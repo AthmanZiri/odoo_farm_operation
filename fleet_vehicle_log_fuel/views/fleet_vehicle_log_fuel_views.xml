@@ -58,30 +58,38 @@
                     </div>
                     <group>
                         <group>
-                            <field name="description" readonly="state!='todo'" />
-                            <field name="service_type_id" readonly="state!='todo'" />
-                            <field name="product_id" readonly="state!='todo'" />
-                            <field name="location_id" readonly="state!='todo'" />
-                            <field name="location_dest_id" readonly="state!='todo'" />
-                            <field name="date" readonly="state!='todo'" />
+                            <field name="vehicle_id" readonly="state!='todo'" />
+                            <field name="date_time" readonly="state!='todo'" />
+                            <field name="date" readonly="state!='todo'" string="Date (Legacy)" invisible="1"/>
+                            <field name="purchaser_id" readonly="state!='todo'" string="Driver"/>
+                            <field name="job" readonly="state!='todo'"/>
+                            <field name="product_id" readonly="state!='todo'" string="Type of Fuel" domain="[('is_fuel', '=', True)]" context="{'default_is_fuel': True}"/>
+                            <field name="liter" readonly="state!='todo'" string="Litres Filled (L)"/>
+                            <field name="filler_id" readonly="state!='todo'"/>
+                            <field name="location_id" readonly="state!='todo'" string="Filled From"/>
+                            <field name="odometer" readonly="state!='todo'" string="Hours | Kilometers"/>
+                            <field name="odometer_unit" />
+                        </group>
+                        <group>
+                            <label for="prev_date" string="Prev Fill Up"/>
+                            <div>
+                                <field name="prev_date" readonly="1" class="oe_inline"/>
+                            </div>
+                            <field name="prev_odometer" readonly="1" string="Prev Hrs | Km"/>
+                            <field name="distance" readonly="1" string="Distance (Hrs|Km)"/>
+                            <field name="consumption_rate" readonly="1" string="L/Hr"/>
+                            <field name="pump_meter" readonly="state!='todo'"/>
+                            <field name="avg_consumption_rate" readonly="1" string="AVERAGE CR"/>
+                            <field name="physical_pump_reading" readonly="state!='todo'"/>
+                            
                             <field
                                 name="amount"
                                 widget="monetary"
                                 readonly="state!='todo'"
                             />
-                            <field name="vendor_id" readonly="state!='todo'" />
-                        </group>
-                        <group>
-                            <field name="liter" readonly="state!='todo'" />
-                            <field name="price_per_liter" readonly="state!='todo'" />
-                            <field name="vehicle_id" readonly="state!='todo'" />
-                            <field name="purchaser_id" readonly="state!='todo'" />
-                            <field name="odometer_id" invisible="1" />
-                            <label for="odometer" />
-                            <div class="o_row">
-                                <field name="odometer" readonly="odometer_id" />
-                                <field name="odometer_unit" />
-                            </div>
+                            <field name="vendor_id" readonly="state!='todo'" invisible="1"/>
+                            <field name="service_type_id" readonly="state!='todo'" invisible="1"/>
+                            <field name="location_dest_id" readonly="state!='todo'" invisible="1"/>
                         </group>
                     </group>
                     <group string="Notes">
@@ -89,6 +97,7 @@
                             nolabel="1"
                             name="notes"
                             placeholder="Write here any other information related to the service completed."
+                            colspan="2"
                         />
                     </group>
                 </sheet>
@@ -101,15 +110,21 @@
         <field name="model">fleet.vehicle.log.fuel</field>
         <field name="arch" type="xml">
             <list multi_edit="1">
-                <field name="date" readonly="1" />
-                <field name="description" readonly="state!='todo'" />
-                <field name="service_type_id" readonly="state!='todo'" />
-                <field name="product_id" readonly="state!='todo'" />
+                <field name="date_time" optional="show"/>
+                <field name="date" readonly="1" optional="hide"/>
+                <field name="job" optional="hide"/>
+                <field name="description" readonly="state!='todo'" optional="hide"/>
+                <field name="service_type_id" readonly="state!='todo'" optional="hide"/>
+                <field name="product_id" readonly="state!='todo'" optional="show"/>
                 <field name="vehicle_id" readonly="1" widget="many2one_avatar" />
                 <field name="purchaser_id" readonly="1" widget="many2one_avatar" />
+                <field name="filler_id" readonly="1" widget="many2one_avatar" optional="hide"/>
                 <field name="vendor_id" optional="show" readonly="state!='todo'" />
                 <field name="inv_ref" column_invisible="1" />
                 <field name="liter" readonly="state!='todo'" />
+                <field name="distance" optional="hide"/>
+                <field name="consumption_rate" optional="hide"/>
+                <field name="pump_meter" optional="hide"/>
                 <field name="price_per_liter" column_invisible="1" />
                 <field name="notes" optional="show" />
                 <field

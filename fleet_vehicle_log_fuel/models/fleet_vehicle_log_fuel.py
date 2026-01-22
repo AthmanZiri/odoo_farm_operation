@@ -80,11 +80,83 @@ class FleetVehicleLogFuel(models.Model):
     service_id = fields.Many2one(
         comodel_name="fleet.vehicle.log.services", readonly=True, copy=False
     )
+    # New Fields
+    filler_id = fields.Many2one("res.partner", string="Filler")
+    job = fields.Char(string="Job")
+    pump_meter = fields.Float(string="Pump Meter")
+    physical_pump_reading = fields.Float(string="Physical Pump Reading")
+    date_time = fields.Datetime(string="Date & Time", default=fields.Datetime.now)
+
+    # Computed stats
+    prev_odometer = fields.Float(
+        string="Prev Odometer", compute="_compute_prev_log_stats", store=True
+    )
+    prev_date = fields.Date(
+        string="Prev Date", compute="_compute_prev_log_stats", store=True
+    )
+    distance = fields.Float(
+        string="Distance", compute="_compute_consumption", store=True
+    )
+    consumption_rate = fields.Float(
+        string="Consumption Rate", compute="_compute_consumption", store=True
+    )
+    avg_consumption_rate = fields.Float(
+        string="Average CR", compute="_compute_avg_consumption"
+    )
+
+    @api.depends("vehicle_id", "date", "date_time")
+    def _compute_prev_log_stats(self):
+        for record in self:
+            prev_log = self.search(
+                [
+                    ("vehicle_id", "=", record.vehicle_id.id),
+                    ("date", "<=", record.date),
+                    ("id", "!=", record.id),
+                ],
+                limit=1,
+                order="date desc, id desc",
+            )
+            record.prev_odometer = prev_log.odometer if prev_log else 0.0
+            record.prev_date = prev_log.date
+
+    @api.depends("odometer", "prev_odometer", "liter")
+    def _compute_consumption(self):
+        for record in self:
+            distance = record.odometer - record.prev_odometer
+            record.distance = distance
+            if distance > 0:
+                # L/100km or L/km? Screenshot shows "4.00" for "L/Hr"??
+                # Screenshot label is "L/Hr". But field name says "Type of Fuel".
+                # Screenshot actually says "L/Hr 4.00".
+                # Usually it's either L/100KM or MPG.
+                # But for tractors/machinery it's often L/Hour.
+                # Since we don't have hours here (only odometer which might be hours for tractors),
+                # let's assume Odometer is Hours if unit is hours.
+                # If odometer_unit is 'kilometers', it's L/km or L/100km.
+                # Current logic: liter / distance.
+                record.consumption_rate = record.liter / distance
+            else:
+                record.consumption_rate = 0.0
+
+    def _compute_avg_consumption(self):
+        for record in self:
+            # Simple average of all logs for this vehicle
+            domain = [("vehicle_id", "=", record.vehicle_id.id)]
+            logs = self.search(domain)
+            total_liter = sum(logs.mapped("liter"))
+            total_distance = sum(logs.mapped("distance"))
+            if total_distance > 0:
+                record.avg_consumption_rate = total_liter / total_distance
+            else:
+                record.avg_consumption_rate = 0.0
+
 
     @api.onchange("product_id")
     def _onchange_product_id(self):
         if self.product_id:
             self.price_per_liter = self.product_id.standard_price
+            if self.product_id.is_fuel and self.product_id.fuel_location_id:
+                self.location_id = self.product_id.fuel_location_id
 
     @api.onchange("liter", "price_per_liter", "amount")
     def _onchange_liter_price_amount(self):

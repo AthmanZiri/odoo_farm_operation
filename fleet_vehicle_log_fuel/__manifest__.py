@@ -15,6 +15,7 @@
         "security/fleet_security.xml",
         "views/fleet_board_view.xml",
         "views/fleet_vehicle_log_fuel_views.xml",
+        "views/product_views.xml",
         "views/fleet_vehicle_views.xml",
     ],
     "installable": True,
