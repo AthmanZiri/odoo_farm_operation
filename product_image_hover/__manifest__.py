@@ -9,7 +9,9 @@
         enlarging them for better visibility.
     """,
     'depends': ['web', 'product'],
-    'data': [],
+    'data': [
+        'views/product_views.xml',
+    ],
     'assets': {
         'web.assets_backend': [
             'product_image_hover/static/src/css/style.css',

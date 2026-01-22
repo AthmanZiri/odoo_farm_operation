@@ -15,19 +15,3 @@
     cursor: pointer;
 }
 
-/* Enlarge product image on hover/click in Form view */
-.o_form_view .o_field_widget.o_field_image img {
-    transition: transform 0.3s ease;
-    transform-origin: top right;
-    /* Anchor to top right as it's usually there */
-}
-
-.o_form_view .o_field_widget.o_field_image img:hover,
-.o_form_view .o_field_widget.o_field_image img:active {
-    transform: scale(2.5);
-    z-index: 1000;
-    position: relative;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    border-radius: 4px;
-    cursor: pointer;
-}
