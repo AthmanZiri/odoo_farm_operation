@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+bi_auto_confirm_purchase_order.access_confirm_purchase_wizard,access_confirm_purchase_wizard,bi_auto_confirm_purchase_order.model_confirm_purchase_wizard,base.group_user,1,1,1,1

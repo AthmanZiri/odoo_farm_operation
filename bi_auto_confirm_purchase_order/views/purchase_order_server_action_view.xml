@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_auto_confirm_purchase_order" model="ir.actions.server">
+        <field name="name">Auto Confirm Purchase Order</field>
+        <field name="model_id" ref="purchase.model_purchase_order"/>
+        <field name="binding_model_id" ref="purchase.model_purchase_order"/>
+        <field name="type">ir.actions.server</field>
+        <field name="state">code</field>
+        <field name="code">action = records.action_open_purchase_order_wizard()</field>
+    </record>
+
+</odoo>
