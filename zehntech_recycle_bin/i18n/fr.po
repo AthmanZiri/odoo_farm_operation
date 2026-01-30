@@ -1,0 +1,577 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* zehntech_recycle_bin
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-02-12 05:36+0000\n"
+"PO-Revision-Date: 2025-02-12 05:36+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: zehntech_recycle_bin
+#. odoo-javascript
+#: code:addons/zehntech_recycle_bin/static/src/js/recycle_bin_notification.js:0
+#, python-format
+msgid "%d record(s) have been successfully deleted."
+msgstr "%d enregistrement(s) ont été supprimés avec succès."
+
+#. module: zehntech_recycle_bin
+#. odoo-python
+#: code:addons/zehntech_recycle_bin/models/recycle_bin.py:0
+#, python-format
+msgid "%s record(s) restored successfully."
+msgstr "%s enregistrement(s) restauré(s) avec succès."
+
+#. module: zehntech_recycle_bin
+#: model:ir.model.fields,help:zehntech_recycle_bin.field_recycle_bin__parent_id
+msgid ""
+"A reference to the parent record, if this record is related to another"
+"deleted record."
+msgstr ""
+"Une référence à l'enregistrement parent, si cet enregistrement est lié à"
+"unautreenregistrement supprimé."
+
+#. module: zehntech_recycle_bin
+#: model:ir.model.fields,field_description:zehntech_recycle_bin.field_recycle_bin_audit_log__action
+msgid "Action"
+msgstr ""
+
+#. module: zehntech_recycle_bin
+#: model:ir.model.fields,help:zehntech_recycle_bin.field_recycle_bin_audit_log__details
+msgid "Additional information or comments regarding this action."
+msgstr "Informations complémentaires ou commentaires concernant cette action."
+
+#. module: zehntech_recycle_bin
+#: model:res.groups,name:zehntech_recycle_bin.group_super_admin
+msgid "Admin"
+msgstr "Administrateur"
+
+#. module: zehntech_recycle_bin
+#. odoo-python
+#: code:addons/zehntech_recycle_bin/models/setting.py:0
+#, python-format
+msgid ""
+"An error occurred while loading the excluded models configuration. Please "
+"check the settings."
+msgstr ""
+
+#. module: zehntech_recycle_bin
+#. odoo-python
+#: code:addons/zehntech_recycle_bin/models/setting.py:0
+#, python-format
+msgid ""
+"An error occurred while saving the excluded models configuration. Please try"
+" again."
+msgstr ""
+
+#. module: zehntech_recycle_bin
+#. odoo-javascript
+#: code:addons/zehntech_recycle_bin/static/src/js/recycle_bin_notification.js:0
+#, python-format
+msgid "Are you sure you want to delete these records?"
+msgstr "Êtes-vous sûr de vouloir supprimer ces enregistrements ?"
+
+#. module: zehntech_recycle_bin
+#. odoo-javascript
+#: code:addons/zehntech_recycle_bin/static/src/js/custom_notification.js:0
+#: code:addons/zehntech_recycle_bin/static/src/js/recycle_bin_notification.js:0
+#, python-format
+msgid "Are you sure you want to delete this record?"
+msgstr "Êtes-vous sûr de vouloir supprimer cet enregistrement ?"
+
+#. module: zehntech_recycle_bin
+#: model:ir.ui.menu,name:zehntech_recycle_bin.menu_recycle_bin_audit_log
+msgid "Audit Log"
+msgstr "Journal d'audit"
+
+#. module: zehntech_recycle_bin
+#: model:ir.model,name:zehntech_recycle_bin.model_base
+msgid "Base"
+msgstr ""
+
+#. module: zehntech_recycle_bin
+#: model:ir.actions.server,name:zehntech_recycle_bin.ir_cron_clear_recycle_bin_ir_actions_server
+#: model:ir.cron,cron_name:zehntech_recycle_bin.ir_cron_clear_recycle_bin
+msgid "Clear Recycle Bin"
+msgstr "Vider la corbeille"
+
+#. module: zehntech_recycle_bin
+#: model:ir.model.fields,field_description:zehntech_recycle_bin.field_res_config_settings__recycle_bin_lifecycle
+msgid "Clear Recycle Bin Lifecycle"
+msgstr "Effacer le cycle de vie de la corbeille"
+
+#. module: zehntech_recycle_bin
+#: model:ir.model,name:zehntech_recycle_bin.model_res_config_settings
+msgid "Config Settings"
+msgstr "Paramètres de configuration"
+
+#. module: zehntech_recycle_bin
+#: model:ir.model.fields.selection,name:zehntech_recycle_bin.selection__recycle_bin_audit_log__action__create
+msgid "Create Record"
+msgstr "Créer un enregistrement"
+
+#. module: zehntech_recycle_bin
+#: model:ir.model.fields,field_description:zehntech_recycle_bin.field_recycle_bin__create_uid
+#: model:ir.model.fields,field_description:zehntech_recycle_bin.field_recycle_bin_audit_log__create_uid
+#: model:ir.model.fields,field_description:zehntech_recycle_bin.field_recycle_bin_exclude_model__create_uid
+msgid "Created by"
+msgstr "Créé par"
+
+#. module: zehntech_recycle_bin
+#: model:ir.model.fields,field_description:zehntech_recycle_bin.field_recycle_bin__create_date
+#: model:ir.model.fields,field_description:zehntech_recycle_bin.field_recycle_bin_audit_log__create_date
+#: model:ir.model.fields,field_description:zehntech_recycle_bin.field_recycle_bin_exclude_model__create_date
+msgid "Created on"
+msgstr "Créé le"
+
+#. module: zehntech_recycle_bin
+#: model_terms:ir.ui.view,arch_db:zehntech_recycle_bin.view_recycle_bin_form
+msgid "Delete Permanently"
+msgstr "Supprimer définitivement"
+
+#. module: zehntech_recycle_bin
+#: model:ir.model.fields.selection,name:zehntech_recycle_bin.selection__recycle_bin_audit_log__action__delete
+msgid "Delete Record"
+msgstr "Supprimer l'enregistrement"
+
+#. module: zehntech_recycle_bin
+#: model_terms:ir.ui.view,arch_db:zehntech_recycle_bin.view_recycle_bin_form
+msgid "Deleted By"
+msgstr "Supprimé par"
+
+#. module: zehntech_recycle_bin
+#: model:ir.model.fields,field_description:zehntech_recycle_bin.field_recycle_bin__parent_record_id
+msgid "Deleted Parent Record ID"
+msgstr "ID d'enregistrement parent supprimé"
+
+#. module: zehntech_recycle_bin
+#: model:ir.model.fields,field_description:zehntech_recycle_bin.field_recycle_bin__record_id
+#: model_terms:ir.ui.view,arch_db:zehntech_recycle_bin.view_recycle_bin_form
+msgid "Deleted Record ID"
+msgstr "ID d'enregistrement supprimé"
+
+#. module: zehntech_recycle_bin
+#: model:ir.model.fields,field_description:zehntech_recycle_bin.field_recycle_bin__user_id
+msgid "Deleted by"
+msgstr "Supprimé par"
+
+#. module: zehntech_recycle_bin
+#: model:ir.model.fields,field_description:zehntech_recycle_bin.field_recycle_bin_audit_log__details
+msgid "Details"
+msgstr "Supprimé par"
+
+#. module: zehntech_recycle_bin
+#: model:ir.model.fields,field_description:zehntech_recycle_bin.field_recycle_bin__display_name
+#: model:ir.model.fields,field_description:zehntech_recycle_bin.field_recycle_bin_audit_log__display_name
+#: model:ir.model.fields,field_description:zehntech_recycle_bin.field_recycle_bin_exclude_model__display_name
+msgid "Display Name"
+msgstr "Nom d'affichage"
+
+#. module: zehntech_recycle_bin
+#: model:ir.model.fields,field_description:zehntech_recycle_bin.field_recycle_bin__end_date
+msgid "End Date"
+msgstr "Date de fin"
+
+#. module: zehntech_recycle_bin
+#: model_terms:ir.ui.view,arch_db:zehntech_recycle_bin.view_recycle_bin_search
+msgid "Enter keyword..."
+msgstr "Entrez le mot-clé..."
+
+#. module: zehntech_recycle_bin
+#: model_terms:ir.ui.view,arch_db:zehntech_recycle_bin.view_recycle_bin_res_config_settings_inherit
+msgid "Enter lifecycle (e.g., 30 days)"
+msgstr "Saisissez le cycle de vie (par exemple, 30 jours)"
+
+#. module: zehntech_recycle_bin
+#: model:ir.model.fields,field_description:zehntech_recycle_bin.field_res_config_settings__recycle_bin_exclude_models
+#: model_terms:ir.ui.view,arch_db:zehntech_recycle_bin.view_recycle_bin_res_config_settings_inherit
+msgid "Exclude Models"
+msgstr "Exclure des modèles"
+
+#. module: zehntech_recycle_bin
+#. odoo-python
+#: code:addons/zehntech_recycle_bin/models/recycle_bin.py:0
+#, python-format
+msgid "Failed to log create action for record %(record_id)s: %(error)s"
+msgstr "Échec de la journalisation de l'action de création pour l'enregistrement %(record_id)s : %(error)s"
+
+#. module: zehntech_recycle_bin
+#. odoo-python
+#: code:addons/zehntech_recycle_bin/models/recycle_bin.py:0
+#, python-format
+msgid "Failed to log delete action for record %(record_id)s: %(error)s"
+msgstr "Échec de la journalisation de l'action de suppression pour l'enregistrement %(record_id)s : %(error)s"
+
+#. module: zehntech_recycle_bin
+#. odoo-python
+#: code:addons/zehntech_recycle_bin/models/recycle_bin.py:0
+#, python-format
+msgid "Failed to log restore action for record %(record_id)s: %(error)s"
+msgstr "Échec de la journalisation de l'action de restauration pour l'enregistrement %(record_id)s : %(error)s"
+
+#. module: zehntech_recycle_bin
+#: model_terms:ir.ui.view,arch_db:zehntech_recycle_bin.view_recycle_bin_search
+msgid "Filter by Date"
+msgstr "Filtrer par date"
+
+#. module: zehntech_recycle_bin
+#: model:ir.module.category,description:zehntech_recycle_bin.module_category_recycle_bin
+msgid "Helps you manage your Deleted Records"
+msgstr "Vous aide à gérer vos enregistrements supprimés"
+
+#. module: zehntech_recycle_bin
+#: model:ir.model.fields,field_description:zehntech_recycle_bin.field_recycle_bin__id
+#: model:ir.model.fields,field_description:zehntech_recycle_bin.field_recycle_bin_audit_log__id
+#: model:ir.model.fields,field_description:zehntech_recycle_bin.field_recycle_bin_exclude_model__id
+msgid "ID"
+msgstr "IDENTIFIANT"
+
+#. module: zehntech_recycle_bin
+#: model:ir.model.fields,help:zehntech_recycle_bin.field_recycle_bin_audit_log__user_id
+msgid "Indicates the user who performed this action."
+msgstr "Indique l'utilisateur qui a effectué cette action."
+
+#. module: zehntech_recycle_bin
+#: model:ir.model.fields,field_description:zehntech_recycle_bin.field_recycle_bin____last_update
+#: model:ir.model.fields,field_description:zehntech_recycle_bin.field_recycle_bin_audit_log____last_update
+#: model:ir.model.fields,field_description:zehntech_recycle_bin.field_recycle_bin_exclude_model____last_update
+msgid "Last Modified on"
+msgstr "Dernière modification le"
+
+#. module: zehntech_recycle_bin
+#: model:ir.model.fields,field_description:zehntech_recycle_bin.field_recycle_bin__write_uid
+#: model:ir.model.fields,field_description:zehntech_recycle_bin.field_recycle_bin_audit_log__write_uid
+#: model:ir.model.fields,field_description:zehntech_recycle_bin.field_recycle_bin_exclude_model__write_uid
+msgid "Last Updated by"
+msgstr "Dernière mise à jour par"
+
+#. module: zehntech_recycle_bin
+#: model:ir.model.fields,field_description:zehntech_recycle_bin.field_recycle_bin__write_date
+#: model:ir.model.fields,field_description:zehntech_recycle_bin.field_recycle_bin_audit_log__write_date
+#: model:ir.model.fields,field_description:zehntech_recycle_bin.field_recycle_bin_exclude_model__write_date
+msgid "Last Updated on"
+msgstr "Dernière mise à jour le"
+
+#. module: zehntech_recycle_bin
+#: model:res.groups,name:zehntech_recycle_bin.group_admin
+msgid "Manager"
+msgstr "Directeur"
+
+#. module: zehntech_recycle_bin
+#: model:ir.model.fields,field_description:zehntech_recycle_bin.field_recycle_bin__model_id
+#: model:ir.model.fields,field_description:zehntech_recycle_bin.field_recycle_bin_exclude_model__model
+#: model_terms:ir.ui.view,arch_db:zehntech_recycle_bin.view_recycle_bin_form
+msgid "Model"
+msgstr "Modèle"
+
+#. module: zehntech_recycle_bin
+#: model:ir.model,name:zehntech_recycle_bin.model_recycle_bin
+msgid "Module to store deleted records"
+msgstr "Module pour stocker les enregistrements supprimés"
+
+#. module: zehntech_recycle_bin
+#: model:ir.model.fields,field_description:zehntech_recycle_bin.field_recycle_bin_exclude_model__name
+msgid "Name"
+msgstr ""
+
+#. module: zehntech_recycle_bin
+#: model:ir.model.fields,field_description:zehntech_recycle_bin.field_recycle_bin__name
+#: model_terms:ir.ui.view,arch_db:zehntech_recycle_bin.view_recycle_bin_form
+msgid "Name of Record"
+msgstr "Nom du dossier"
+
+#. module: zehntech_recycle_bin
+#: model_terms:ir.actions.act_window,help:zehntech_recycle_bin.action_recycle_bin
+msgid "No records found in Recycle Bin."
+msgstr "Aucun enregistrement trouvé dans la corbeille."
+
+#. module: zehntech_recycle_bin
+#: model:ir.model.fields,help:zehntech_recycle_bin.field_res_config_settings__recycle_bin_lifecycle
+msgid ""
+"Number of days after which recycle bin records will be automatically"
+"deleted."
+msgstr ""
+"Nombre de jours après lesquels les enregistrements de la corbeille"
+"serontautomatiquement supprimé."
+
+#. module: zehntech_recycle_bin
+#. odoo-javascript
+#: code:addons/zehntech_recycle_bin/static/src/js/recycle_bin_notification.js:0
+#, python-format
+msgid "Only the first %s records have been deleted (out of %s selected)"
+msgstr ""
+"Seuls les %s premiers enregistrements ont été supprimés (sur %ssélectionnés)"
+
+#. module: zehntech_recycle_bin
+#: model:ir.model.fields,field_description:zehntech_recycle_bin.field_recycle_bin__parent_id
+msgid "Parent Record"
+msgstr "Dossier parental"
+
+#. module: zehntech_recycle_bin
+#: model:ir.model.fields,field_description:zehntech_recycle_bin.field_recycle_bin_audit_log__user_id
+msgid "Performed By"
+msgstr "Interprété par"
+
+#. module: zehntech_recycle_bin
+#: model:ir.model.fields,field_description:zehntech_recycle_bin.field_recycle_bin__deleted_data
+msgid "Record Data"
+msgstr "Enregistrer les données"
+
+#. module: zehntech_recycle_bin
+#: model_terms:ir.ui.view,arch_db:zehntech_recycle_bin.view_recycle_bin_form
+msgid "Record Data (JSON)"
+msgstr "Enregistrer des données (JSON)"
+
+#. module: zehntech_recycle_bin
+#: model_terms:ir.ui.view,arch_db:zehntech_recycle_bin.view_recycle_bin_form
+msgid "Record Deleted At"
+msgstr "Enregistrement supprimé à"
+
+#. module: zehntech_recycle_bin
+#: model:ir.model.fields,field_description:zehntech_recycle_bin.field_recycle_bin__deleted_datetime
+msgid "Record Deleted at"
+msgstr "Enregistrement supprimé à"
+
+#. module: zehntech_recycle_bin
+#. odoo-python
+#: code:addons/zehntech_recycle_bin/models/recycle_bin.py:0
+#, python-format
+msgid "Record ID: %s, Model: %s was created in the recycle bin"
+msgstr "ID d'enregistrement : %s, Modèle : %s a été créé dans la corbeille"
+
+#. module: zehntech_recycle_bin
+#. odoo-python
+#: code:addons/zehntech_recycle_bin/models/recycle_bin.py:0
+#, python-format
+msgid "Record ID: %s, Model: %s was deleted from the recycle bin"
+msgstr "ID d'enregistrement : %s, Modèle : %s a été supprimé de la corbeille"
+
+#. module: zehntech_recycle_bin
+#. odoo-python
+#: code:addons/zehntech_recycle_bin/models/recycle_bin.py:0
+#, python-format
+msgid "Record ID: %s, Model: %s was restored from the recycle bin"
+msgstr "ID d'enregistrement : %s, modèle : %s a été restauré à partir de la corbeille"
+
+#. module: zehntech_recycle_bin
+#. odoo-javascript
+#: code:addons/zehntech_recycle_bin/static/src/js/custom_notification.js:0
+#, python-format
+msgid "Record deleted successfully!"
+msgstr "Enregistrement supprimé avec succès !"
+
+#. module: zehntech_recycle_bin
+#: model:ir.actions.act_window,name:zehntech_recycle_bin.action_recycle_bin
+#: model:ir.ui.menu,name:zehntech_recycle_bin.menu_recycle_bin
+#: model:ir.ui.menu,name:zehntech_recycle_bin.menu_recycle_bin_root
+#: model_terms:ir.ui.view,arch_db:zehntech_recycle_bin.view_recycle_bin_form
+msgid "Recycle Bin"
+msgstr "Corbeille"
+
+#. module: zehntech_recycle_bin
+#: model:ir.actions.act_window,name:zehntech_recycle_bin.action_recycle_bin_audit_log
+#: model:ir.model,name:zehntech_recycle_bin.model_recycle_bin_audit_log
+#: model_terms:ir.ui.view,arch_db:zehntech_recycle_bin.view_recycle_bin_audit_log_form
+#: model_terms:ir.ui.view,arch_db:zehntech_recycle_bin.view_recycle_bin_audit_log_tree
+msgid "Recycle Bin Audit Log"
+msgstr "Journal d'audit de la corbeille"
+
+#. module: zehntech_recycle_bin
+#: model:ir.model,name:zehntech_recycle_bin.model_recycle_bin_exclude_model
+msgid "Recycle Bin Excluded Models"
+msgstr "Modèles exclus de la corbeille"
+
+#. module: zehntech_recycle_bin
+#: model_terms:ir.ui.view,arch_db:zehntech_recycle_bin.view_recycle_bin_res_config_settings_inherit
+msgid "Recycle Bin Lifecycle"
+msgstr "Cycle de vie de la corbeille"
+
+#. module: zehntech_recycle_bin
+#: model:ir.model.fields,field_description:zehntech_recycle_bin.field_recycle_bin_audit_log__recycle_bin_id
+msgid "Recycle Bin Record"
+msgstr "Enregistrement de la corbeille"
+
+#. module: zehntech_recycle_bin
+#: model_terms:ir.ui.view,arch_db:zehntech_recycle_bin.view_recycle_bin_res_config_settings_inherit
+msgid "Recycle Bin Settings"
+msgstr "Paramètres de la corbeille"
+
+#. module: zehntech_recycle_bin
+#: model:ir.model.fields,help:zehntech_recycle_bin.field_recycle_bin__child_ids
+msgid ""
+"References to records related to the parent record that were also deleted."
+msgstr ""
+"Références aux enregistrements liés à l'enregistrement parent qui"
+"ontégalement été supprimés."
+
+#. module: zehntech_recycle_bin
+#: model:ir.model.fields,field_description:zehntech_recycle_bin.field_recycle_bin__child_ids
+msgid "Related Records"
+msgstr "Enregistrements associés"
+
+#. module: zehntech_recycle_bin
+#. odoo-python
+#: code:addons/zehntech_recycle_bin/models/recycle_bin.py:0
+#, python-format
+msgid "Restoration Successful"
+msgstr "Restauration réussie"
+
+#. module: zehntech_recycle_bin
+#: model_terms:ir.ui.view,arch_db:zehntech_recycle_bin.view_recycle_bin_form
+msgid "Restore"
+msgstr "Restaurer"
+
+#. module: zehntech_recycle_bin
+#: model:ir.model.fields.selection,name:zehntech_recycle_bin.selection__recycle_bin_audit_log__action__restore
+#: model_terms:ir.ui.view,arch_db:zehntech_recycle_bin.view_recycle_bin_tree
+msgid "Restore Record"
+msgstr "Restaurer l'enregistrement"
+
+#. module: zehntech_recycle_bin
+#: model:ir.module.category,name:zehntech_recycle_bin.module_category_recycle_bin
+msgid "Reycle Bin"
+msgstr "Corbeille"
+
+#. module: zehntech_recycle_bin
+#: model_terms:ir.ui.view,arch_db:zehntech_recycle_bin.view_recycle_bin_search
+msgid "Search Records"
+msgstr "Rechercher des enregistrements"
+
+#. module: zehntech_recycle_bin
+#: model_terms:ir.ui.view,arch_db:zehntech_recycle_bin.view_recycle_bin_res_config_settings_inherit
+msgid "Select models to exclude"
+msgstr "Sélectionnez les modèles à exclure"
+
+#. module: zehntech_recycle_bin
+#: model_terms:ir.ui.view,arch_db:zehntech_recycle_bin.view_recycle_bin_res_config_settings_inherit
+msgid "Select models to exclude from the recycle bin."
+msgstr "Sélectionnez les modèles à exclure de la corbeille."
+
+#. module: zehntech_recycle_bin
+#: model:ir.model.fields,help:zehntech_recycle_bin.field_res_config_settings__recycle_bin_exclude_models
+msgid ""
+"Select models to exclude from the recycle bin. Records from these models "
+"will be permanently deleted instead of being moved to the recycle bin."
+msgstr ""
+"Sélectionnez les modèles à exclure de la corbeille. Enregistrements de ces modèles "
+"sera définitivement supprimé au lieu d'être déplacé vers la corbeille."
+
+#. module: zehntech_recycle_bin
+#: model:ir.model.fields,help:zehntech_recycle_bin.field_recycle_bin_audit_log__action
+msgid ""
+"Specifies the type of action performed on the recycle bin record (e.g.,"
+"Restore, Delete, Create)."
+msgstr ""
+"Spécifie le type d'action effectuée sur l'enregistrement de la corbeille(par"
+" exemple, Restaurer, supprimer, créer)."
+
+#. module: zehntech_recycle_bin
+#: model_terms:ir.ui.view,arch_db:zehntech_recycle_bin.view_recycle_bin_res_config_settings_inherit
+msgid ""
+"Specify the number of days after which items in the recycle bin are"
+"automatically deleted."
+msgstr ""
+"Spécifiez le nombre de jours après lesquels les éléments de la corbeille"
+"sont automatiquement supprimé."
+
+#. module: zehntech_recycle_bin
+#: model:ir.model.fields,field_description:zehntech_recycle_bin.field_recycle_bin__start_date
+msgid "Start Date"
+msgstr ""
+
+#. module: zehntech_recycle_bin
+#. odoo-javascript
+#: code:addons/zehntech_recycle_bin/static/src/js/custom_notification.js:0
+#: code:addons/zehntech_recycle_bin/static/src/js/recycle_bin_notification.js:0
+#, python-format
+msgid "Success"
+msgstr "Succès"
+
+#. module: zehntech_recycle_bin
+#: model:ir.model.fields,help:zehntech_recycle_bin.field_recycle_bin_exclude_model__model
+msgid "Technical name of the model to exclude"
+msgstr "Nom technique du modèle à exclure"
+
+#. module: zehntech_recycle_bin
+#: model:ir.model.fields,help:zehntech_recycle_bin.field_recycle_bin__deleted_datetime
+msgid "The date and time when the record was deleted."
+msgstr "La date et l'heure auxquelles l'enregistrement a été supprimé."
+
+#. module: zehntech_recycle_bin
+#: model:ir.model.fields,help:zehntech_recycle_bin.field_recycle_bin_audit_log__timestamp
+msgid "The date and time when this action was performed."
+msgstr "La date et l'heure auxquelles cette action a été effectuée."
+
+#. module: zehntech_recycle_bin
+#: model:ir.model.fields,help:zehntech_recycle_bin.field_recycle_bin__end_date
+msgid "The ending date for the record retention period."
+msgstr "La date de fin de la période de conservation des enregistrements."
+
+#. module: zehntech_recycle_bin
+#: model:ir.model.fields,help:zehntech_recycle_bin.field_recycle_bin__model_id
+msgid "The model (database table) to which the deleted record belonged."
+msgstr ""
+"Le modèle (table de base de données) auquel appartenait"
+"l'enregistrementsupprimé."
+
+#. module: zehntech_recycle_bin
+#: model:ir.model.fields,help:zehntech_recycle_bin.field_recycle_bin__name
+msgid "The name of the deleted record as it appeared before deletion."
+msgstr ""
+"Le nom de l'enregistrement supprimé tel qu'il apparaissait avant"
+"lasuppression."
+
+#. module: zehntech_recycle_bin
+#: model:ir.model.fields,help:zehntech_recycle_bin.field_recycle_bin_audit_log__recycle_bin_id
+msgid "The related record in the recycle bin that this action refers to."
+msgstr ""
+"L'enregistrement associé dans la corbeille auquel cette action faitréférence"
+
+#. module: zehntech_recycle_bin
+#: model:ir.model.fields,help:zehntech_recycle_bin.field_recycle_bin__deleted_data
+msgid "The serialized data (JSON format) of the deleted record."
+msgstr "Les données sérialisées (format JSON) de l'enregistrement supprimé."
+
+#. module: zehntech_recycle_bin
+#: model:ir.model.fields,help:zehntech_recycle_bin.field_recycle_bin__start_date
+msgid "The starting date for the record retention period."
+msgstr "La date de début de la période de conservation des enregistrements."
+
+#. module: zehntech_recycle_bin
+#: model:ir.model.fields,help:zehntech_recycle_bin.field_recycle_bin__record_id
+msgid "The unique identifier (ID) of the deleted record."
+msgstr "L'identifiant unique (ID) de l'enregistrement supprimé."
+
+#. module: zehntech_recycle_bin
+#: model:ir.model.fields,help:zehntech_recycle_bin.field_recycle_bin__parent_record_id
+msgid "The unique identifier (ID) of the parent record, if applicable."
+msgstr "L'identifiant unique (ID) de l'enregistrement parent, le cas échéant."
+
+#. module: zehntech_recycle_bin
+#: model:ir.model.fields,help:zehntech_recycle_bin.field_recycle_bin__user_id
+msgid "The user who deleted the record."
+msgstr "L'utilisateur qui a supprimé l'enregistrement."
+
+#. module: zehntech_recycle_bin
+#: model:ir.model.fields,field_description:zehntech_recycle_bin.field_recycle_bin_audit_log__timestamp
+msgid "Timestamp"
+msgstr "Horodatage"
+
+#. module: zehntech_recycle_bin
+#: model:res.groups,name:zehntech_recycle_bin.group_user
+msgid "User"
+msgstr "Utilisateur"
+
+#. module: zehntech_recycle_bin
+#. odoo-javascript
+#: code:addons/zehntech_recycle_bin/static/src/js/recycle_bin_notification.js:0
+#, python-format
+msgid "Warning"
+msgstr "Avertissement"

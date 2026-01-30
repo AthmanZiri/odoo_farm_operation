@@ -1,0 +1,14 @@
+<odoo>
+    <data>
+        <record id="ir_cron_clear_recycle_bin" model="ir.cron">
+            <field name="name">Clear Recycle Bin</field>
+            <field name="model_id" ref="model_recycle_bin" />
+            <field name="state">code</field>
+            <field name="code">model.clear_recycle_bin()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="active">True</field>
+        </record>
+
+    </data>
+</odoo>

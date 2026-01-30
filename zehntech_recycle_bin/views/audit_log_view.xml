@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Tree View for Audit Log -->
+    <record id="view_recycle_bin_audit_log_tree" model="ir.ui.view">
+        <field name="name">recycle.bin.audit.log.list</field>
+        <field name="model">recycle.bin.audit.log</field>
+        <field name="arch" type="xml">
+            <list string="Recycle Bin Audit Log" decoration-bf="action == 'restore'"
+                decoration-info="action == 'create'" decoration-danger="action == 'delete'">
+                <field name="action" />
+                <field name="user_id" />
+                <field name="timestamp" />
+                <field name="details" />
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View for Audit Log -->
+    <record id="view_recycle_bin_audit_log_form" model="ir.ui.view">
+        <field name="name">recycle.bin.audit.log.form</field>
+        <field name="model">recycle.bin.audit.log</field>
+        <field name="arch" type="xml">
+            <form string="Recycle Bin Audit Log">
+                <sheet>
+                    <group>
+                        <field name="action" />
+                        <field name="user_id" />
+                        <field name="timestamp" />
+                        <field name="details" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search View for Audit Log -->
+    <record id="view_recycle_bin_audit_log_search" model="ir.ui.view">
+        <field name="name">recycle.bin.audit.log.search</field>
+        <field name="model">recycle.bin.audit.log</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="action" />
+                <field name="user_id" />
+                <field name="timestamp" />
+            </search>
+        </field>
+    </record>
+</odoo>

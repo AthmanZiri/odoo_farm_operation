@@ -1,0 +1,37 @@
+<odoo>
+    <data>
+        <record id="view_recycle_bin_res_config_settings_inherit" model="ir.ui.view">
+            <field name="name">res.recycle.bin.config.settings.inherit</field>
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id" ref="base_setup.res_config_settings_view_form" />
+            <field name="arch" type="xml">
+                <!-- Correct XPath to position after the 'user div' -->
+                <xpath expr="//div[@id='invite_users']" position="after">
+                    <div>
+                        <h2>Recycle Bin Settings</h2>
+                        <div class="row mt16 o_settings_container">
+                            <div class="col-12 col-lg-6 o_setting_box">
+                                <div class="o_setting_right_pane">
+                                    <label for="recycle_bin_lifecycle" style="margin-bottom: 10px;">Recycle Bin Lifecycle</label>
+                                    <field name="recycle_bin_lifecycle" widget="char"
+                                           placeholder="Enter lifecycle (e.g., 30 days)"
+                                           style="padding-left: 15px; padding-right: 5px;" />
+                                    <div class="text-muted">Specify the number of days after which items in the recycle bin are automatically deleted.</div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 o_setting_box">
+                                <div class="o_setting_right_pane">
+                                    <label for="recycle_bin_exclude_models" style="margin-bottom: 10px;">Exclude Models</label>
+                                    <field name="recycle_bin_exclude_models" widget="many2many_tags"
+                                           placeholder="Select models to exclude"
+                                           style="padding-left: 15px; padding-right: 5px;" />
+                                    <div class="text-muted">Select models to exclude from the recycle bin.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

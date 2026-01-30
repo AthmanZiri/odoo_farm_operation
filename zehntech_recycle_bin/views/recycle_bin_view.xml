@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Search View for Recycle Bin -->
+    <record id="view_recycle_bin_search" model="ir.ui.view">
+        <field name="name">recycle.bin.search</field>
+        <field name="model">recycle.bin</field>
+        <field name="arch" type="xml">
+            <search>
+                <!-- Search Bar -->
+                <field name="name" string="Search Records" placeholder="Enter keyword..." />
+                
+                <!-- Date Range Filter -->
+                <filter name="filter_by_date" string="Filter by Date"
+                        domain="[('deleted_datetime', '&gt;=', context.get('start_date')), ('deleted_datetime', '&lt;=', context.get('end_date'))]"
+                        context="{'start_date': context.get('start_date'), 'end_date': context.get('end_date')}" />
+            </search>
+        </field>
+    </record>
+
+    <!-- Tree View for Recycle Bin -->
+    <record id="view_recycle_bin_tree" model="ir.ui.view">
+        <field name="name">recycle.bin.list</field>
+        <field name="model">recycle.bin</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name" />
+                <field name="model_id" />
+                <field name="record_id" />
+                <field name="parent_record_id" />
+                <field name="deleted_datetime" />
+                <field name="user_id" />
+                <field name="child_ids" />
+                <field name="deleted_data" />
+                <button name="restore_record" string="Restore Record" type="object" class="oe_highlight" />
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View for Recycle Bin -->
+    <record id="view_recycle_bin_form" model="ir.ui.view">
+        <field name="name">recycle.bin.form</field>
+        <field name="model">recycle.bin</field>
+        <field name="arch" type="xml">
+            <form string="Recycle Bin">
+                <header>
+                    <button name="restore_record" type="object" string="Restore"
+                        groups="zehntech_recycle_bin.group_super_admin,zehntech_recycle_bin.group_admin,zehntech_recycle_bin.group_user" />
+                    <button name="unlink" type="object" string="Delete Permanently"
+                        groups="zehntech_recycle_bin.group_admin" />
+                </header>
+                <sheet>
+                    <group>
+                        <field name="name" string="Name of Record" />
+                        <field name="model_id" options="{'no_create': True}" string="Model" />
+                        <field name="record_id" string="Deleted Record ID" />
+                        <field name="parent_record_id" />
+                        <field name="deleted_datetime" string="Record Deleted At" />
+                        <field name="user_id" options="{'no_create': True}" string="Deleted By" />
+                        <field name="child_ids" />
+                        <field name="deleted_data" widget="text" string="Record Data (JSON)" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

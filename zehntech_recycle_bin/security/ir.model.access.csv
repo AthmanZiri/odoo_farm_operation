@@ -1,0 +1,13 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_recycle_bin,Recycle.Bin,model_recycle_bin,base.group_system,1,1,1,1
+access_recycle_bin_audit_log,Recycle.Bin.Audit.Log,model_recycle_bin_audit_log,base.group_system,1,1,1,1
+access_recycle_bin,Recycle.Bin,model_recycle_bin,base.group_user,1,0,0,0
+access_recycle_bin_audit_log,Recycle.Bin.Audit.Log,model_recycle_bin_audit_log,base.group_user,1,0,0,0
+
+access_recycle_bin_super_admin,Recycle.Bin.Super.Admin,model_recycle_bin,zehntech_recycle_bin.group_super_admin,1,1,1,1
+access_recycle_bin_admin,Recycle.Bin.Admin,model_recycle_bin,zehntech_recycle_bin.group_admin,1,1,1,1
+
+access_recycle_bin_audit_log_super_admin,Recycle.Bin.Audit.Log.Super.Admin,model_recycle_bin_audit_log,zehntech_recycle_bin.group_super_admin,1,1,1,1
+access_recycle_bin_audit_log_admin,Recycle.Bin.Audit.Log.Admin,model_recycle_bin_audit_log,zehntech_recycle_bin.group_admin,1,1,1,1
+
+access_recycle_bin_exclude_model_admin,Recycle.Bin.Exclude.Model.Admin,model_recycle_bin_exclude_model,zehntech_recycle_bin.group_super_admin,1,1,1,1

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Action to Open Recycle Bin Tree View -->
+    <record id="action_recycle_bin" model="ir.actions.act_window">
+        <field name="name">Recycle Bin</field>
+        <field name="res_model">recycle.bin</field>
+        <field name="view_mode">list,form,search</field>
+        <field name="context">{'edit': False, 'create': False}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No records found in Recycle Bin.
+            </p>
+        </field>
+    </record>
+
+    <!-- Root Menu for Recycle Bin -->
+    <menuitem id="menu_recycle_bin_root" name="Recycle Bin" sequence="10"/>
+
+    <!-- Sub Menu for Recycle Bin -->
+    <menuitem id="menu_recycle_bin" name="Recycle Bin"
+        parent="menu_recycle_bin_root"
+        action="action_recycle_bin"
+        sequence="10" />
+</odoo>

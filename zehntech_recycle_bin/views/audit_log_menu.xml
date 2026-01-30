@@ -1,0 +1,21 @@
+<odoo>
+    <!-- Action for Recycle Bin Audit Log -->
+    <record id="action_recycle_bin_audit_log" model="ir.actions.act_window">
+        <field name="name">Recycle Bin Audit Log</field>
+        <field name="res_model">recycle.bin.audit.log</field>
+        <field name="view_mode">list,form,search</field>
+        <field name="view_id" ref="view_recycle_bin_audit_log_tree" />
+        <field name="search_view_id" ref="view_recycle_bin_audit_log_search" />
+       <field name="context">{'edit': False, 'create': False}</field>
+    </record>
+
+    <!-- Parent Menu -->
+    <menuitem id="menu_recycle_bin_root" name="Recycle Bin" sequence="10" />
+
+    <!-- Submenu for Audit Log -->
+    <menuitem id="menu_recycle_bin_audit_log"
+        name="Audit Log"
+        parent="menu_recycle_bin_root"
+        action="action_recycle_bin_audit_log"
+        sequence="20" />
+</odoo>
