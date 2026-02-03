@@ -1,0 +1,14 @@
+<odoo>
+    <record id="view_picking_form_analytic" model="ir.ui.view">
+        <field name="name">stock.picking.form.analytic</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock_fleet_allocation.view_picking_form_inherit_fleet_allocation"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='allocation_type']" position="before">
+                <field name="analytic_plan_id" options="{'no_create': True}"/>
+                <field name="analytic_account_id" options="{'no_create': True}"/>
+                <field name="analytic_distribution" widget="analytic_distribution" groups="analytic.group_analytic_accounting" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
