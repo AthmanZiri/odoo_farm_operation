@@ -9,6 +9,24 @@
                 <field name="analytic_account_id" options="{'no_create': True}"/>
                 <field name="analytic_distribution" widget="analytic_distribution" groups="analytic.group_analytic_accounting" invisible="1"/>
             </xpath>
+            <xpath expr="//field[@name='picking_type_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='location_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='location_dest_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='allocation_type']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='fleet_vehicle_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='equipment_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
         </field>
     </record>
 </odoo>

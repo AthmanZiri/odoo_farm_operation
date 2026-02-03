@@ -25,11 +25,24 @@ class StockPicking(models.Model):
         readonly=False,
         help="Analytic distribution for cost centers."
     )
-    
+
     analytic_precision = fields.Integer(
         default=5,
         readonly=True
     )
+
+    @api.model
+    def default_get(self, fields_list):
+        res = super(StockPicking, self).default_get(fields_list)
+        if 'picking_type_id' in fields_list and not res.get('picking_type_id'):
+            picking_type = self.env.ref('stock.picking_type_internal', raise_if_not_found=False)
+            if picking_type:
+                res['picking_type_id'] = picking_type.id
+        if 'location_id' in fields_list and not res.get('location_id'):
+            location = self.env.ref('stock.stock_location_stock', raise_if_not_found=False)
+            if location:
+                res['location_id'] = location.id
+        return res
 
     @api.onchange('fleet_vehicle_id', 'equipment_id')
     def _onchange_vehicle_equipment_analytic(self):
