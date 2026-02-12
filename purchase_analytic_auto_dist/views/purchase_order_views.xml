@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="purchase_order_form_inherit_analytic_auto_dist" model="ir.ui.view">
+        <field name="name">purchase.order.form.inherit.analytic.auto.dist</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <!-- Add to the list/tree view in the order_line one2many -->
+            <xpath expr="//field[@name='order_line']//field[@name='product_id']" position="after">
+                <field name="account_analytic_id" optional="show" groups="analytic.group_analytic_accounting" widget="many2one"/>
+            </xpath>
+            <!-- Add to the form view of the order_line (usually there's only one product_id in the whole form that matches this if we are careful) -->
+            <!-- But to be safe, let's just use the above and see if it works for the tree first. -->
+        </field>
+    </record>
+</odoo>
