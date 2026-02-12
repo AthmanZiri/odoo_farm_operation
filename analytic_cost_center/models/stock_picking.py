@@ -13,7 +13,6 @@ class StockPicking(models.Model):
     analytic_account_id = fields.Many2one(
         'account.analytic.account', 
         string='Analytic Account',
-        domain="[('plan_id', '=', analytic_plan_id)]",
         help="Select the analytic account for cost tracking."
     )
 
@@ -55,6 +54,9 @@ class StockPicking(models.Model):
     @api.onchange('analytic_account_id')
     def _onchange_analytic_account_reverse_lookup(self):
         if self.analytic_account_id:
+            # Sync plan
+            self.analytic_plan_id = self.analytic_account_id.plan_id.id
+            
             # Sync distribution
             self.analytic_distribution = {str(self.analytic_account_id.id): 100.0}
             
@@ -75,6 +77,19 @@ class StockPicking(models.Model):
             if equipment:
                 self.equipment_id = equipment.id
                 self.allocation_type = 'equipment'
+
+    @api.onchange('analytic_plan_id')
+    def _onchange_analytic_plan_id(self):
+        if self.analytic_plan_id:
+            if self.analytic_account_id and self.analytic_account_id.plan_id != self.analytic_plan_id:
+                self.analytic_account_id = False
+            
+            # Auto-select if only one account exists for this plan
+            accounts = self.env['account.analytic.account'].search([('plan_id', '=', self.analytic_plan_id.id)])
+            if len(accounts) == 1:
+                self.analytic_account_id = accounts[0].id
+        else:
+            self.analytic_account_id = False
 
     @api.depends('analytic_account_id')
     def _compute_analytic_distribution(self):

@@ -10,8 +10,7 @@ class FleetVehicleLogFuel(models.Model):
     
     analytic_account_id = fields.Many2one(
         'account.analytic.account', 
-        string='Analytic Account',
-        domain="[('plan_id', '=', analytic_plan_id)]"
+        string='Analytic Account'
     )
 
     analytic_distribution = fields.Json(
@@ -37,6 +36,9 @@ class FleetVehicleLogFuel(models.Model):
     @api.onchange('analytic_account_id')
     def _onchange_analytic_account_vehicle_lookup(self):
         if self.analytic_account_id:
+            # Sync plan
+            self.analytic_plan_id = self.analytic_account_id.plan_id.id
+            
             # Sync distribution
             self.analytic_distribution = {str(self.analytic_account_id.id): 100.0}
             
