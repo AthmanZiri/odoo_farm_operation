@@ -167,3 +167,9 @@ class StockMove(models.Model):
         default=5,
         readonly=True
     )
+
+    def _get_account_move_line_vals(self):
+        res = super()._get_account_move_line_vals()
+        for line in res:
+            line['analytic_distribution'] = self.analytic_distribution
+        return res

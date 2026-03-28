@@ -69,22 +69,58 @@ class FleetVehicleLogFuel(models.Model):
     def button_done(self):
         for item in self.filtered(lambda x: x.state == "running"):
             if item.product_id and item.location_id and item.liter > 0:
+                # Get Picking Type
+                picking_type = self.env['stock.picking.type'].search([
+                    ('code', '=', 'internal'),
+                    ('warehouse_id', '=', item.location_id.warehouse_id.id)
+                ], limit=1)
+                if not picking_type:
+                    picking_type = self.env.ref('stock.picking_type_internal', raise_if_not_found=False)
+
+                # Create Picking
+                picking_vals = {
+                    'picking_type_id': picking_type.id if picking_type else False,
+                    'location_id': item.location_id.id,
+                    'location_dest_id': item.location_dest_id.id or self.env.ref("analytic_cost_center.stock_location_consumption").id,
+                    'origin': item.vehicle_id.name,
+                    'analytic_distribution': item.analytic_distribution,
+                }
+                picking = self.env['stock.picking'].create(picking_vals)
+
+                # Create Move
                 move_vals = {
                     "product_id": item.product_id.id,
                     "product_uom_qty": item.liter,
                     "product_uom": item.product_id.uom_id.id,
                     "location_id": item.location_id.id,
-                    "location_dest_id": item.location_dest_id.id
-                    or self.env.ref("analytic_cost_center.stock_location_consumption").id,
+                    "location_dest_id": picking.location_dest_id.id,
+                    "picking_id": picking.id,
                     "origin": item.vehicle_id.name,
                     "analytic_distribution": item.analytic_distribution,
                 }
                 move = self.env["stock.move"].create(move_vals)
-                move._action_confirm()
-                move._action_assign()
-                for line in move.move_line_ids:
-                    line.quantity = line.quantity_product_uom
-                move._action_done()
+                
+                # Validation Flow
+                picking.action_confirm()
+                picking.action_assign()
+                
+                # Set quantity done
+                for move_line in picking.move_line_ids:
+                    move_line.quantity = move_line.quantity_product_uom
+                
+                # If no lines (e.g. no stock reserved), create one to allow validation
+                if not picking.move_line_ids:
+                     self.env['stock.move.line'].create({
+                        'picking_id': picking.id,
+                        'move_id': move.id,
+                        'product_id': item.product_id.id,
+                        'quantity': item.liter,
+                        'product_uom_id': item.product_id.uom_id.id,
+                        'location_id': item.location_id.id,
+                        'location_dest_id': picking.location_dest_id.id,
+                    })
+
+                picking.button_validate()
                 item.stock_move_id = move.id
 
             vals = item._prepare_fleet_vehicle_log_services_vals()
