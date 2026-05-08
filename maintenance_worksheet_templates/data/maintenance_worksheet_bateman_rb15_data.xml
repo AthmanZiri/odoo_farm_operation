@@ -1,20 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+
+    <!-- SEED RECORDS: Created once, never overwritten on upgrade. -->
     <data noupdate="1">
 
-        <!-- Equipment Category -->
         <record id="maintenance_category_sprayers" model="maintenance.equipment.category">
             <field name="name">Sprayers</field>
         </record>
 
-        <!-- ========================================== -->
-        <!-- Template 1: Bateman RB15 - 250 Hour Service -->
-        <!-- ========================================== -->
         <record id="template_bateman_rb15_250h" model="worksheet.template">
             <field name="name">Bateman RB15 - 250 Hour Service</field>
             <field name="res_model">maintenance.request</field>
         </record>
 
+        <record id="template_bateman_rb15_500h" model="worksheet.template">
+            <field name="name">Bateman RB15 - 500 Hour Service</field>
+            <field name="res_model">maintenance.request</field>
+        </record>
+
+        <record id="template_bateman_rb15_750h" model="worksheet.template">
+            <field name="name">Bateman RB15 - 750 Hour Service</field>
+            <field name="res_model">maintenance.request</field>
+        </record>
+
+        <record id="template_bateman_rb15_1000h" model="worksheet.template">
+            <field name="name">Bateman RB15 - 1000 Hour Service</field>
+            <field name="res_model">maintenance.request</field>
+        </record>
+
+        <record id="template_bateman_rb15_2000h" model="worksheet.template">
+            <field name="name">Bateman RB15 - 2000 Hour Service</field>
+            <field name="res_model">maintenance.request</field>
+        </record>
+
+        <record id="template_bateman_rb15_4000h" model="worksheet.template">
+            <field name="name">Bateman RB15 - 4000 Hour Service</field>
+            <field name="res_model">maintenance.request</field>
+        </record>
+
+    </data>
+
+    <!-- VIEW GENERATION: Re-runs on every upgrade. -->
+    <data noupdate="0">
+
+        <!-- 250hr: Base interval -->
         <function model="worksheet.template" name="_generate_accumulated_template">
             <value eval="'maintenance_worksheet_templates.template_bateman_rb15_250h'"/>
             <value>Bateman RB15</value>
@@ -29,14 +58,7 @@
             ]"/>
         </function>
 
-        <!-- ========================================== -->
-        <!-- Template 2: Bateman RB15 - 500 Hour Service -->
-        <!-- ========================================== -->
-        <record id="template_bateman_rb15_500h" model="worksheet.template">
-            <field name="name">Bateman RB15 - 500 Hour Service</field>
-            <field name="res_model">maintenance.request</field>
-        </record>
-
+        <!-- 500hr: Accumulates 250hr -->
         <function model="worksheet.template" name="_generate_accumulated_template">
             <value eval="'maintenance_worksheet_templates.template_bateman_rb15_500h'"/>
             <value>Bateman RB15</value>
@@ -50,14 +72,7 @@
             ]"/>
         </function>
 
-        <!-- ========================================== -->
-        <!-- Template 3: Bateman RB15 - 750 Hour Service -->
-        <!-- ========================================== -->
-        <record id="template_bateman_rb15_750h" model="worksheet.template">
-            <field name="name">Bateman RB15 - 750 Hour Service</field>
-            <field name="res_model">maintenance.request</field>
-        </record>
-
+        <!-- 750hr: Accumulates 250hr -->
         <function model="worksheet.template" name="_generate_accumulated_template">
             <value eval="'maintenance_worksheet_templates.template_bateman_rb15_750h'"/>
             <value>Bateman RB15</value>
@@ -67,14 +82,7 @@
             ]"/>
         </function>
 
-        <!-- ========================================== -->
-        <!-- Template 4: Bateman RB15 - 1000 Hour Service -->
-        <!-- ========================================== -->
-        <record id="template_bateman_rb15_1000h" model="worksheet.template">
-            <field name="name">Bateman RB15 - 1000 Hour Service</field>
-            <field name="res_model">maintenance.request</field>
-        </record>
-
+        <!-- 1000hr: Accumulates 250hr, 500hr -->
         <function model="worksheet.template" name="_generate_accumulated_template">
             <value eval="'maintenance_worksheet_templates.template_bateman_rb15_1000h'"/>
             <value>Bateman RB15</value>
@@ -85,14 +93,7 @@
             ]"/>
         </function>
 
-        <!-- ========================================== -->
-        <!-- Template 5: Bateman RB15 - 2000 Hour Service -->
-        <!-- ========================================== -->
-        <record id="template_bateman_rb15_2000h" model="worksheet.template">
-            <field name="name">Bateman RB15 - 2000 Hour Service</field>
-            <field name="res_model">maintenance.request</field>
-        </record>
-
+        <!-- 2000hr: Accumulates 250hr, 500hr, 1000hr -->
         <function model="worksheet.template" name="_generate_accumulated_template">
             <value eval="'maintenance_worksheet_templates.template_bateman_rb15_2000h'"/>
             <value>Bateman RB15</value>
@@ -103,14 +104,7 @@
             ]"/>
         </function>
 
-        <!-- ========================================== -->
-        <!-- Template 6: Bateman RB15 - 4000 Hour Service -->
-        <!-- ========================================== -->
-        <record id="template_bateman_rb15_4000h" model="worksheet.template">
-            <field name="name">Bateman RB15 - 4000 Hour Service</field>
-            <field name="res_model">maintenance.request</field>
-        </record>
-
+        <!-- 4000hr: Accumulates 250hr, 500hr, 1000hr, 2000hr -->
         <function model="worksheet.template" name="_generate_accumulated_template">
             <value eval="'maintenance_worksheet_templates.template_bateman_rb15_4000h'"/>
             <value>Bateman RB15</value>

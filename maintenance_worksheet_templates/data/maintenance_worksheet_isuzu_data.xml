@@ -1,20 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+
+    <!-- SEED RECORDS: Created once, never overwritten on upgrade. -->
     <data noupdate="1">
 
-        <!-- Equipment Category -->
         <record id="maintenance_category_vehicles" model="maintenance.equipment.category">
             <field name="name">Vehicles</field>
         </record>
 
-        <!-- ========================================== -->
-        <!-- Template 1: Isuzu - 5,000 km Service -->
-        <!-- ========================================== -->
         <record id="template_isuzu_5000km" model="worksheet.template">
             <field name="name">Isuzu - 5,000 km Service</field>
             <field name="res_model">maintenance.request</field>
         </record>
 
+        <record id="template_isuzu_10000km" model="worksheet.template">
+            <field name="name">Isuzu - 10,000 km Service</field>
+            <field name="res_model">maintenance.request</field>
+        </record>
+
+        <record id="template_isuzu_15000km" model="worksheet.template">
+            <field name="name">Isuzu - 15,000 km Service</field>
+            <field name="res_model">maintenance.request</field>
+        </record>
+
+        <record id="template_isuzu_20000km" model="worksheet.template">
+            <field name="name">Isuzu - 20,000 km Service</field>
+            <field name="res_model">maintenance.request</field>
+        </record>
+
+        <record id="template_isuzu_50000km" model="worksheet.template">
+            <field name="name">Isuzu - 50,000 km Service</field>
+            <field name="res_model">maintenance.request</field>
+        </record>
+
+        <!-- Year-based intervals are standalone (not km-accumulated) -->
+        <record id="template_isuzu_2yr" model="worksheet.template">
+            <field name="name">Isuzu - 2 Year Service</field>
+            <field name="res_model">maintenance.request</field>
+        </record>
+
+        <record id="template_isuzu_5yr" model="worksheet.template">
+            <field name="name">Isuzu - 5 Year Service</field>
+            <field name="res_model">maintenance.request</field>
+        </record>
+
+    </data>
+
+    <!-- VIEW GENERATION: Re-runs on every upgrade. -->
+    <data noupdate="0">
+
+        <!-- 5,000km: Base km interval -->
         <function model="worksheet.template" name="_generate_accumulated_template">
             <value eval="'maintenance_worksheet_templates.template_isuzu_5000km'"/>
             <value>Isuzu</value>
@@ -69,14 +104,7 @@
             <value>km</value>
         </function>
 
-        <!-- ========================================== -->
-        <!-- Template 2: Isuzu - 10,000 km Service -->
-        <!-- ========================================== -->
-        <record id="template_isuzu_10000km" model="worksheet.template">
-            <field name="name">Isuzu - 10,000 km Service</field>
-            <field name="res_model">maintenance.request</field>
-        </record>
-
+        <!-- 10,000km: Accumulates 5,000km -->
         <function model="worksheet.template" name="_generate_accumulated_template">
             <value eval="'maintenance_worksheet_templates.template_isuzu_10000km'"/>
             <value>Isuzu</value>
@@ -88,14 +116,7 @@
             <value>km</value>
         </function>
 
-        <!-- ========================================== -->
-        <!-- Template 3: Isuzu - 15,000 km Service -->
-        <!-- ========================================== -->
-        <record id="template_isuzu_15000km" model="worksheet.template">
-            <field name="name">Isuzu - 15,000 km Service</field>
-            <field name="res_model">maintenance.request</field>
-        </record>
-
+        <!-- 15,000km: Accumulates 5,000km -->
         <function model="worksheet.template" name="_generate_accumulated_template">
             <value eval="'maintenance_worksheet_templates.template_isuzu_15000km'"/>
             <value>Isuzu</value>
@@ -107,14 +128,7 @@
             <value>km</value>
         </function>
 
-        <!-- ========================================== -->
-        <!-- Template 4: Isuzu - 20,000 km Service -->
-        <!-- ========================================== -->
-        <record id="template_isuzu_20000km" model="worksheet.template">
-            <field name="name">Isuzu - 20,000 km Service</field>
-            <field name="res_model">maintenance.request</field>
-        </record>
-
+        <!-- 20,000km: Accumulates 5,000km, 10,000km -->
         <function model="worksheet.template" name="_generate_accumulated_template">
             <value eval="'maintenance_worksheet_templates.template_isuzu_20000km'"/>
             <value>Isuzu</value>
@@ -125,14 +139,7 @@
             <value>km</value>
         </function>
 
-        <!-- ========================================== -->
-        <!-- Template 5: Isuzu - 50,000 km Service -->
-        <!-- ========================================== -->
-        <record id="template_isuzu_50000km" model="worksheet.template">
-            <field name="name">Isuzu - 50,000 km Service</field>
-            <field name="res_model">maintenance.request</field>
-        </record>
-
+        <!-- 50,000km: Accumulates 5,000km, 10,000km -->
         <function model="worksheet.template" name="_generate_accumulated_template">
             <value eval="'maintenance_worksheet_templates.template_isuzu_50000km'"/>
             <value>Isuzu</value>
@@ -145,15 +152,7 @@
             <value>km</value>
         </function>
 
-        <!-- ========================================== -->
-        <!-- Template 6: Isuzu - 2 Year Service -->
-        <!-- ========================================== -->
-        <!-- WARNING: "Year" service intervals are not accumulated by km logic. Manual definition kept, but switched to new loader to gen view. -->
-        <record id="template_isuzu_2yr" model="worksheet.template">
-            <field name="name">Isuzu - 2 Year Service</field>
-            <field name="res_model">maintenance.request</field>
-        </record>
-
+        <!-- 2 Year: Standalone (Year-based, no km accumulation) -->
         <function model="worksheet.template" name="_generate_accumulated_template">
             <value eval="'maintenance_worksheet_templates.template_isuzu_2yr'"/>
             <value>Isuzu</value>
@@ -166,14 +165,7 @@
             <value>Year</value>
         </function>
 
-        <!-- ========================================== -->
-        <!-- Template 7: Isuzu - 5 Year Service -->
-        <!-- ========================================== -->
-        <record id="template_isuzu_5yr" model="worksheet.template">
-            <field name="name">Isuzu - 5 Year Service</field>
-            <field name="res_model">maintenance.request</field>
-        </record>
-
+        <!-- 5 Year: Accumulates 2 Year -->
         <function model="worksheet.template" name="_generate_accumulated_template">
             <value eval="'maintenance_worksheet_templates.template_isuzu_5yr'"/>
             <value>Isuzu</value>

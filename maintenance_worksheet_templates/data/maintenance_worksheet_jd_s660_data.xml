@@ -1,19 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+
+    <!-- SEED RECORDS: Created once, never overwritten on upgrade. -->
     <data noupdate="1">
 
-        <!-- Equipment Category -->
         <record id="maintenance_category_harvesters" model="maintenance.equipment.category">
             <field name="name">Harvesters</field>
         </record>
 
-        <!-- ========================================== -->
-        <!-- Template 1: JD S660 - 250 Hour Service -->
-        <!-- ========================================== -->
         <record id="template_jd_s660_250h" model="worksheet.template">
             <field name="name">JD S660 - 250 Hour Service</field>
             <field name="res_model">maintenance.request</field>
         </record>
+
+        <record id="template_jd_s660_500h" model="worksheet.template">
+            <field name="name">JD S660 - 500 Hour Service</field>
+            <field name="res_model">maintenance.request</field>
+        </record>
+
+        <record id="template_jd_s660_750h" model="worksheet.template">
+            <field name="name">JD S660 - 750 Hour Service</field>
+            <field name="res_model">maintenance.request</field>
+        </record>
+
+        <record id="template_jd_s660_1000h" model="worksheet.template">
+            <field name="name">JD S660 - 1000 Hour Service</field>
+            <field name="res_model">maintenance.request</field>
+        </record>
+
+        <record id="template_jd_s660_2000h" model="worksheet.template">
+            <field name="name">JD S660 - 2000 Hour Service</field>
+            <field name="res_model">maintenance.request</field>
+        </record>
+
+        <record id="template_jd_s660_4500h" model="worksheet.template">
+            <field name="name">JD S660 - 4500 Hour Service</field>
+            <field name="res_model">maintenance.request</field>
+        </record>
+
+    </data>
+
+    <!-- VIEW GENERATION: Re-runs on every upgrade. -->
+    <data noupdate="0">
 
         <function model="worksheet.template" name="_generate_accumulated_template">
             <value eval="'maintenance_worksheet_templates.template_jd_s660_250h'"/>
@@ -47,14 +75,7 @@
             ]"/>
         </function>
 
-        <!-- ========================================== -->
-        <!-- Template 2: JD S660 - 500 Hour Service -->
-        <!-- ========================================== -->
-        <record id="template_jd_s660_500h" model="worksheet.template">
-            <field name="name">JD S660 - 500 Hour Service</field>
-            <field name="res_model">maintenance.request</field>
-        </record>
-
+        <!-- 500hr: Accumulates 250hr -->
         <function model="worksheet.template" name="_generate_accumulated_template">
             <value eval="'maintenance_worksheet_templates.template_jd_s660_500h'"/>
             <value>JD S660</value>
@@ -74,14 +95,7 @@
             ]"/>
         </function>
 
-        <!-- ========================================== -->
-        <!-- Template 3: JD S660 - 750 Hour Service -->
-        <!-- ========================================== -->
-        <record id="template_jd_s660_750h" model="worksheet.template">
-            <field name="name">JD S660 - 750 Hour Service</field>
-            <field name="res_model">maintenance.request</field>
-        </record>
-
+        <!-- 750hr: Accumulates 250hr -->
         <function model="worksheet.template" name="_generate_accumulated_template">
             <value eval="'maintenance_worksheet_templates.template_jd_s660_750h'"/>
             <value>JD S660</value>
@@ -93,14 +107,7 @@
             ]"/>
         </function>
 
-        <!-- ========================================== -->
-        <!-- Template 4: JD S660 - 1000 Hour Service -->
-        <!-- ========================================== -->
-        <record id="template_jd_s660_1000h" model="worksheet.template">
-            <field name="name">JD S660 - 1000 Hour Service</field>
-            <field name="res_model">maintenance.request</field>
-        </record>
-
+        <!-- 1000hr: Accumulates 250hr, 500hr -->
         <function model="worksheet.template" name="_generate_accumulated_template">
             <value eval="'maintenance_worksheet_templates.template_jd_s660_1000h'"/>
             <value>JD S660</value>
@@ -117,14 +124,7 @@
             ]"/>
         </function>
 
-        <!-- ========================================== -->
-        <!-- Template 5: JD S660 - 2000 Hour Service -->
-        <!-- ========================================== -->
-        <record id="template_jd_s660_2000h" model="worksheet.template">
-            <field name="name">JD S660 - 2000 Hour Service</field>
-            <field name="res_model">maintenance.request</field>
-        </record>
-
+        <!-- 2000hr: Accumulates 250hr, 500hr, 1000hr -->
         <function model="worksheet.template" name="_generate_accumulated_template">
             <value eval="'maintenance_worksheet_templates.template_jd_s660_2000h'"/>
             <value>JD S660</value>
@@ -137,14 +137,7 @@
             ]"/>
         </function>
 
-        <!-- ========================================== -->
-        <!-- Template 6: JD S660 - 4500 Hour Service -->
-        <!-- ========================================== -->
-        <record id="template_jd_s660_4500h" model="worksheet.template">
-            <field name="name">JD S660 - 4500 Hour Service</field>
-            <field name="res_model">maintenance.request</field>
-        </record>
-
+        <!-- 4500hr: Accumulates 250hr, 500hr, 750hr, 1000hr -->
         <function model="worksheet.template" name="_generate_accumulated_template">
             <value eval="'maintenance_worksheet_templates.template_jd_s660_4500h'"/>
             <value>JD S660</value>

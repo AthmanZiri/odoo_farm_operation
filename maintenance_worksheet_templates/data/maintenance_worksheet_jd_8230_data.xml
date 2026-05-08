@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+
+    <!-- =========================================================== -->
+    <!-- SEED RECORDS: Created once, never overwritten on upgrade.    -->
+    <!-- =========================================================== -->
     <data noupdate="1">
 
         <!-- Equipment Category -->
@@ -7,19 +11,51 @@
             <field name="name">Tractors</field>
         </record>
 
-        <!-- ========================================== -->
-        <!-- Template 1: JD 8230 - 250 Hour Service -->
-        <!-- ========================================== -->
         <record id="template_jd8230_250h" model="worksheet.template">
             <field name="name">JD 8230 - 250 Hour Service</field>
             <field name="res_model">maintenance.request</field>
         </record>
 
+        <record id="template_jd8230_500h" model="worksheet.template">
+            <field name="name">JD 8230 - 500 Hour Service</field>
+            <field name="res_model">maintenance.request</field>
+        </record>
+
+        <record id="template_jd8230_750h" model="worksheet.template">
+            <field name="name">JD 8230 - 750 Hour Service</field>
+            <field name="res_model">maintenance.request</field>
+        </record>
+
+        <record id="template_jd8230_1500h" model="worksheet.template">
+            <field name="name">JD 8230 - 1500 Hour Service</field>
+            <field name="res_model">maintenance.request</field>
+        </record>
+
+        <record id="template_jd8230_2000h" model="worksheet.template">
+            <field name="name">JD 8230 - 2000 Hour Service</field>
+            <field name="res_model">maintenance.request</field>
+        </record>
+
+        <record id="template_jd8230_4500h" model="worksheet.template">
+            <field name="name">JD 8230 - 4500 Hour Service</field>
+            <field name="res_model">maintenance.request</field>
+        </record>
+
+    </data>
+
+    <!-- =========================================================== -->
+    <!-- VIEW GENERATION: Re-runs on every upgrade to rebuild        -->
+    <!-- accumulated worksheet views with full task inheritance.     -->
+    <!-- =========================================================== -->
+    <data noupdate="0">
+
+        <!-- ========================================== -->
+        <!-- Template 1: JD 8230 - 250 Hour Service -->
+        <!-- ========================================== -->
         <function model="worksheet.template" name="_generate_accumulated_template">
             <value eval="'maintenance_worksheet_templates.template_jd8230_250h'"/>
             <value>JD 8230</value>
             <value eval="250"/>
-            <!-- Specific Fields -->
             <value eval="[
                 {'name': 'x_clean_fuel_tank_sump', 'string': 'CLEAN: Fuel Tank Sump'},
                 {'name': 'x_clean_fuel_tank_vent_filter', 'string': 'CLEAN: Fuel Tank Vent Filter'},
@@ -40,17 +76,12 @@
 
         <!-- ========================================== -->
         <!-- Template 2: JD 8230 - 500 Hour Service -->
+        <!-- Accumulates: 250hr                         -->
         <!-- ========================================== -->
-        <record id="template_jd8230_500h" model="worksheet.template">
-            <field name="name">JD 8230 - 500 Hour Service</field>
-            <field name="res_model">maintenance.request</field>
-        </record>
-
         <function model="worksheet.template" name="_generate_accumulated_template">
             <value eval="'maintenance_worksheet_templates.template_jd8230_500h'"/>
             <value>JD 8230</value>
             <value eval="500"/>
-            <!-- Specific Fields -->
             <value eval="[
                 {'name': 'x_change_engine_oil', 'string': 'CHANGE: Engine Oil &amp; Filter'},
                 {'name': 'x_change_fuel_filters', 'string': 'CHANGE: Both Fuel Filters'},
@@ -66,12 +97,8 @@
 
         <!-- ========================================== -->
         <!-- Template 3: JD 8230 - 750 Hour Service -->
+        <!-- Accumulates: 250hr                         -->
         <!-- ========================================== -->
-        <record id="template_jd8230_750h" model="worksheet.template">
-            <field name="name">JD 8230 - 750 Hour Service</field>
-            <field name="res_model">maintenance.request</field>
-        </record>
-
         <function model="worksheet.template" name="_generate_accumulated_template">
             <value eval="'maintenance_worksheet_templates.template_jd8230_750h'"/>
             <value>JD 8230</value>
@@ -85,12 +112,8 @@
 
         <!-- ========================================== -->
         <!-- Template 4: JD 8230 - 1500 Hour Service -->
+        <!-- Accumulates: 250hr, 500hr, 750hr           -->
         <!-- ========================================== -->
-        <record id="template_jd8230_1500h" model="worksheet.template">
-            <field name="name">JD 8230 - 1500 Hour Service</field>
-            <field name="res_model">maintenance.request</field>
-        </record>
-
         <function model="worksheet.template" name="_generate_accumulated_template">
             <value eval="'maintenance_worksheet_templates.template_jd8230_1500h'"/>
             <value>JD 8230</value>
@@ -111,12 +134,8 @@
 
         <!-- ========================================== -->
         <!-- Template 5: JD 8230 - 2000 Hour Service -->
+        <!-- Accumulates: 250hr, 500hr                  -->
         <!-- ========================================== -->
-        <record id="template_jd8230_2000h" model="worksheet.template">
-            <field name="name">JD 8230 - 2000 Hour Service</field>
-            <field name="res_model">maintenance.request</field>
-        </record>
-
         <function model="worksheet.template" name="_generate_accumulated_template">
             <value eval="'maintenance_worksheet_templates.template_jd8230_2000h'"/>
             <value>JD 8230</value>
@@ -130,12 +149,8 @@
 
         <!-- ========================================== -->
         <!-- Template 6: JD 8230 - 4500 Hour Service -->
+        <!-- Accumulates: 250hr, 500hr, 750hr, 1500hr  -->
         <!-- ========================================== -->
-        <record id="template_jd8230_4500h" model="worksheet.template">
-            <field name="name">JD 8230 - 4500 Hour Service</field>
-            <field name="res_model">maintenance.request</field>
-        </record>
-
         <function model="worksheet.template" name="_generate_accumulated_template">
             <value eval="'maintenance_worksheet_templates.template_jd8230_4500h'"/>
             <value>JD 8230</value>

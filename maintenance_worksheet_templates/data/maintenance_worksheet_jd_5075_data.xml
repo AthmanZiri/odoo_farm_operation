@@ -1,20 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+
+    <!-- SEED RECORDS: Created once, never overwritten on upgrade. -->
     <data noupdate="1">
 
-        <!-- Equipment Category -->
         <record id="maintenance_category_tractors_5075" model="maintenance.equipment.category">
             <field name="name">Tractors (5075)</field>
         </record>
 
-        <!-- ========================================== -->
-        <!-- Template 1: JD 5075 - 250 Hour Service -->
-        <!-- ========================================== -->
         <record id="template_jd_5075_250h" model="worksheet.template">
             <field name="name">JD 5075 - 250 Hour Service</field>
             <field name="res_model">maintenance.request</field>
         </record>
 
+        <record id="template_jd_5075_500h" model="worksheet.template">
+            <field name="name">JD 5075 - 500 Hour Service</field>
+            <field name="res_model">maintenance.request</field>
+        </record>
+
+        <record id="template_jd_5075_750h" model="worksheet.template">
+            <field name="name">JD 5075 - 750 Hour Service</field>
+            <field name="res_model">maintenance.request</field>
+        </record>
+
+    </data>
+
+    <!-- VIEW GENERATION: Re-runs on every upgrade. -->
+    <data noupdate="0">
+
+        <!-- 250hr: Base interval -->
         <function model="worksheet.template" name="_generate_accumulated_template">
             <value eval="'maintenance_worksheet_templates.template_jd_5075_250h'"/>
             <value>JD 5075</value>
@@ -28,14 +42,7 @@
             ]"/>
         </function>
 
-        <!-- ========================================== -->
-        <!-- Template 2: JD 5075 - 500 Hour Service -->
-        <!-- ========================================== -->
-        <record id="template_jd_5075_500h" model="worksheet.template">
-            <field name="name">JD 5075 - 500 Hour Service</field>
-            <field name="res_model">maintenance.request</field>
-        </record>
-
+        <!-- 500hr: Accumulates 250hr -->
         <function model="worksheet.template" name="_generate_accumulated_template">
             <value eval="'maintenance_worksheet_templates.template_jd_5075_500h'"/>
             <value>JD 5075</value>
@@ -51,14 +58,7 @@
             ]"/>
         </function>
 
-        <!-- ========================================== -->
-        <!-- Template 3: JD 5075 - 750 Hour Service -->
-        <!-- ========================================== -->
-        <record id="template_jd_5075_750h" model="worksheet.template">
-            <field name="name">JD 5075 - 750 Hour Service</field>
-            <field name="res_model">maintenance.request</field>
-        </record>
-
+        <!-- 750hr: Accumulates 250hr -->
         <function model="worksheet.template" name="_generate_accumulated_template">
             <value eval="'maintenance_worksheet_templates.template_jd_5075_750h'"/>
             <value>JD 5075</value>

@@ -1,20 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+
+    <!-- SEED RECORDS: Created once, never overwritten on upgrade. -->
     <data noupdate="1">
 
-        <!-- Equipment Category -->
         <record id="maintenance_category_motorbikes" model="maintenance.equipment.category">
             <field name="name">Motorbikes</field>
         </record>
 
-        <!-- ========================================== -->
-        <!-- Template 1: Motorbike - 2,500 km Service -->
-        <!-- ========================================== -->
         <record id="template_motorbike_2500km" model="worksheet.template">
             <field name="name">Motorbike - 2,500 km Service</field>
             <field name="res_model">maintenance.request</field>
         </record>
 
+        <record id="template_motorbike_5000km" model="worksheet.template">
+            <field name="name">Motorbike - 5,000 km Service</field>
+            <field name="res_model">maintenance.request</field>
+        </record>
+
+        <record id="template_motorbike_10000km" model="worksheet.template">
+            <field name="name">Motorbike - 10,000 km Service</field>
+            <field name="res_model">maintenance.request</field>
+        </record>
+
+        <record id="template_motorbike_15000km" model="worksheet.template">
+            <field name="name">Motorbike - 15,000 km Service</field>
+            <field name="res_model">maintenance.request</field>
+        </record>
+
+        <record id="template_motorbike_30000km" model="worksheet.template">
+            <field name="name">Motorbike - 30,000 km Service</field>
+            <field name="res_model">maintenance.request</field>
+        </record>
+
+    </data>
+
+    <!-- VIEW GENERATION: Re-runs on every upgrade. -->
+    <data noupdate="0">
+
+        <!-- 2,500km: Base interval -->
         <function model="worksheet.template" name="_generate_accumulated_template">
             <value eval="'maintenance_worksheet_templates.template_motorbike_2500km'"/>
             <value>Motorbike</value>
@@ -44,14 +68,7 @@
             <value>km</value>
         </function>
 
-        <!-- ========================================== -->
-        <!-- Template 2: Motorbike - 5,000 km Service -->
-        <!-- ========================================== -->
-        <record id="template_motorbike_5000km" model="worksheet.template">
-            <field name="name">Motorbike - 5,000 km Service</field>
-            <field name="res_model">maintenance.request</field>
-        </record>
-
+        <!-- 5,000km: Accumulates 2,500km -->
         <function model="worksheet.template" name="_generate_accumulated_template">
             <value eval="'maintenance_worksheet_templates.template_motorbike_5000km'"/>
             <value>Motorbike</value>
@@ -65,14 +82,7 @@
             <value>km</value>
         </function>
 
-        <!-- ========================================== -->
-        <!-- Template 3: Motorbike - 10,000 km Service -->
-        <!-- ========================================== -->
-        <record id="template_motorbike_10000km" model="worksheet.template">
-            <field name="name">Motorbike - 10,000 km Service</field>
-            <field name="res_model">maintenance.request</field>
-        </record>
-
+        <!-- 10,000km: Accumulates 2,500km, 5,000km -->
         <function model="worksheet.template" name="_generate_accumulated_template">
             <value eval="'maintenance_worksheet_templates.template_motorbike_10000km'"/>
             <value>Motorbike</value>
@@ -86,14 +96,7 @@
             <value>km</value>
         </function>
 
-        <!-- ========================================== -->
-        <!-- Template 4: Motorbike - 15,000 km Service -->
-        <!-- ========================================== -->
-        <record id="template_motorbike_15000km" model="worksheet.template">
-            <field name="name">Motorbike - 15,000 km Service</field>
-            <field name="res_model">maintenance.request</field>
-        </record>
-
+        <!-- 15,000km: Accumulates 2,500km, 5,000km -->
         <function model="worksheet.template" name="_generate_accumulated_template">
             <value eval="'maintenance_worksheet_templates.template_motorbike_15000km'"/>
             <value>Motorbike</value>
@@ -107,14 +110,7 @@
             <value>km</value>
         </function>
 
-        <!-- ========================================== -->
-        <!-- Template 5: Motorbike - 30,000 km Service -->
-        <!-- ========================================== -->
-        <record id="template_motorbike_30000km" model="worksheet.template">
-            <field name="name">Motorbike - 30,000 km Service</field>
-            <field name="res_model">maintenance.request</field>
-        </record>
-
+        <!-- 30,000km: Accumulates 2,500km, 5,000km, 10,000km, 15,000km -->
         <function model="worksheet.template" name="_generate_accumulated_template">
             <value eval="'maintenance_worksheet_templates.template_motorbike_30000km'"/>
             <value>Motorbike</value>
