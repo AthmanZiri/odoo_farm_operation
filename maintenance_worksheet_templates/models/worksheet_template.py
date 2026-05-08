@@ -33,7 +33,7 @@ class WorksheetTemplate(models.Model):
             self.env['ir.model.fields'].create(fields_to_create)
 
     @api.model
-    def _generate_accumulated_template(self, template_xml_id, series_name, interval, specific_fields, interval_unit='Hour'):
+    def _generate_accumulated_template(self, template_xml_id, series_name, interval, specific_fields, interval_unit='Hour', exclude_intervals=None):
         """
         Generates a worksheet template by accumulating fields from lower service intervals.
         Dynamic View Generation: Creates/Updates the Form View based on accumulated fields.
@@ -43,6 +43,7 @@ class WorksheetTemplate(models.Model):
         :param interval: The service interval number (e.g., 4500).
         :param specific_fields: Fields specific to this interval.
         :param interval_unit: Unit of the interval (default 'Hour').
+        :param exclude_intervals: List of lower intervals to exclude from accumulation (e.g., [250, 500]).
         """
         template = self.env.ref(template_xml_id)
         model_id = template.model_id.id
@@ -68,6 +69,8 @@ class WorksheetTemplate(models.Model):
                 
                 # Check if it is a lower interval and a factor
                 if t_interval < interval and interval % t_interval == 0:
+                    if exclude_intervals and t_interval in exclude_intervals:
+                        continue
                     lower_templates.append((t_interval, t))
             except (IndexError, ValueError):
                 continue
@@ -123,8 +126,8 @@ class WorksheetTemplate(models.Model):
                         # Logic: Lower intervals are base. Specific fields (already added) override? 
                         # Or if we want to include ALL, we just skip duplicates.
                         if f_name and f_name.startswith('x_') and f_name not in items_map:
-                            # Fetch field def to get String/Group
-                            f_record = self.env['ir.model.fields'].search([('name', '=', f_name), ('model_id', '=', model_id)], limit=1)
+                            # Fetch field def from the LOWER template's model to get String/Group/Type
+                            f_record = self.env['ir.model.fields'].search([('name', '=', f_name), ('model_id', '=', t_record.model_id.id)], limit=1)
                             if f_record:
                                 group, _ = parse_field_string(f_record.field_description)
                                 items_map[f_name] = {
@@ -132,6 +135,20 @@ class WorksheetTemplate(models.Model):
                                     'string': f_record.field_description,
                                     'group': group
                                 }
+                                
+                                # Ensure the field is created on the current template's model
+                                existing = self.env['ir.model.fields'].search([
+                                    ('name', '=', f_name),
+                                    ('model_id', '=', model_id)
+                                ], limit=1)
+                                
+                                if not existing:
+                                    fields_to_create.append({
+                                        'name': f_name,
+                                        'field_description': f_record.field_description,
+                                        'ttype': f_record.ttype,
+                                        'model_id': model_id,
+                                    })
 
         if fields_to_create:
             self.env['ir.model.fields'].create(fields_to_create)
