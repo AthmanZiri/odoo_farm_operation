@@ -8,6 +8,26 @@ class StockPurchaseRequest(models.Model):
 
     name = fields.Char(string='Reference', required=True, copy=False, readonly=True, default=lambda self: _('New'))
     requester_id = fields.Many2one('res.users', string='Requester', default=lambda self: self.env.user)
+    department = fields.Char(
+        string='Department',
+        tracking=True,
+        help="Department requesting these products. Auto-filled from the "
+        "requester's employee record when HR is installed.",
+    )
+    analytic_account_id = fields.Many2one(
+        'account.analytic.account',
+        string='Analytic Account',
+        tracking=True,
+        check_company=True,
+        help="Cost center or analytic account charged for this requisition.",
+    )
+    approved_by_id = fields.Many2one(
+        'res.users',
+        string='Approved By',
+        readonly=True,
+        copy=False,
+        tracking=True,
+    )
     state = fields.Selection([
         ('draft', 'Draft'),
         ('submitted', 'Submitted'),
@@ -37,11 +57,39 @@ class StockPurchaseRequest(models.Model):
         for rec in self:
             rec.picking_count = len(rec.line_ids.mapped('move_id.picking_id'))
 
+    def _department_from_requester(self, user):
+        """Return department name from the requester's employee, if HR is available."""
+        if not user:
+            return False
+        if 'employee_id' in user._fields:
+            employee = user.employee_id
+            if employee and employee.department_id:
+                return employee.department_id.name
+        if 'hr.employee' in self.env:
+            employee = self.env['hr.employee'].search(
+                [('user_id', '=', user.id)], limit=1
+            )
+            if employee.department_id:
+                return employee.department_id.name
+        return False
+
+    @api.onchange('requester_id')
+    def _onchange_requester_id(self):
+        if self.requester_id:
+            department = self._department_from_requester(self.requester_id)
+            if department:
+                self.department = department
+
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:
             if vals.get('name', _('New')) == _('New'):
                 vals['name'] = self.env['ir.sequence'].next_by_code('stock.purchase.request') or _('New')
+            if not vals.get('department') and vals.get('requester_id'):
+                user = self.env['res.users'].browse(vals['requester_id'])
+                department = self._department_from_requester(user)
+                if department:
+                    vals['department'] = department
         return super(StockPurchaseRequest, self).create(vals_list)
 
     def action_submit(self):
@@ -95,17 +143,25 @@ class StockPurchaseRequest(models.Model):
                 else:
                     line_vals['price_unit'] = line.product_id.standard_price
 
+                if self.analytic_account_id:
+                    line_vals['analytic_distribution'] = {
+                        str(self.analytic_account_id.id): 100.0,
+                    }
+
                 self.env['purchase.order.line'].create(line_vals)
             orders += po
         
-        self.state = 'approved'
+        self.write({
+            'state': 'approved',
+            'approved_by_id': self.env.user.id,
+        })
         return True
 
     def action_reject(self):
         self.write({'state': 'rejected'})
 
     def action_reset_draft(self):
-        self.write({'state': 'draft'})
+        self.write({'state': 'draft', 'approved_by_id': False})
 
     def action_view_purchase_orders(self):
         self.ensure_one()

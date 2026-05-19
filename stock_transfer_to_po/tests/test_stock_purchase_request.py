@@ -15,6 +15,11 @@ class TestStockPurchaseRequest(TransactionCase):
             'seller_ids': [(0, 0, {'partner_id': cls.vendor.id, 'price': 10.0})],
         })
         cls.picking_type = cls.env['stock.picking.type'].search([('code', '=', 'internal')], limit=1)
+        cls.analytic_plan = cls.env['account.analytic.plan'].create({'name': 'Test Plan'})
+        cls.analytic_account = cls.env['account.analytic.account'].create({
+            'name': 'Farm Cost Center',
+            'plan_id': cls.analytic_plan.id,
+        })
 
     def test_create_request_from_move(self):
         # Create a move
@@ -74,4 +79,32 @@ class TestStockPurchaseRequest(TransactionCase):
         po = request.purchase_order_ids[0]
         self.assertEqual(po.partner_id, cls.vendor)
         self.assertEqual(po.request_id, request)
+
+    def test_requisition_header_fields_and_approval(self):
+        request = self.env['stock.purchase.request'].create({
+            'requester_id': self.env.user.id,
+            'department': 'Operations',
+            'analytic_account_id': self.analytic_account.id,
+            'line_ids': [(0, 0, {
+                'product_id': self.product.id,
+                'quantity': 5,
+                'partner_id': self.vendor.id,
+            })],
+        })
+        self.assertEqual(request.department, 'Operations')
+        self.assertEqual(request.analytic_account_id, self.analytic_account)
+        self.assertFalse(request.approved_by_id)
+
+        request.action_submit()
+        request.action_approve()
+        self.assertEqual(request.state, 'approved')
+        self.assertEqual(request.approved_by_id, self.env.user)
+        po_line = request.purchase_order_ids.order_line[:1]
+        self.assertEqual(
+            po_line.analytic_distribution,
+            {str(self.analytic_account.id): 100.0},
+        )
+
+        request.action_reset_draft()
+        self.assertFalse(request.approved_by_id)
 
