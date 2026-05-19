@@ -11,4 +11,38 @@
             </xpath>
         </field>
     </record>
+    <record id="fleet_vehicle_log_fuel_view_search_analytic" model="ir.ui.view">
+        <field name="name">fleet.vehicle.log.fuel.search.analytic</field>
+        <field name="model">fleet.vehicle.log.fuel</field>
+        <field name="inherit_id" ref="fleet_vehicle_log_fuel.fleet_vehicle_log_fuel_view_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='category_id']" position="after">
+                <field name="analytic_account_id" string="Cost Center"/>
+            </xpath>
+            <xpath expr="//filter[@name='group_category']" position="after">
+                <filter string="Cost Center" name="group_analytic_account"
+                        context="{'group_by': 'analytic_account_id'}"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="fleet_vehicle_log_fuel_view_tree_analytic" model="ir.ui.view">
+        <field name="name">fleet.vehicle.log.fuel.tree.analytic</field>
+        <field name="model">fleet.vehicle.log.fuel</field>
+        <field name="inherit_id" ref="fleet_vehicle_log_fuel.fleet_vehicle_log_fuel_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='vehicle_id']" position="after">
+                <field name="analytic_account_id" optional="hide" string="Cost Center"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="fleet_vehicle_log_fuel_view_pivot_analytic" model="ir.ui.view">
+        <field name="name">fleet.vehicle.log.fuel.pivot.analytic</field>
+        <field name="model">fleet.vehicle.log.fuel</field>
+        <field name="inherit_id" ref="fleet_vehicle_log_fuel.fleet_vehicle_log_fuel_view_pivot"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='category_id']" position="after">
+                <field name="analytic_account_id" type="row"/>
+            </xpath>
+        </field>
+    </record>
 </odoo>
