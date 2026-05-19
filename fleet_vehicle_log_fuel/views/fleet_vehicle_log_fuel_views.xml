@@ -65,6 +65,8 @@
                             <field name="job" readonly="state!='todo'"/>
                             <field name="product_id" readonly="state!='todo'" string="Type of Fuel" domain="[('is_fuel', '=', True)]" context="{'default_is_fuel': True}"/>
                             <field name="liter" readonly="state!='todo'" string="Litres Filled (L)"/>
+                            <field name="liter_max_allowed" readonly="1" invisible="not vehicle_id"/>
+                            <field name="liter_fill_hint" readonly="1" invisible="not liter_fill_hint" nolabel="1" class="text-muted"/>
                             <field name="filler_id" readonly="state!='todo'"/>
                             <field name="location_id" readonly="state!='todo'" string="Filled From"/>
                             <field name="odometer" readonly="state!='todo'" string="Hours | Kilometers"/>

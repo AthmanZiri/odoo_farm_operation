@@ -175,3 +175,67 @@ class TestFleetVehicleLogFuelUtilization(TestFleetVehicleLogFuelBase):
         self.assertEqual(log.model_id, self.vehicle.model_id)
         self.assertEqual(log.category_id, self.vehicle.category_id)
         self.assertEqual(log.fuel_type, self.vehicle.fuel_type)
+
+
+class TestFleetVehicleLogFuelLiterRestriction(TestFleetVehicleLogFuelBase):
+    """Litres filled must stay within tank capacity and historical norms."""
+
+    def _create_fuel(self, liter, odometer=5000, date_time="2024-06-01 08:00:00"):
+        return self.env["fleet.vehicle.log.fuel"].create(
+            {
+                "vehicle_id": self.vehicle.id,
+                "date_time": date_time,
+                "odometer": odometer,
+                "liter": liter,
+                "amount": liter * 1.5,
+                "price_per_liter": 1.5,
+            }
+        )
+
+    def _seed_typical_fills(self):
+        """Three fills around 10–14 L to establish a historical baseline."""
+        for day, liters, odo in ((1, 10, 1000), (15, 12, 1100), (20, 14, 1200)):
+            self._create_fuel(
+                liters,
+                odometer=odo,
+                date_time=f"2024-01-{day:02d} 08:00:00",
+            )
+
+    def test_rejects_above_tank_capacity(self):
+        self.vehicle.fuel_tank_capacity = 15.0
+        with self.assertRaises(UserError):
+            self._create_fuel(99)
+
+    def test_rejects_absurd_fill_after_history(self):
+        self.vehicle.fuel_tank_capacity = 100.0
+        self._seed_typical_fills()
+        with self.assertRaises(UserError):
+            self._create_fuel(99, odometer=1300, date_time="2024-01-25 08:00:00")
+
+    def test_accepts_typical_fill_after_history(self):
+        self.vehicle.fuel_tank_capacity = 100.0
+        self._seed_typical_fills()
+        log = self._create_fuel(13, odometer=1300, date_time="2024-01-25 08:00:00")
+        self.assertEqual(log.liter, 13)
+
+    def test_button_running_enforces_limit(self):
+        self.vehicle.fuel_tank_capacity = 15.0
+        log = self._create_fuel(10)
+        log.liter = 99
+        with self.assertRaises(UserError):
+            log.button_running()
+
+    def test_liter_max_allowed_reflects_history(self):
+        self.vehicle.fuel_tank_capacity = 100.0
+        self._seed_typical_fills()
+        log = self.env["fleet.vehicle.log.fuel"].new(
+            {
+                "vehicle_id": self.vehicle.id,
+                "odometer": 1300,
+                "date_time": "2024-01-25 08:00:00",
+            }
+        )
+        log._compute_liter_fill_hints()
+        # avg ~12 L × 2 = 24; past max 14 × 1.25 = 17.5 → effective cap 17.5
+        self.assertLessEqual(log.liter_max_allowed, 17.5)
+        self.assertGreater(log.liter_max_allowed, 0)

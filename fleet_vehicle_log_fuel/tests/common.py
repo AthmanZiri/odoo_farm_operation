@@ -20,5 +20,6 @@ class TestFleetVehicleLogFuelBase(BaseCommon):
                 "model_id": cls.model.id,
                 "driver_id": cls.driver.id,
                 "license_plate": "TEST123",
+                "fuel_tank_capacity": 200.0,
             }
         )

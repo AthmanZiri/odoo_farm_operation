@@ -142,6 +142,198 @@ class FleetVehicleLogFuel(models.Model):
         help="Lifetime average consumption rate for the vehicle "
         "(sum(litres) / sum(distance) across all non-cancelled fuel logs).",
     )
+    liter_max_allowed = fields.Float(
+        string="Max Allowed (L)",
+        compute="_compute_liter_fill_hints",
+        help="Maximum litres allowed for this fill based on tank capacity, "
+        "past fills, and expected consumption.",
+    )
+    liter_fill_hint = fields.Char(
+        compute="_compute_liter_fill_hints",
+    )
+
+    # -------------------------------------------------------------------------
+    # Litres filled validation (tank capacity + historical + consumption)
+    # -------------------------------------------------------------------------
+
+    @api.model
+    def _liter_validation_params(self):
+        icp = self.env["ir.config_parameter"].sudo()
+        return {
+            "history_min_count": int(
+                icp.get_param("fleet_vehicle_log_fuel.liter_history_min_count", "3")
+            ),
+            "history_max_factor": float(
+                icp.get_param("fleet_vehicle_log_fuel.liter_history_max_factor", "2.0")
+            ),
+            "past_max_factor": float(
+                icp.get_param("fleet_vehicle_log_fuel.liter_past_max_factor", "1.25")
+            ),
+            "consumption_max_factor": float(
+                icp.get_param(
+                    "fleet_vehicle_log_fuel.liter_consumption_max_factor", "1.5"
+                )
+            ),
+            "absolute_max_fallback": float(
+                icp.get_param("fleet_vehicle_log_fuel.liter_absolute_max_fallback", "500")
+            ),
+        }
+
+    def _get_historical_fill_liters(self):
+        """Return recent fill volumes for this vehicle (excluding current log)."""
+        self.ensure_one()
+        domain = [
+            ("vehicle_id", "=", self.vehicle_id.id),
+            ("state", "!=", "cancelled"),
+            ("liter", ">", 0),
+        ]
+        if self.id:
+            domain.append(("id", "!=", self.id))
+        logs = self.search(domain, order="date_time desc", limit=20)
+        return logs.mapped("liter")
+
+    def _get_vehicle_avg_consumption_rate(self):
+        """Average L per distance unit for the vehicle (excluding this log)."""
+        self.ensure_one()
+        domain = [
+            ("vehicle_id", "=", self.vehicle_id.id),
+            ("state", "!=", "cancelled"),
+            ("distance", ">", 0),
+        ]
+        if self.id:
+            domain.append(("id", "!=", self.id))
+        data = self.env["fleet.vehicle.log.fuel"]._read_group(
+            domain,
+            groupby=["vehicle_id"],
+            aggregates=["liter:sum", "distance:sum"],
+        )
+        if not data:
+            return 0.0
+        _vehicle, total_liter, total_distance = data[0]
+        return (total_liter / total_distance) if total_distance > 0 else 0.0
+
+    def _get_expected_liters_from_distance(self):
+        """Estimate litres needed from odometer delta and past consumption."""
+        self.ensure_one()
+        prev_log = self.search(
+            self._prev_log_domain(),
+            limit=1,
+            order="date_time desc, id desc",
+        )
+        if not prev_log or not self.odometer:
+            return 0.0
+        distance = self.odometer - prev_log.odometer
+        if distance <= 0:
+            return 0.0
+        avg_rate = self._get_vehicle_avg_consumption_rate()
+        return distance * avg_rate if avg_rate > 0 else 0.0
+
+    def _get_liter_fill_limits(self):
+        """Return ``(max_liter, detail_lines)`` for the current fill."""
+        self.ensure_one()
+        params = self._liter_validation_params()
+        vehicle = self.vehicle_id
+        max_candidates = []
+        details = []
+
+        if vehicle.fuel_tank_capacity > 0:
+            max_candidates.append(vehicle.fuel_tank_capacity)
+            details.append(
+                _("tank capacity: %(cap)s L") % {"cap": vehicle.fuel_tank_capacity}
+            )
+
+        past_liters = self._get_historical_fill_liters()
+        if len(past_liters) >= params["history_min_count"]:
+            avg_liter = sum(past_liters) / len(past_liters)
+            max_candidates.append(avg_liter * params["history_max_factor"])
+            max_candidates.append(max(past_liters) * params["past_max_factor"])
+            details.append(
+                _("average past fill: %(avg)s L (%(count)s logs)")
+                % {"avg": round(avg_liter, 1), "count": len(past_liters)}
+            )
+
+        expected = self._get_expected_liters_from_distance()
+        if expected > 0:
+            max_candidates.append(expected * params["consumption_max_factor"])
+            details.append(
+                _("expected from usage since last fill: %(exp)s L")
+                % {"exp": round(expected, 1)}
+            )
+
+        if max_candidates:
+            max_liter = min(max_candidates)
+        else:
+            max_liter = params["absolute_max_fallback"]
+            if not details:
+                details.append(_("default limit (set tank capacity on the vehicle)"))
+
+        return max_liter, details
+
+    def _check_liter_fill_amount(self):
+        if self.env.context.get("skip_fuel_liter_validation"):
+            return
+        for record in self.filtered(
+            lambda r: r.liter > 0 and r.state != "cancelled" and r.vehicle_id
+        ):
+            max_liter, details = record._get_liter_fill_limits()
+            if record.liter > max_liter + 1e-9:
+                detail_text = "\n".join(f"• {line}" for line in details)
+                raise UserError(
+                    _(
+                        "Litres filled (%(liter)s L) exceeds the allowed maximum "
+                        "of %(max)s L for vehicle %(vehicle)s.\n\n"
+                        "This limit is based on:\n%(details)s"
+                    )
+                    % {
+                        "liter": record.liter,
+                        "max": round(max_liter, 1),
+                        "vehicle": record.vehicle_id.display_name,
+                        "details": detail_text,
+                    }
+                )
+
+    @api.depends(
+        "liter",
+        "vehicle_id",
+        "vehicle_id.fuel_tank_capacity",
+        "odometer",
+        "date_time",
+    )
+    def _compute_liter_fill_hints(self):
+        for record in self:
+            if not record.vehicle_id:
+                record.liter_max_allowed = 0.0
+                record.liter_fill_hint = False
+                continue
+            max_liter, details = record._get_liter_fill_limits()
+            record.liter_max_allowed = max_liter
+            record.liter_fill_hint = "; ".join(details) if details else False
+
+    @api.constrains("liter", "vehicle_id", "odometer", "state")
+    def _constrains_liter_fill(self):
+        self._check_liter_fill_amount()
+
+    @api.onchange("liter", "vehicle_id", "odometer")
+    def _onchange_liter_fill_warning(self):
+        if self.liter <= 0 or not self.vehicle_id:
+            return
+        max_liter, details = self._get_liter_fill_limits()
+        if self.liter > max_liter + 1e-9:
+            detail_text = "; ".join(details)
+            return {
+                "warning": {
+                    "title": _("Unusual fill amount"),
+                    "message": _(
+                        "%(liter)s L exceeds the suggested maximum of %(max)s L. "
+                        "(%(details)s)"
+                    )
+                    % {
+                        "liter": self.liter,
+                        "max": round(max_liter, 1),
+                        "details": detail_text,
+                    },
+                }
+            }
 
     @api.depends("date_time")
     def _compute_date(self):
@@ -343,7 +535,9 @@ class FleetVehicleLogFuel(models.Model):
             service.purchaser_id = service.vehicle_id.driver_id
 
     def button_running(self):
-        self.filtered(lambda x: x.state == "todo").state = "running"
+        todo = self.filtered(lambda x: x.state == "todo")
+        todo._check_liter_fill_amount()
+        todo.state = "running"
         return True
 
     def _prepare_fleet_vehicle_odometer_vals(self):
@@ -370,7 +564,9 @@ class FleetVehicleLogFuel(models.Model):
         return True
 
     def button_done(self):
-        for item in self.filtered(lambda x: x.state == "running"):
+        running = self.filtered(lambda x: x.state == "running")
+        running._check_liter_fill_amount()
+        for item in running:
             if item.product_id and item.location_id and item.liter > 0:
                 move_vals = {
                     "product_id": item.product_id.id,

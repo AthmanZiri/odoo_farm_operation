@@ -10,6 +10,11 @@ class FleetVehicle(models.Model):
 
     log_fuels = fields.One2many("fleet.vehicle.log.fuel", "vehicle_id", "Fuel Logs")
     fuel_count = fields.Integer(compute="_compute_fuel_count", string="Fuel Log Count")
+    fuel_tank_capacity = fields.Float(
+        string="Fuel Tank Capacity (L)",
+        tracking=True,
+        help="Maximum fuel tank volume in litres. Used to validate fuel log entries.",
+    )
 
     @api.depends("log_fuels")
     def _compute_fuel_count(self):
