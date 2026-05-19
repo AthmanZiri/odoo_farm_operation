@@ -94,3 +94,84 @@ class TestFleetVehicleLogFuelReport(TestFleetVehicleLogFuelBase):
         self.assertEqual(
             sum(items.filtered(lambda x: x.cost_type == "fuel").mapped("cost")), 75
         )
+
+
+class TestFleetVehicleLogFuelUtilization(TestFleetVehicleLogFuelBase):
+    """Cover the utilization stats used by the fuel reporting graph/pivot."""
+
+    def _create_log(self, date_time, odometer, liter, state="done"):
+        log = self.env["fleet.vehicle.log.fuel"].create(
+            {
+                "vehicle_id": self.vehicle.id,
+                "date_time": date_time,
+                "odometer": odometer,
+                "liter": liter,
+                "amount": liter * 1.5,
+                "price_per_liter": 1.5,
+            }
+        )
+        if state == "done":
+            log.button_running()
+            log.button_done()
+        elif state == "cancelled":
+            log.button_cancel()
+        return log
+
+    def test_first_fill_has_no_consumption(self):
+        log = self._create_log("2024-01-01 08:00:00", 1000, 50)
+        self.assertFalse(log.has_prev_log)
+        self.assertEqual(log.distance, 0.0)
+        self.assertEqual(log.consumption_rate, 0.0)
+
+    def test_second_fill_consumption_rate(self):
+        self._create_log("2024-01-01 08:00:00", 1000, 50)
+        second = self._create_log("2024-01-15 08:00:00", 1100, 25)
+        self.assertTrue(second.has_prev_log)
+        self.assertEqual(second.distance, 100.0)
+        self.assertAlmostEqual(second.consumption_rate, 0.25)
+
+    def test_backdated_log_recomputes_neighbor(self):
+        first = self._create_log("2024-02-01 08:00:00", 1100, 25)
+        # Initially first is the only log -> no consumption stats
+        self.assertEqual(first.distance, 0.0)
+        # Insert an earlier log; the originally-first record should now have a
+        # valid previous odometer and consumption rate.
+        self._create_log("2024-01-01 08:00:00", 1000, 50)
+        first.invalidate_recordset()
+        self.assertTrue(first.has_prev_log)
+        self.assertEqual(first.distance, 100.0)
+        self.assertAlmostEqual(first.consumption_rate, 0.25)
+
+    def test_cancelled_log_is_ignored_for_prev(self):
+        self._create_log("2024-01-01 08:00:00", 1000, 50)
+        self._create_log("2024-01-10 08:00:00", 1050, 30, state="cancelled")
+        third = self._create_log("2024-01-20 08:00:00", 1100, 20)
+        # The cancelled log between the two real fills must NOT be the prev log
+        self.assertEqual(third.prev_odometer, 1000)
+        self.assertEqual(third.distance, 100.0)
+
+    def test_avg_consumption_rate_is_aggregated(self):
+        self._create_log("2024-01-01 08:00:00", 1000, 50)
+        self._create_log("2024-01-15 08:00:00", 1100, 25)
+        self._create_log("2024-02-01 08:00:00", 1200, 30)
+        logs = self.env["fleet.vehicle.log.fuel"].search(
+            [("vehicle_id", "=", self.vehicle.id)]
+        )
+        # Lifetime CR = total liter on non-first fills / total distance.
+        # The first fill carries 0 distance so it does not contribute.
+        avg = logs[0].avg_consumption_rate
+        self.assertGreater(avg, 0.0)
+        # All logs for the same vehicle expose the same lifetime average
+        self.assertTrue(all(abs(log.avg_consumption_rate - avg) < 1e-9 for log in logs))
+
+    def test_date_synced_from_date_time(self):
+        log = self._create_log("2024-03-15 14:30:00", 1000, 50)
+        self.assertEqual(str(log.date), "2024-03-15")
+
+    def test_grouping_dimensions_populated(self):
+        log = self._create_log("2024-01-01 08:00:00", 1000, 50)
+        # Related fields used as grouping dimensions in the report views must
+        # be readable on a stored fuel log even when their value is empty.
+        self.assertEqual(log.model_id, self.vehicle.model_id)
+        self.assertEqual(log.category_id, self.vehicle.category_id)
+        self.assertEqual(log.fuel_type, self.vehicle.fuel_type)
