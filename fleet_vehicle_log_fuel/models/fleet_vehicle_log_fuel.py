@@ -43,6 +43,10 @@ class FleetVehicleLogFuel(models.Model):
     date = fields.Date(
         help="Date when the cost has been executed",
         default=fields.Date.context_today,
+        compute="_compute_date",
+        store=True,
+        readonly=False,
+        precompute=True,
     )
     company_id = fields.Many2one(
         "res.company", "Company", default=lambda self: self.env.company
@@ -53,6 +57,29 @@ class FleetVehicleLogFuel(models.Model):
         string="Driver",
         compute="_compute_purchaser_id",
         store=True,
+    )
+    # Related vehicle fields exposed for reporting / grouping ("per fleet" and
+    # "all fleets" utilization analyses are driven from these dimensions).
+    model_id = fields.Many2one(
+        "fleet.vehicle.model",
+        related="vehicle_id.model_id",
+        store=True,
+        string="Model",
+    )
+    category_id = fields.Many2one(
+        "fleet.vehicle.model.category",
+        related="vehicle_id.category_id",
+        store=True,
+        string="Fleet Category",
+    )
+    tag_ids = fields.Many2many(
+        related="vehicle_id.tag_ids",
+        string="Tags",
+    )
+    fuel_type = fields.Selection(
+        related="vehicle_id.fuel_type",
+        store=True,
+        string="Fuel Type",
     )
     inv_ref = fields.Char("Vendor Reference")
     vendor_id = fields.Many2one("res.partner", "Vendor")
@@ -94,62 +121,179 @@ class FleetVehicleLogFuel(models.Model):
     prev_date = fields.Date(
         string="Prev Date", compute="_compute_prev_log_stats", store=True
     )
+    has_prev_log = fields.Boolean(
+        compute="_compute_prev_log_stats",
+        store=True,
+        help="True when a previous fuel log exists for the vehicle, so that "
+        "distance and consumption can be derived meaningfully.",
+    )
     distance = fields.Float(
         string="Distance", compute="_compute_consumption", store=True
     )
     consumption_rate = fields.Float(
-        string="Consumption Rate", compute="_compute_consumption", store=True
+        string="Consumption Rate", compute="_compute_consumption", store=True,
+        help="Litres consumed per unit of distance/time since the previous log "
+        "(L/Hr for machinery, L/km for road vehicles).",
     )
     avg_consumption_rate = fields.Float(
-        string="Average CR", compute="_compute_avg_consumption"
+        string="Average CR",
+        compute="_compute_avg_consumption",
+        store=True,
+        help="Lifetime average consumption rate for the vehicle "
+        "(sum(litres) / sum(distance) across all non-cancelled fuel logs).",
     )
 
-    @api.depends("vehicle_id", "date", "date_time")
+    @api.depends("date_time")
+    def _compute_date(self):
+        """Keep the legacy ``date`` field in sync with ``date_time`` so reports
+        based on either field stay consistent."""
+        for record in self:
+            if record.date_time:
+                record.date = fields.Date.to_date(record.date_time)
+            elif not record.date:
+                record.date = fields.Date.context_today(record)
+
+    def _prev_log_domain(self):
+        """Domain used to fetch the previous fuel log for a vehicle.
+
+        We deliberately exclude cancelled records (they are not real fills) and
+        compare on ``date_time`` so that multiple fills on the same day order
+        correctly.
+        """
+        self.ensure_one()
+        return [
+            ("vehicle_id", "=", self.vehicle_id.id),
+            ("state", "!=", "cancelled"),
+            ("id", "!=", self.id or self._origin.id or 0),
+            ("date_time", "<=", self.date_time or fields.Datetime.now()),
+        ]
+
+    @api.depends("vehicle_id", "date_time", "state")
     def _compute_prev_log_stats(self):
         for record in self:
             prev_log = self.search(
-                [
-                    ("vehicle_id", "=", record.vehicle_id.id),
-                    ("date", "<=", record.date),
-                    ("id", "!=", record.id),
-                ],
+                record._prev_log_domain(),
                 limit=1,
-                order="date desc, id desc",
+                order="date_time desc, id desc",
             )
             record.prev_odometer = prev_log.odometer if prev_log else 0.0
-            record.prev_date = prev_log.date
+            record.prev_date = prev_log.date if prev_log else False
+            record.has_prev_log = bool(prev_log)
 
-    @api.depends("odometer", "prev_odometer", "liter")
+    @api.depends("odometer", "prev_odometer", "liter", "has_prev_log")
     def _compute_consumption(self):
         for record in self:
+            # The very first fuel log for a vehicle has no real previous
+            # odometer reading. Treating ``prev_odometer`` as 0 would attribute
+            # the whole odometer reading to a single tank, making consumption
+            # meaningless. Skip until at least one prior log exists.
+            if not record.has_prev_log:
+                record.distance = 0.0
+                record.consumption_rate = 0.0
+                continue
             distance = record.odometer - record.prev_odometer
-            record.distance = distance
+            record.distance = distance if distance > 0 else 0.0
             if distance > 0:
-                # L/100km or L/km? Screenshot shows "4.00" for "L/Hr"??
-                # Screenshot label is "L/Hr". But field name says "Type of Fuel".
-                # Screenshot actually says "L/Hr 4.00".
-                # Usually it's either L/100KM or MPG.
-                # But for tractors/machinery it's often L/Hour.
-                # Since we don't have hours here (only odometer which might be hours for tractors),
-                # let's assume Odometer is Hours if unit is hours.
-                # If odometer_unit is 'kilometers', it's L/km or L/100km.
-                # Current logic: liter / distance.
                 record.consumption_rate = record.liter / distance
             else:
                 record.consumption_rate = 0.0
 
+    @api.depends("vehicle_id", "liter", "distance", "state")
     def _compute_avg_consumption(self):
-        for record in self:
-            # Simple average of all logs for this vehicle
-            domain = [("vehicle_id", "=", record.vehicle_id.id)]
-            logs = self.search(domain)
-            total_liter = sum(logs.mapped("liter"))
-            total_distance = sum(logs.mapped("distance"))
-            if total_distance > 0:
-                record.avg_consumption_rate = total_liter / total_distance
-            else:
-                record.avg_consumption_rate = 0.0
+        """Lifetime average consumption rate per vehicle.
 
+        Aggregated with a single ``_read_group`` to avoid the previous O(N x M)
+        ``search`` per record, so the value can be safely used as a measure in
+        graph / pivot views.
+        """
+        vehicle_ids = self.mapped("vehicle_id").ids
+        averages = {}
+        if vehicle_ids:
+            # Exclude the first fill of each vehicle (distance == 0) so the
+            # lifetime ratio is not skewed by litres without a measured
+            # distance baseline.
+            data = self.env["fleet.vehicle.log.fuel"]._read_group(
+                [
+                    ("vehicle_id", "in", vehicle_ids),
+                    ("state", "!=", "cancelled"),
+                    ("distance", ">", 0),
+                ],
+                groupby=["vehicle_id"],
+                aggregates=["liter:sum", "distance:sum"],
+            )
+            for vehicle, total_liter, total_distance in data:
+                averages[vehicle.id] = (
+                    (total_liter / total_distance) if total_distance > 0 else 0.0
+                )
+        for record in self:
+            record.avg_consumption_rate = averages.get(record.vehicle_id.id, 0.0)
+
+
+    def _affected_neighbor_logs(self):
+        """Return the fuel logs whose prev/avg stats may be invalidated by
+        creating, updating or removing the records in ``self``.
+
+        For each affected (vehicle, date_time) we recompute the *next* log so
+        its ``prev_odometer`` / ``consumption_rate`` reflects the change.
+        """
+        Log = self.env["fleet.vehicle.log.fuel"]
+        neighbors = Log.browse()
+        for record in self:
+            if not record.vehicle_id:
+                continue
+            next_log = Log.search(
+                [
+                    ("vehicle_id", "=", record.vehicle_id.id),
+                    ("state", "!=", "cancelled"),
+                    ("id", "!=", record.id),
+                    ("date_time", ">=", record.date_time or fields.Datetime.now()),
+                ],
+                limit=1,
+                order="date_time asc, id asc",
+            )
+            neighbors |= next_log
+            neighbors |= Log.search(
+                [
+                    ("vehicle_id", "=", record.vehicle_id.id),
+                    ("state", "!=", "cancelled"),
+                ]
+            )
+        return neighbors
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        records = super().create(vals_list)
+        neighbors = records._affected_neighbor_logs() - records
+        if neighbors:
+            neighbors._compute_prev_log_stats()
+            neighbors._compute_consumption()
+            neighbors._compute_avg_consumption()
+        return records
+
+    def write(self, vals):
+        trigger_fields = {"vehicle_id", "date_time", "odometer", "liter", "state"}
+        affected_before = (
+            self._affected_neighbor_logs()
+            if trigger_fields.intersection(vals)
+            else self.browse()
+        )
+        res = super().write(vals)
+        if trigger_fields.intersection(vals):
+            neighbors = (affected_before | self._affected_neighbor_logs()) - self
+            if neighbors:
+                neighbors._compute_prev_log_stats()
+                neighbors._compute_consumption()
+                neighbors._compute_avg_consumption()
+        return res
+
+    def unlink(self):
+        neighbors = self._affected_neighbor_logs() - self
+        res = super().unlink()
+        if neighbors.exists():
+            neighbors._compute_prev_log_stats()
+            neighbors._compute_consumption()
+            neighbors._compute_avg_consumption()
+        return res
 
     @api.onchange("product_id")
     def _onchange_product_id(self):
