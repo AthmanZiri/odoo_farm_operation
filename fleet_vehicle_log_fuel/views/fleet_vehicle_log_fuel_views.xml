@@ -117,13 +117,17 @@
                 <field name="service_type_id" readonly="state!='todo'" optional="hide"/>
                 <field name="product_id" readonly="state!='todo'" optional="show"/>
                 <field name="vehicle_id" readonly="1" widget="many2one_avatar" />
+                <field name="category_id" optional="hide" readonly="1"/>
+                <field name="model_id" optional="hide" readonly="1"/>
+                <field name="fuel_type" optional="hide" readonly="1"/>
                 <field name="purchaser_id" readonly="1" widget="many2one_avatar" />
                 <field name="filler_id" readonly="1" widget="many2one_avatar" optional="hide"/>
                 <field name="vendor_id" optional="show" readonly="state!='todo'" />
                 <field name="inv_ref" column_invisible="1" />
-                <field name="liter" readonly="state!='todo'" />
-                <field name="distance" optional="hide"/>
-                <field name="consumption_rate" optional="hide"/>
+                <field name="liter" readonly="state!='todo'" sum="Total"/>
+                <field name="distance" optional="hide" sum="Total"/>
+                <field name="consumption_rate" optional="hide" avg="Average"/>
+                <field name="avg_consumption_rate" optional="hide" string="Lifetime CR"/>
                 <field name="pump_meter" optional="hide"/>
                 <field name="price_per_liter" column_invisible="1" />
                 <field name="notes" optional="show" />
@@ -181,11 +185,29 @@
         <field name="name">fleet.vehicle.log.fuel.graph</field>
         <field name="model">fleet.vehicle.log.fuel</field>
         <field name="arch" type="xml">
-            <graph string="Fuel Costs Per Month" stacked="True" sample="1">
-                <field name="date" type="row" />
-                <field name="vehicle_id" type="row" />
-                <field name="amount" type="measure" />
+            <graph string="Fuel Utilization" stacked="True" sample="1">
+                <field name="date_time" type="row" interval="month"/>
+                <field name="vehicle_id" type="row"/>
+                <field name="liter" type="measure"/>
+                <field name="distance" type="measure"/>
+                <field name="consumption_rate" type="measure"/>
+                <field name="amount" type="measure"/>
             </graph>
+        </field>
+    </record>
+    <record id="fleet_vehicle_log_fuel_view_pivot" model="ir.ui.view">
+        <field name="name">fleet.vehicle.log.fuel.pivot</field>
+        <field name="model">fleet.vehicle.log.fuel</field>
+        <field name="arch" type="xml">
+            <pivot string="Fuel Utilization" sample="1">
+                <field name="category_id" type="row"/>
+                <field name="vehicle_id" type="row"/>
+                <field name="date_time" type="col" interval="month"/>
+                <field name="liter" type="measure"/>
+                <field name="distance" type="measure"/>
+                <field name="consumption_rate" type="measure"/>
+                <field name="amount" type="measure"/>
+            </pivot>
         </field>
     </record>
     <record id="fleet_vehicle_log_fuel_view_search" model="ir.ui.view">
@@ -193,22 +215,52 @@
         <field name="model">fleet.vehicle.log.fuel</field>
         <field name="arch" type="xml">
             <search string="Fuel Logs">
-                <field name="vehicle_id" />
-                <field name="liter" />
-                <field name="service_type_id" />
-                <separator />
-                <filter
-                    string="Archived"
-                    name="inactive"
-                    domain="[('active', '=', False)]"
-                />
+                <field name="vehicle_id"/>
+                <field name="category_id" string="Fleet Category"/>
+                <field name="model_id"/>
+                <field name="purchaser_id" string="Driver"/>
+                <field name="product_id" string="Fuel Product"/>
+                <field name="liter"/>
+                <field name="service_type_id"/>
+                <separator/>
+                <filter string="To Do" name="state_todo"
+                        domain="[('state', '=', 'todo')]"/>
+                <filter string="Running" name="state_running"
+                        domain="[('state', '=', 'running')]"/>
+                <filter string="Done" name="state_done"
+                        domain="[('state', '=', 'done')]"/>
+                <filter string="Cancelled" name="state_cancelled"
+                        domain="[('state', '=', 'cancelled')]"/>
+                <separator/>
+                <filter string="Date" name="filter_date_time" date="date_time"/>
+                <separator/>
+                <filter string="Archived" name="inactive"
+                        domain="[('active', '=', False)]"/>
+                <group>
+                    <filter string="Fleet Category" name="group_category"
+                            context="{'group_by': 'category_id'}"/>
+                    <filter string="Vehicle" name="group_vehicle"
+                            context="{'group_by': 'vehicle_id'}"/>
+                    <filter string="Model" name="group_model"
+                            context="{'group_by': 'model_id'}"/>
+                    <filter string="Driver" name="group_driver"
+                            context="{'group_by': 'purchaser_id'}"/>
+                    <filter string="Fuel Type" name="group_fuel_type"
+                            context="{'group_by': 'fuel_type'}"/>
+                    <filter string="Stage" name="group_state"
+                            context="{'group_by': 'state'}"/>
+                    <filter string="Date: Month" name="group_month"
+                            context="{'group_by': 'date_time:month'}"/>
+                    <filter string="Date: Year" name="group_year"
+                            context="{'group_by': 'date_time:year'}"/>
+                </group>
             </search>
         </field>
     </record>
     <record id='fleet_vehicle_log_fuel_action' model='ir.actions.act_window'>
         <field name="name">Fuel Logs</field>
         <field name="res_model">fleet.vehicle.log.fuel</field>
-        <field name="view_mode">list,kanban,form,graph</field>
+        <field name="view_mode">list,kanban,form,graph,pivot</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
             Create a new fuel log entry
@@ -218,11 +270,41 @@
           </p>
         </field>
     </record>
+    <record id="fleet_vehicle_log_fuel_action_utilization" model="ir.actions.act_window">
+        <field name="name">Fuel Utilization</field>
+        <field name="res_model">fleet.vehicle.log.fuel</field>
+        <field name="view_mode">graph,pivot,list,form</field>
+        <field name="domain">[('state', '=', 'done')]</field>
+        <field name="context">{
+            "search_default_state_done": 1,
+            "search_default_group_category": 1,
+            "search_default_group_month": 1
+        }</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+              Analyse fuel utilization over time
+            </p>
+            <p>
+              Use the graph and pivot views to compare litres consumed,
+              distance covered and consumption rates per fleet category,
+              vehicle and period. Remove the Fleet Category grouping to see
+              all fleets aggregated together.
+            </p>
+        </field>
+    </record>
     <menuitem
         action="fleet_vehicle_log_fuel_action"
         id="fleet_vehicle_log_fuel_menu"
         groups="fleet.fleet_group_user"
         sequence="4"
         web_icon="fleet,static/description/icon.png"
+    />
+    <menuitem
+        id="fleet_vehicle_log_fuel_menu_utilization"
+        name="Fuel Utilization"
+        parent="fleet.menu_fleet_reporting"
+        action="fleet_vehicle_log_fuel_action_utilization"
+        groups="fleet.fleet_group_user"
+        sequence="3"
     />
 </odoo>
