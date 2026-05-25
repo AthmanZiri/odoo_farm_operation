@@ -158,44 +158,56 @@ class WorksheetTemplate(models.Model):
         grouped_fields = defaultdict(list)
         for fname, info in items_map.items():
             grouped_fields[info['group']].append(fname)
-            
-        # Build Arch
-        arch = """<form><sheet><group>"""
-        sorted_groups = sorted(grouped_fields.keys())
-        
-        for g in sorted_groups:
-            arch += f"""<group string="{g}">"""
+
+        # Build Arch — preserve the standard worksheet form structure:
+        # header with x_maintenance_request_id, checklist groups, then comments.
+        # x_maintenance_request_id is the fixed link field added by maintenance_worksheet to all template models.
+        req_id_field = 'x_maintenance_request_id'
+
+        arch = '<form create="false" duplicate="false"><sheet>'
+        invisible = f"context.get('studio') or context.get('default_{req_id_field}')"
+        arch += f'<h1 invisible="{invisible}"><field name="{req_id_field}"/></h1>'
+        arch += '<group>'
+        for g in sorted(grouped_fields.keys()):
+            arch += f'<group string="{g}">'
             for fname in grouped_fields[g]:
-                arch += f"""<field name="{fname}"/>"""
-            arch += """</group>"""
-            
-        arch += """</group><group><field name="x_comments"/></group></sheet></form>"""
-        
-        # Find or Create view for THIS template
-        # XML ID convention: template_xxx -> view_xxx
-        module, name = template_xml_id.split('.')
-        current_view_name = name.replace('template_', 'view_')
-        current_view_xml_id = f"{module}.{current_view_name}"
-        
-        view = self.env.ref(current_view_xml_id, raise_if_not_found=False)
-        if view:
-            view.write({'arch': arch})
+                arch += f'<field name="{fname}"/>'
+            arch += '</group>'
+        arch += '</group>'
+        arch += '<group><field name="x_comments" placeholder="Add details about your intervention..."/></group>'
+        arch += '</sheet></form>'
+
+        # Target the auto-generated primary form view (lowest ID wins on equal priority).
+        # The worksheet module creates this view when the template record is first saved.
+        target_view = self.env['ir.ui.view'].search([
+            ('model', '=', template.model_id.model),
+            ('type', '=', 'form'),
+            ('mode', '=', 'primary'),
+        ], order='id asc', limit=1)
+
+        if target_view:
+            target_view.write({'arch': arch})
         else:
-            # Create new view
-            new_view = self.env['ir.ui.view'].create({
-                'name': f"{current_view_name}",
-                'model': template.model_id.model,
-                'arch': arch,
-                'type': 'form',
-            })
-            
-            # Create XML ID for persistence
-            self.env['ir.model.data'].create({
-                'module': module,
-                'name': current_view_name,
-                'model': 'ir.ui.view',
-                'res_id': new_view.id,
-                'noupdate': True
-            })
+            # Fallback for fresh installs where the auto-generated view doesn't exist yet.
+            module, name = template_xml_id.split('.')
+            current_view_name = name.replace('template_', 'view_')
+            current_view_xml_id = f"{module}.{current_view_name}"
+            view = self.env.ref(current_view_xml_id, raise_if_not_found=False)
+            if view:
+                view.write({'arch': arch})
+            else:
+                new_view = self.env['ir.ui.view'].create({
+                    'name': current_view_name,
+                    'model': template.model_id.model,
+                    'arch': arch,
+                    'type': 'form',
+                })
+                self.env['ir.model.data'].create({
+                    'module': module,
+                    'name': current_view_name,
+                    'model': 'ir.ui.view',
+                    'res_id': new_view.id,
+                    'noupdate': True,
+                })
 
 
