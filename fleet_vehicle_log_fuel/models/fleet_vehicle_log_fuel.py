@@ -520,14 +520,21 @@ class FleetVehicleLogFuel(models.Model):
             record.odometer = record.odometer_id.value
 
     def _inverse_odometer(self):
-        if any(not x.odometer for x in self):
-            raise UserError(
-                _("Emptying the odometer value of a vehicle is not allowed.")
-            )
         for record in self:
-            self.odometer_id = self.env["fleet.vehicle.odometer"].create(
-                record._prepare_fleet_vehicle_odometer_vals()
-            )
+            if not record.odometer:
+                # Clearing an existing reading is not allowed, but a new record
+                # with no odometer yet is fine — just leave odometer_id empty.
+                if record.odometer_id:
+                    raise UserError(
+                        _("Emptying the odometer value of a vehicle is not allowed.")
+                    )
+                continue
+            if record.odometer_id:
+                record.odometer_id.value = record.odometer
+            else:
+                record.odometer_id = self.env["fleet.vehicle.odometer"].create(
+                    record._prepare_fleet_vehicle_odometer_vals()
+                )
 
     @api.depends("vehicle_id")
     def _compute_purchaser_id(self):

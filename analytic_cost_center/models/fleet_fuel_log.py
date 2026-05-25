@@ -120,7 +120,9 @@ class FleetVehicleLogFuel(models.Model):
                         'location_dest_id': picking.location_dest_id.id,
                     })
 
-                picking.button_validate()
+                picking.with_context(
+                    skip_immediate=True, skip_backorder=True
+                ).button_validate()
                 item.stock_move_id = move.id
 
             vals = item._prepare_fleet_vehicle_log_services_vals()
