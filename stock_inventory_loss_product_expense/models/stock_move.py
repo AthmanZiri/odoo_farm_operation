@@ -8,12 +8,7 @@ class StockMove(models.Model):
     def _get_product_expense_account(self):
         """Product expense account, then category, then company default."""
         self.ensure_one()
-        fiscal_pos = self.picking_id.fiscal_position_id if self.picking_id else False
-        if fiscal_pos:
-            accounts = self.product_id.get_product_accounts(fiscal_pos)
-        else:
-            accounts = self.product_id._get_product_accounts()
-        return accounts.get('expense')
+        return self.product_id._get_product_accounts().get('expense')
 
     def _get_account_move_line_vals(self):
         lines = super()._get_account_move_line_vals()
