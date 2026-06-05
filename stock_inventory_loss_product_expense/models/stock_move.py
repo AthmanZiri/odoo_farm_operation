@@ -24,7 +24,8 @@ class StockMove(models.Model):
                 product=self.product_id.display_name,
             ))
 
+        loss_account_id = dest.valuation_account_id.id
         for line in lines:
-            if line.get('debit'):
+            if line.get('account_id') == loss_account_id:
                 line['account_id'] = expense_account.id
         return lines
