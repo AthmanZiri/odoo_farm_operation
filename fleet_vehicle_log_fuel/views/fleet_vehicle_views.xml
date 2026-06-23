@@ -5,7 +5,7 @@
         <field name="model">fleet.vehicle</field>
         <field name="inherit_id" ref="fleet.fleet_vehicle_view_form" />
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='model_id']" position="after">
+            <xpath expr="//group[@string='Vehicle']/field[@name='location']" position="after">
                 <field name="fuel_tank_capacity"/>
             </xpath>
             <div name="button_box" position="inside">
